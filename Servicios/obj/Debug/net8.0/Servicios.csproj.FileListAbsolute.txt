@@ -1,0 +1,17 @@
+C:\Users\hory_\source\repos\AutoGestion\Servicios\obj\Debug\net8.0\Servicios.csproj.AssemblyReference.cache
+C:\Users\hory_\source\repos\AutoGestion\Servicios\obj\Debug\net8.0\Servicios.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hory_\source\repos\AutoGestion\Servicios\obj\Debug\net8.0\Servicios.AssemblyInfoInputs.cache
+C:\Users\hory_\source\repos\AutoGestion\Servicios\obj\Debug\net8.0\Servicios.AssemblyInfo.cs
+C:\Users\hory_\source\repos\AutoGestion\Servicios\obj\Debug\net8.0\Servicios.csproj.CoreCompileInputs.cache
+C:\Users\hory_\source\repos\AutoGestion\Servicios\bin\Debug\net8.0\Servicios.deps.json
+C:\Users\hory_\source\repos\AutoGestion\Servicios\bin\Debug\net8.0\Servicios.dll
+C:\Users\hory_\source\repos\AutoGestion\Servicios\bin\Debug\net8.0\Servicios.pdb
+C:\Users\hory_\source\repos\AutoGestion\Servicios\bin\Debug\net8.0\DAO.dll
+C:\Users\hory_\source\repos\AutoGestion\Servicios\bin\Debug\net8.0\Entidades.dll
+C:\Users\hory_\source\repos\AutoGestion\Servicios\bin\Debug\net8.0\DAO.pdb
+C:\Users\hory_\source\repos\AutoGestion\Servicios\bin\Debug\net8.0\Entidades.pdb
+C:\Users\hory_\source\repos\AutoGestion\Servicios\obj\Debug\net8.0\Servicios.csproj.Up2Date
+C:\Users\hory_\source\repos\AutoGestion\Servicios\obj\Debug\net8.0\Servicios.dll
+C:\Users\hory_\source\repos\AutoGestion\Servicios\obj\Debug\net8.0\refint\Servicios.dll
+C:\Users\hory_\source\repos\AutoGestion\Servicios\obj\Debug\net8.0\Servicios.pdb
+C:\Users\hory_\source\repos\AutoGestion\Servicios\obj\Debug\net8.0\ref\Servicios.dll
