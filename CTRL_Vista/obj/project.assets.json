@@ -154,23 +154,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\hory_\\.nuget\\packages\\": {},
+    "C:\\Users\\Educaccion\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\hory_\\source\\repos\\AutoGestion\\CTRL_Vista\\CTRL_Vista.csproj",
+      "projectUniqueName": "C:\\Users\\Educaccion\\Desktop\\TP-NET8\\AutoGestionNet8\\CTRL_Vista\\CTRL_Vista.csproj",
       "projectName": "CTRL_Vista",
-      "projectPath": "C:\\Users\\hory_\\source\\repos\\AutoGestion\\CTRL_Vista\\CTRL_Vista.csproj",
-      "packagesPath": "C:\\Users\\hory_\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\hory_\\source\\repos\\AutoGestion\\CTRL_Vista\\obj\\",
+      "projectPath": "C:\\Users\\Educaccion\\Desktop\\TP-NET8\\AutoGestionNet8\\CTRL_Vista\\CTRL_Vista.csproj",
+      "packagesPath": "C:\\Users\\Educaccion\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Educaccion\\Desktop\\TP-NET8\\AutoGestionNet8\\CTRL_Vista\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\hory_\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Educaccion\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -185,14 +185,14 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\hory_\\source\\repos\\AutoGestion\\BLL\\BLL.csproj": {
-              "projectPath": "C:\\Users\\hory_\\source\\repos\\AutoGestion\\BLL\\BLL.csproj"
+            "C:\\Users\\Educaccion\\Desktop\\TP-NET8\\AutoGestionNet8\\BLL\\BLL.csproj": {
+              "projectPath": "C:\\Users\\Educaccion\\Desktop\\TP-NET8\\AutoGestionNet8\\BLL\\BLL.csproj"
             },
-            "C:\\Users\\hory_\\source\\repos\\AutoGestion\\Entidades\\Entidades.csproj": {
-              "projectPath": "C:\\Users\\hory_\\source\\repos\\AutoGestion\\Entidades\\Entidades.csproj"
+            "C:\\Users\\Educaccion\\Desktop\\TP-NET8\\AutoGestionNet8\\Entidades\\Entidades.csproj": {
+              "projectPath": "C:\\Users\\Educaccion\\Desktop\\TP-NET8\\AutoGestionNet8\\Entidades\\Entidades.csproj"
             },
-            "C:\\Users\\hory_\\source\\repos\\AutoGestion\\Servicios\\Servicios.csproj": {
-              "projectPath": "C:\\Users\\hory_\\source\\repos\\AutoGestion\\Servicios\\Servicios.csproj"
+            "C:\\Users\\Educaccion\\Desktop\\TP-NET8\\AutoGestionNet8\\Servicios\\Servicios.csproj": {
+              "projectPath": "C:\\Users\\Educaccion\\Desktop\\TP-NET8\\AutoGestionNet8\\Servicios\\Servicios.csproj"
             }
           }
         }
@@ -207,7 +207,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.200"
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net8.0": {
@@ -234,7 +234,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.204/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
       }
     }
   },

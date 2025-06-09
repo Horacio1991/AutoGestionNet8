@@ -104,4 +104,12 @@
     <Contacto>charo.ortiz2014@gmail.com</Contacto>
     <FechaRegistro>2025-05-30T09:03:50.4051418-03:00</FechaRegistro>
   </Cliente>
+  <Cliente>
+    <ID>14</ID>
+    <Dni>36000000</Dni>
+    <Nombre>Zoe</Nombre>
+    <Apellido>Francia</Apellido>
+    <Contacto>zoe.francia@gmail.com</Contacto>
+    <FechaRegistro>2025-06-09T07:35:03.1423603-03:00</FechaRegistro>
+  </Cliente>
 </ArrayOfCliente>

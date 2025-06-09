@@ -173,4 +173,48 @@
     <Fecha>2025-06-02T11:42:36.7688496-03:00</Fecha>
     <MotivoRechazo>La venta no corresponde con comisión por pensalización</MotivoRechazo>
   </Comision>
+  <Comision>
+    <ID>5</ID>
+    <Venta>
+      <ID>6</ID>
+      <Vendedor>
+        <ID>2</ID>
+        <Nombre>Diego</Nombre>
+        <FechaAlta>2025-06-09T08:18:24.8792191-03:00</FechaAlta>
+      </Vendedor>
+      <Cliente>
+        <ID>14</ID>
+        <Dni>36000000</Dni>
+        <Nombre>Zoe</Nombre>
+        <Apellido>Francia</Apellido>
+        <Contacto>zoe.francia@gmail.com</Contacto>
+        <FechaRegistro>2025-06-09T07:35:03.1423603-03:00</FechaRegistro>
+      </Cliente>
+      <Vehiculo>
+        <ID>16</ID>
+        <Marca>Fiat</Marca>
+        <Modelo>Cronos</Modelo>
+        <Año>2023</Año>
+        <Color>Blanco</Color>
+        <Km>4000</Km>
+        <Dominio>TUV404</Dominio>
+        <Estado>Disponible</Estado>
+      </Vehiculo>
+      <Pago>
+        <ID>13</ID>
+        <TipoPago>Efectivo</TipoPago>
+        <Monto>99999999</Monto>
+        <Cuotas>0</Cuotas>
+        <Detalles />
+        <FechaPago>2025-06-09T08:19:00.2773752-03:00</FechaPago>
+      </Pago>
+      <Estado>Entregada</Estado>
+      <Fecha>2025-06-09T08:19:00.3371876-03:00</Fecha>
+    </Venta>
+    <Porcentaje>0</Porcentaje>
+    <Monto>0</Monto>
+    <Estado>Rechazada</Estado>
+    <Fecha>2025-06-09T08:21:40.1203642-03:00</Fecha>
+    <MotivoRechazo>Vendedor penalizado, no cobra comisiones</MotivoRechazo>
+  </Comision>
 </ArrayOfComision>

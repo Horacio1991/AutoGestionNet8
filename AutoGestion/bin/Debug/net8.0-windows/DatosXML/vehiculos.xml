@@ -158,7 +158,7 @@
     <Color>Blanco</Color>
     <Km>4000</Km>
     <Dominio>TUV404</Dominio>
-    <Estado>Disponible</Estado>
+    <Estado>En Proceso</Estado>
   </Vehiculo>
   <Vehiculo>
     <ID>17</ID>
@@ -168,7 +168,7 @@
     <Color>Gris</Color>
     <Km>28000</Km>
     <Dominio>WXY505</Dominio>
-    <Estado>Disponible</Estado>
+    <Estado>En Proceso</Estado>
   </Vehiculo>
   <Vehiculo>
     <ID>18</ID>

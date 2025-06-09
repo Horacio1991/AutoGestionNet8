@@ -77,8 +77,16 @@ namespace AutoGestion.Vista
                 _facturaBLL.EmitirFactura(factura);
                 _ventaBLL.MarcarComoFacturada(venta.ID);
 
-                // Fix: Provide a valid path for the "rutaDestino" parameter
-                string rutaDestino = @"C:\Facturas\" + $"Factura_{factura.ID}.pdf";
+                using SaveFileDialog dialogo = new SaveFileDialog
+                {
+                    Filter = "Archivo PDF (*.pdf)|*.pdf",
+                    FileName = $"Factura_{factura.ID}.pdf"
+                };
+
+                if (dialogo.ShowDialog() != DialogResult.OK)
+                    return;
+
+                string rutaDestino = dialogo.FileName;
                 GeneradorFacturaPDF.Generar(factura, rutaDestino);
 
                 MessageBox.Show("Factura emitida correctamente.");
@@ -86,6 +94,7 @@ namespace AutoGestion.Vista
             }
         }
 
-       
+
+
     }
 }

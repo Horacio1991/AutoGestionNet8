@@ -264,4 +264,52 @@
     <Precio>400000000</Precio>
     <Fecha>2025-06-02T11:41:42.1883895-03:00</Fecha>
   </Factura>
+  <Factura>
+    <ID>12</ID>
+    <Cliente>
+      <ID>14</ID>
+      <Dni>36000000</Dni>
+      <Nombre>Zoe</Nombre>
+      <Apellido>Francia</Apellido>
+      <Contacto>zoe.francia@gmail.com</Contacto>
+      <FechaRegistro>2025-06-09T07:35:03.1423603-03:00</FechaRegistro>
+    </Cliente>
+    <Vehiculo>
+      <ID>17</ID>
+      <Marca>Honda</Marca>
+      <Modelo>Fit</Modelo>
+      <Año>2019</Año>
+      <Color>Gris</Color>
+      <Km>28000</Km>
+      <Dominio>WXY505</Dominio>
+      <Estado>Disponible</Estado>
+    </Vehiculo>
+    <FormaPago>Efectivo</FormaPago>
+    <Precio>1000000</Precio>
+    <Fecha>2025-06-09T07:36:52.4166185-03:00</Fecha>
+  </Factura>
+  <Factura>
+    <ID>13</ID>
+    <Cliente>
+      <ID>14</ID>
+      <Dni>36000000</Dni>
+      <Nombre>Zoe</Nombre>
+      <Apellido>Francia</Apellido>
+      <Contacto>zoe.francia@gmail.com</Contacto>
+      <FechaRegistro>2025-06-09T07:35:03.1423603-03:00</FechaRegistro>
+    </Cliente>
+    <Vehiculo>
+      <ID>16</ID>
+      <Marca>Fiat</Marca>
+      <Modelo>Cronos</Modelo>
+      <Año>2023</Año>
+      <Color>Blanco</Color>
+      <Km>4000</Km>
+      <Dominio>TUV404</Dominio>
+      <Estado>Disponible</Estado>
+    </Vehiculo>
+    <FormaPago>Efectivo</FormaPago>
+    <Precio>99999999</Precio>
+    <Fecha>2025-06-09T08:19:29.7037139-03:00</Fecha>
+  </Factura>
 </ArrayOfFactura>
