@@ -129,5 +129,13 @@ namespace AutoGestion.BLL
                         .ToList();
         }
 
+        public List<Venta> ObtenerVentasPorFecha(DateTime desde, DateTime hasta)
+        {
+            return _repo.ObtenerTodos()
+                        .Where(v => v.Fecha.Date >= desde.Date && v.Fecha.Date <= hasta.Date)
+                        .ToList();
+        }
+
+
     }
 }

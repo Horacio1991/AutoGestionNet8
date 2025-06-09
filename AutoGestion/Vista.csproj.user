@@ -19,6 +19,9 @@
     <Compile Update="UserControls\ConsultarComisiones\ConsultarComisiones.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="UserControls\Dashboard\Dashboard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="UserControls\EmitirFactura\EmitirFactura.cs">
       <SubType>UserControl</SubType>
     </Compile>
