@@ -28,7 +28,7 @@
     <Color>Rojo</Color>
     <Km>30000</Km>
     <Dominio>GHI789</Dominio>
-    <Estado>En Proceso</Estado>
+    <Estado>Disponible</Estado>
   </Vehiculo>
   <Vehiculo>
     <ID>4</ID>
@@ -148,7 +148,7 @@
     <Color>Negro</Color>
     <Km>15000</Km>
     <Dominio>QRS303</Dominio>
-    <Estado>Disponible</Estado>
+    <Estado>En Proceso</Estado>
   </Vehiculo>
   <Vehiculo>
     <ID>16</ID>
@@ -209,5 +209,15 @@
     <Km>100</Km>
     <Dominio>IWY960</Dominio>
     <Estado>En Proceso</Estado>
+  </Vehiculo>
+  <Vehiculo>
+    <ID>22</ID>
+    <Marca>Chevrolet</Marca>
+    <Modelo>Corsa III</Modelo>
+    <Año>100</Año>
+    <Color>Verde Oscuro</Color>
+    <Km>100</Km>
+    <Dominio>ZX 404 YC</Dominio>
+    <Estado>Disponible</Estado>
   </Vehiculo>
 </ArrayOfVehiculo>

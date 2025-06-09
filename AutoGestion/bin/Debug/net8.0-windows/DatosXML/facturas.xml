@@ -312,4 +312,28 @@
     <Precio>99999999</Precio>
     <Fecha>2025-06-09T08:19:29.7037139-03:00</Fecha>
   </Factura>
+  <Factura>
+    <ID>14</ID>
+    <Cliente>
+      <ID>11</ID>
+      <Dni>36084790</Dni>
+      <Nombre>Horacio</Nombre>
+      <Apellido>Ortiz</Apellido>
+      <Contacto>horacio0291@gmail.com</Contacto>
+      <FechaRegistro>2025-05-29T09:28:19.7256203-03:00</FechaRegistro>
+    </Cliente>
+    <Vehiculo>
+      <ID>15</ID>
+      <Marca>Peugeot</Marca>
+      <Modelo>2008</Modelo>
+      <Año>2021</Año>
+      <Color>Negro</Color>
+      <Km>15000</Km>
+      <Dominio>QRS303</Dominio>
+      <Estado>Disponible</Estado>
+    </Vehiculo>
+    <FormaPago>Efectivo</FormaPago>
+    <Precio>989898989898</Precio>
+    <Fecha>2025-06-09T08:32:03.3288447-03:00</Fecha>
+  </Factura>
 </ArrayOfFactura>

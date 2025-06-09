@@ -52,4 +52,30 @@
     <ValorFinal>333333333333333</ValorFinal>
     <Fecha>2025-05-30T17:18:20.4194321-03:00</Fecha>
   </Tasacion>
+  <Tasacion>
+    <ID>3</ID>
+    <Oferta>
+      <ID>3</ID>
+      <Oferente>
+        <ID>11</ID>
+        <Dni>36084790</Dni>
+        <Nombre>Santiago</Nombre>
+        <Apellido>Ortiz</Apellido>
+        <Contacto>santiago.ortiz@gmail.com</Contacto>
+      </Oferente>
+      <Vehiculo>
+        <ID>3</ID>
+        <Marca>Chevrolet</Marca>
+        <Modelo>Corsa III</Modelo>
+        <Año>100</Año>
+        <Color>Verde Oscuro</Color>
+        <Km>100</Km>
+        <Dominio>ZX 404 YC</Dominio>
+        <Estado>En evaluación</Estado>
+      </Vehiculo>
+      <FechaInspeccion>2025-06-09T08:32:19.05</FechaInspeccion>
+    </Oferta>
+    <ValorFinal>2300000</ValorFinal>
+    <Fecha>2025-06-09T08:33:58.9507738-03:00</Fecha>
+  </Tasacion>
 </ArrayOfTasacion>

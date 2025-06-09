@@ -104,4 +104,12 @@
     <Detalles />
     <FechaPago>2025-06-09T08:19:00.2773752-03:00</FechaPago>
   </Pago>
+  <Pago>
+    <ID>14</ID>
+    <TipoPago>Efectivo</TipoPago>
+    <Monto>989898989898</Monto>
+    <Cuotas>0</Cuotas>
+    <Detalles />
+    <FechaPago>2025-06-09T08:31:52.4383251-03:00</FechaPago>
+  </Pago>
 </ArrayOfPago>

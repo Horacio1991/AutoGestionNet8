@@ -56,17 +56,29 @@ namespace AutoGestion.Vista
                 return;
             }
 
+            // Mostrar diálogo para elegir dónde guardar el comprobante
+            using SaveFileDialog dialogo = new SaveFileDialog
+            {
+                Filter = "Archivo PDF (*.pdf)|*.pdf",
+                FileName = $"Comprobante_Entrega_{venta.ID}.pdf"
+            };
+
+            if (dialogo.ShowDialog() != DialogResult.OK)
+                return;
+
+            string rutaDestino = dialogo.FileName;
+
             // Marcar como entregada
             _ventaBLL.MarcarComoEntregada(venta.ID);
 
             // Generar comprobante en PDF
-            var rutaDestino = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), $"Comprobante_{venta.ID}.pdf");
             GeneradorComprobantePDF.Generar(venta, rutaDestino);
 
-            MessageBox.Show($"Entrega registrada y comprobante generado en: {rutaDestino}");
+            MessageBox.Show("Entrega registrada y comprobante guardado correctamente.");
             CargarVentas();
         }
 
-    
+
+
     }
 }
