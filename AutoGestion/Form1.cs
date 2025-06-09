@@ -1,6 +1,7 @@
 using AutoGestion.Servicios;
 using AutoGestion.Servicios.Composite;
 using AutoGestion.Vista;
+using Vista.UserControls.Dashboard;
 
 namespace AutoGestion
 {
@@ -217,7 +218,14 @@ namespace AutoGestion
             }
         }
 
-      
+        private void dashboardToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panelContenido.Controls.Clear();
+            var control = new Dashboard();
+            control.Dock = DockStyle.Fill;
+            panelContenido.Controls.Add(control);
+
+        }
     }
 }
 

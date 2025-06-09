@@ -336,4 +336,28 @@
     <Precio>989898989898</Precio>
     <Fecha>2025-06-09T08:32:03.3288447-03:00</Fecha>
   </Factura>
+  <Factura>
+    <ID>15</ID>
+    <Cliente>
+      <ID>11</ID>
+      <Dni>36084790</Dni>
+      <Nombre>Horacio</Nombre>
+      <Apellido>Ortiz</Apellido>
+      <Contacto>horacio0291@gmail.com</Contacto>
+      <FechaRegistro>2025-05-29T09:28:19.7256203-03:00</FechaRegistro>
+    </Cliente>
+    <Vehiculo>
+      <ID>3</ID>
+      <Marca>Volkswagen</Marca>
+      <Modelo>Golf</Modelo>
+      <Año>2019</Año>
+      <Color>Rojo</Color>
+      <Km>30000</Km>
+      <Dominio>GHI789</Dominio>
+      <Estado>Disponible</Estado>
+    </Vehiculo>
+    <FormaPago>Efectivo</FormaPago>
+    <Precio>10000000</Precio>
+    <Fecha>2025-06-09T16:00:10.0940805-03:00</Fecha>
+  </Factura>
 </ArrayOfFactura>

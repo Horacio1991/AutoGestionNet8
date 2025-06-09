@@ -252,4 +252,40 @@
     <Estado>Entregada</Estado>
     <Fecha>2025-06-09T08:31:52.5008063-03:00</Fecha>
   </Venta>
+  <Venta>
+    <ID>8</ID>
+    <Vendedor>
+      <ID>1</ID>
+      <Nombre>admin</Nombre>
+      <FechaAlta>2025-06-09T15:59:44.9122371-03:00</FechaAlta>
+    </Vendedor>
+    <Cliente>
+      <ID>11</ID>
+      <Dni>36084790</Dni>
+      <Nombre>Horacio</Nombre>
+      <Apellido>Ortiz</Apellido>
+      <Contacto>horacio0291@gmail.com</Contacto>
+      <FechaRegistro>2025-05-29T09:28:19.7256203-03:00</FechaRegistro>
+    </Cliente>
+    <Vehiculo>
+      <ID>3</ID>
+      <Marca>Volkswagen</Marca>
+      <Modelo>Golf</Modelo>
+      <Año>2019</Año>
+      <Color>Rojo</Color>
+      <Km>30000</Km>
+      <Dominio>GHI789</Dominio>
+      <Estado>Disponible</Estado>
+    </Vehiculo>
+    <Pago>
+      <ID>15</ID>
+      <TipoPago>Efectivo</TipoPago>
+      <Monto>10000000</Monto>
+      <Cuotas>0</Cuotas>
+      <Detalles />
+      <FechaPago>2025-06-09T15:59:58.7257925-03:00</FechaPago>
+    </Pago>
+    <Estado>Facturada</Estado>
+    <Fecha>2025-06-09T15:59:58.8426914-03:00</Fecha>
+  </Venta>
 </ArrayOfVenta>

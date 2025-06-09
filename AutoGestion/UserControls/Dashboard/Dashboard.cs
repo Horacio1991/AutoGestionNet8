@@ -18,6 +18,12 @@ namespace Vista.UserControls.Dashboard
         public Dashboard()
         {
             InitializeComponent();
+            cmbFiltroPeriodo.Items.AddRange(new object[]
+            {
+                "Hoy",
+                "Últimos 7 días",
+                "Últimos 30 días"
+            });
             cmbFiltroPeriodo.SelectedIndex = 0; // Default: Hoy
             AplicarFiltro();
         }
@@ -59,11 +65,13 @@ namespace Vista.UserControls.Dashboard
 
         private void CargarVentas(DateTime desde, DateTime hasta)
         {
-            var ventas = _ventaBLL.ObtenerVentasFacturadas()
-                                  .Where(v => v.Fecha.Date >= desde && v.Fecha.Date <= hasta)
-                                  .ToList();
+            var ventas = _ventaBLL.ObtenerTodas()
+                .Where(v =>
+                    (v.Estado == "Facturada" || v.Estado == "Entregada") &&
+                    v.Fecha.Date >= desde && v.Fecha.Date <= hasta
+                )
+                .ToList();
 
-            // Actualizar DataGridView
             dgvVentas.DataSource = ventas.Select(v => new
             {
                 Fecha = v.Fecha.ToShortDateString(),
@@ -76,11 +84,9 @@ namespace Vista.UserControls.Dashboard
             dgvVentas.ReadOnly = true;
             dgvVentas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
-            // Calcular total
             decimal total = ventas.Sum(v => v.Total);
             lblTotalFacturado.Text = $"{ObtenerTextoPeriodo()}: ${total:N2}";
 
-            // Gráfico
             chartVentas.Series.Clear();
             var serie = new Series("Ventas")
             {
@@ -91,7 +97,11 @@ namespace Vista.UserControls.Dashboard
             var agrupadas = ventas
                 .GroupBy(v => v.Fecha.Date)
                 .OrderBy(g => g.Key)
-                .Select(g => new { Fecha = g.Key.ToShortDateString(), Total = g.Sum(v => v.Total) });
+                .Select(g => new
+                {
+                    Fecha = g.Key.ToShortDateString(),
+                    Total = g.Sum(v => v.Total)
+                });
 
             foreach (var dato in agrupadas)
                 serie.Points.AddXY(dato.Fecha, dato.Total);
@@ -102,9 +112,12 @@ namespace Vista.UserControls.Dashboard
 
         private void CargarRanking(DateTime desde, DateTime hasta)
         {
-            var ventas = _ventaBLL.ObtenerVentasFacturadas()
-                                  .Where(v => v.Fecha.Date >= desde && v.Fecha.Date <= hasta)
-                                  .ToList();
+            var ventas = _ventaBLL.ObtenerTodas()
+                .Where(v =>
+                    (v.Estado == "Facturada" || v.Estado == "Entregada") &&
+                    v.Fecha.Date >= desde && v.Fecha.Date <= hasta
+                )
+                .ToList();
 
             var ranking = ventas
                 .GroupBy(v => v.Vendedor?.Nombre)
@@ -118,13 +131,11 @@ namespace Vista.UserControls.Dashboard
                 .OrderByDescending(x => x.Total)
                 .ToList();
 
-            // DataGridView
             dgvRanking.DataSource = ranking;
             dgvRanking.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvRanking.ReadOnly = true;
             dgvRanking.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
-            // Gráfico
             chartRanking.Series.Clear();
             var serie = new Series("Facturación")
             {

@@ -53,6 +53,7 @@
             mnuAsignarRoles = new ToolStripMenuItem();
             mnuCerrarSesion = new ToolStripMenuItem();
             panelContenido = new Panel();
+            dashboardToolStripMenuItem = new ToolStripMenuItem();
             menuPrincipal.SuspendLayout();
             SuspendLayout();
             // 
@@ -207,7 +208,7 @@
             // 
             // seguridadToolStripMenuItem
             // 
-            seguridadToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { mnuAsignarRoles, mnuCerrarSesion });
+            seguridadToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { mnuAsignarRoles, dashboardToolStripMenuItem, mnuCerrarSesion });
             seguridadToolStripMenuItem.Name = "seguridadToolStripMenuItem";
             seguridadToolStripMenuItem.Size = new Size(72, 20);
             seguridadToolStripMenuItem.Text = "Seguridad";
@@ -232,6 +233,13 @@
             panelContenido.Name = "panelContenido";
             panelContenido.Size = new Size(800, 424);
             panelContenido.TabIndex = 1;
+            // 
+            // dashboardToolStripMenuItem
+            // 
+            dashboardToolStripMenuItem.Name = "dashboardToolStripMenuItem";
+            dashboardToolStripMenuItem.Size = new Size(180, 22);
+            dashboardToolStripMenuItem.Text = "Dashboard";
+            dashboardToolStripMenuItem.Click += dashboardToolStripMenuItem_Click;
             // 
             // Form1
             // 
@@ -277,5 +285,6 @@
         private ToolStripMenuItem mnuAsignarRoles;
         private ToolStripMenuItem mnuCerrarSesion;
         private Panel panelContenido;
+        private ToolStripMenuItem dashboardToolStripMenuItem;
     }
 }
