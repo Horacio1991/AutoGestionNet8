@@ -150,14 +150,9 @@ namespace Vista.UserControls.Dashboard
             chartVentas.Legends[0].Enabled = false; // Oculta leyenda si no la querés
         }
 
-
-
-
-
-
-
         private void CargarRanking(DateTime desde, DateTime hasta)
         {
+
             var ventas = _ventaBLL.ObtenerTodas()
                 .Where(v =>
                     (v.Estado == "Facturada" || v.Estado == "Entregada") &&
@@ -167,7 +162,7 @@ namespace Vista.UserControls.Dashboard
 
             var ranking = ventas
                 .GroupBy(v => v.Vendedor?.Nombre)
-                .Where(g => !string.IsNullOrEmpty(g.Key))
+                .Where(g => !string.IsNullOrWhiteSpace(g.Key))
                 .Select(g => new
                 {
                     Vendedor = g.Key,
@@ -177,24 +172,62 @@ namespace Vista.UserControls.Dashboard
                 .OrderByDescending(x => x.Total)
                 .ToList();
 
+            // Mostrar en tabla
             dgvRanking.DataSource = ranking;
             dgvRanking.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvRanking.ReadOnly = true;
             dgvRanking.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
+            // Gráfico
             chartRanking.Series.Clear();
+            chartRanking.ChartAreas[0].AxisY.CustomLabels.Clear();
+
             var serie = new Series("Facturación")
             {
                 ChartType = SeriesChartType.Bar,
-                IsValueShownAsLabel = true
+                IsValueShownAsLabel = true,
+                Color = Color.MediumSeaGreen
             };
 
-            foreach (var r in ranking)
-                serie.Points.AddXY(r.Vendedor, r.Total);
+            int index = 1;
+            foreach (var item in ranking)
+            {
+                serie.Points.AddXY(index, item.Total);
+                serie.Points[index - 1].ToolTip = $"{item.Vendedor}: ${item.Total:N0}";
+
+                // Etiqueta personalizada en el eje Y con el nombre del vendedor
+                var label = new CustomLabel
+                {
+                    FromPosition = index - 0.5,
+                    ToPosition = index + 0.5,
+                    Text = item.Vendedor
+                };
+                chartRanking.ChartAreas[0].AxisY.CustomLabels.Add(label);
+
+                index++;
+            }
 
             chartRanking.Series.Add(serie);
-            chartRanking.ChartAreas[0].AxisX.LabelStyle.Angle = 0;
+
+            var area = chartRanking.ChartAreas[0];
+            area.AxisX.Title = "Monto Vendido ($)";
+            area.AxisX.LabelStyle.Format = "C0";
+            area.AxisY.Title = "Vendedor";
+            area.AxisY.Interval = 1;
+
+            // ✅ Ocultar completamente la numeración del eje Y
+            area.AxisY.LabelStyle.Enabled = false;
+            area.AxisY.MajorTickMark.Enabled = false;
+            area.AxisY.LineWidth = 0;
+
+            chartRanking.Legends[0].Enabled = false;
+
         }
+
+
+
+
+
 
         private string ObtenerTextoPeriodo()
         {

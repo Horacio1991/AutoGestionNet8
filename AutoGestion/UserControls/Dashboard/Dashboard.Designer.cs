@@ -68,7 +68,7 @@
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             chartRanking.Series.Add(series1);
-            chartRanking.Size = new Size(394, 266);
+            chartRanking.Size = new Size(394, 155);
             chartRanking.TabIndex = 3;
             chartRanking.Text = "chart2";
             // 
