@@ -34,34 +34,18 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            chartVentas = new System.Windows.Forms.DataVisualization.Charting.Chart();
             dgvVentas = new DataGridView();
             chartRanking = new System.Windows.Forms.DataVisualization.Charting.Chart();
             dgvRanking = new DataGridView();
             cmbFiltroPeriodo = new ComboBox();
             label1 = new Label();
             lblTotalFacturado = new Label();
-            ((System.ComponentModel.ISupportInitialize)chartVentas).BeginInit();
+            chartVentas = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)dgvVentas).BeginInit();
             ((System.ComponentModel.ISupportInitialize)chartRanking).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvRanking).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)chartVentas).BeginInit();
             SuspendLayout();
-            // 
-            // chartVentas
-            // 
-            chartArea1.Name = "ChartArea1";
-            chartVentas.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            chartVentas.Legends.Add(legend1);
-            chartVentas.Location = new Point(452, 26);
-            chartVentas.Name = "chartVentas";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            chartVentas.Series.Add(series1);
-            chartVentas.Size = new Size(333, 192);
-            chartVentas.TabIndex = 0;
-            chartVentas.Text = "chart1";
             // 
             // dgvVentas
             // 
@@ -73,17 +57,18 @@
             // 
             // chartRanking
             // 
-            chartArea2.Name = "ChartArea1";
-            chartRanking.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            chartRanking.Legends.Add(legend2);
-            chartRanking.Location = new Point(452, 224);
+            chartArea1.Name = "ChartArea1";
+            chartRanking.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            chartRanking.Legends.Add(legend1);
+            chartRanking.Location = new Point(421, 261);
             chartRanking.Name = "chartRanking";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            chartRanking.Series.Add(series2);
-            chartRanking.Size = new Size(333, 192);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Bar;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            chartRanking.Series.Add(series1);
+            chartRanking.Size = new Size(394, 266);
             chartRanking.TabIndex = 3;
             chartRanking.Text = "chart2";
             // 
@@ -122,35 +107,50 @@
             lblTotalFacturado.TabIndex = 7;
             lblTotalFacturado.Text = "Total Facturado:";
             // 
+            // chartVentas
+            // 
+            chartArea2.Name = "ChartArea1";
+            chartVentas.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            chartVentas.Legends.Add(legend2);
+            chartVentas.Location = new Point(421, 26);
+            chartVentas.Name = "chartVentas";
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            chartVentas.Series.Add(series2);
+            chartVentas.Size = new Size(394, 229);
+            chartVentas.TabIndex = 8;
+            chartVentas.Text = "chart1";
+            // 
             // Dashboard
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(chartVentas);
             Controls.Add(lblTotalFacturado);
             Controls.Add(label1);
             Controls.Add(cmbFiltroPeriodo);
             Controls.Add(dgvRanking);
             Controls.Add(chartRanking);
             Controls.Add(dgvVentas);
-            Controls.Add(chartVentas);
             Name = "Dashboard";
-            Size = new Size(800, 426);
-            ((System.ComponentModel.ISupportInitialize)chartVentas).EndInit();
+            Size = new Size(1085, 557);
             ((System.ComponentModel.ISupportInitialize)dgvVentas).EndInit();
             ((System.ComponentModel.ISupportInitialize)chartRanking).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvRanking).EndInit();
+            ((System.ComponentModel.ISupportInitialize)chartVentas).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private System.Windows.Forms.DataVisualization.Charting.Chart chartVentas;
         private DataGridView dgvVentas;
         private System.Windows.Forms.DataVisualization.Charting.Chart chartRanking;
         private DataGridView dgvRanking;
         private ComboBox cmbFiltroPeriodo;
         private Label label1;
         private Label lblTotalFacturado;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartVentas;
     }
 }

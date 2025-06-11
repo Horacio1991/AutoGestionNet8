@@ -65,6 +65,7 @@ namespace Vista.UserControls.Dashboard
 
         private void CargarVentas(DateTime desde, DateTime hasta)
         {
+            // Filtrar ventas válidas en el rango
             var ventas = _ventaBLL.ObtenerTodas()
                 .Where(v =>
                     (v.Estado == "Facturada" || v.Estado == "Entregada") &&
@@ -72,6 +73,7 @@ namespace Vista.UserControls.Dashboard
                 )
                 .ToList();
 
+            // Cargar el DataGridView
             dgvVentas.DataSource = ventas.Select(v => new
             {
                 Fecha = v.Fecha.ToShortDateString(),
@@ -84,31 +86,75 @@ namespace Vista.UserControls.Dashboard
             dgvVentas.ReadOnly = true;
             dgvVentas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
+            // Total facturado
             decimal total = ventas.Sum(v => v.Total);
             lblTotalFacturado.Text = $"{ObtenerTextoPeriodo()}: ${total:N2}";
 
-            chartVentas.Series.Clear();
-            var serie = new Series("Ventas")
-            {
-                ChartType = SeriesChartType.Column,
-                IsValueShownAsLabel = true
-            };
-
+            // Agrupar ventas por fecha
             var agrupadas = ventas
                 .GroupBy(v => v.Fecha.Date)
                 .OrderBy(g => g.Key)
                 .Select(g => new
                 {
-                    Fecha = g.Key.ToShortDateString(),
+                    Fecha = g.Key.ToString("dd/MM/yyyy"),
                     Total = g.Sum(v => v.Total)
-                });
+                })
+                .ToList();
 
-            foreach (var dato in agrupadas)
-                serie.Points.AddXY(dato.Fecha, dato.Total);
+            // Limpiar y crear la serie
+            chartVentas.Series.Clear();
+            chartVentas.ChartAreas[0].AxisX.CustomLabels.Clear();
+
+            var serie = new Series("Ventas")
+            {
+                ChartType = SeriesChartType.Column,
+                IsValueShownAsLabel = true,
+                Color = Color.SkyBlue
+            };
+
+            int index = 1;
+            foreach (var item in agrupadas)
+            {
+                serie.Points.AddXY(index, item.Total);
+                serie.Points[index - 1].ToolTip = $"{item.Fecha}: ${item.Total:N0}";
+
+                // Agregar etiqueta personalizada debajo del número
+                var label = new CustomLabel
+                {
+                    FromPosition = index - 0.5,
+                    ToPosition = index + 0.5,
+                    Text = item.Fecha
+                };
+                chartVentas.ChartAreas[0].AxisX.CustomLabels.Add(label);
+
+                index++;
+            }
 
             chartVentas.Series.Add(serie);
-            chartVentas.ChartAreas[0].AxisX.LabelStyle.Angle = -45;
+            // Asegurar que todas las barras tengan el mismo ancho visual
+            serie["PointWidth"] = "0.2"; // Ajustable entre 0.0 y 1.0 (0.6 es un buen valor)
+
+            // Evitar que el gráfico agregue espacio automático
+            chartVentas.ChartAreas[0].AxisX.IsMarginVisible = true;
+
+
+            // Configuración visual del gráfico
+            var area = chartVentas.ChartAreas[0];
+            area.AxisX.Title = "Día con ventas";
+            area.AxisX.Interval = 1;
+            area.AxisX.LabelStyle.Angle = 0;
+
+            area.AxisY.Title = "Monto Vendido ($)";
+            area.AxisY.LabelStyle.Format = "C0";
+
+            chartVentas.Legends[0].Enabled = false; // Oculta leyenda si no la querés
         }
+
+
+
+
+
+
 
         private void CargarRanking(DateTime desde, DateTime hasta)
         {

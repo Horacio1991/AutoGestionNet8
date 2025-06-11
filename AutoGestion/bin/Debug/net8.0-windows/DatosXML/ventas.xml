@@ -28,7 +28,7 @@
     <Pago>
       <ID>8</ID>
       <TipoPago>Efectivo</TipoPago>
-      <Monto>10000000</Monto>
+      <Monto>1000</Monto>
       <Cuotas>0</Cuotas>
       <Detalles>Compra en efectivo, sin cuotas.</Detalles>
       <FechaPago>2025-06-02T10:00:08.2471696-03:00</FechaPago>
@@ -64,7 +64,7 @@
     <Pago>
       <ID>9</ID>
       <TipoPago>Tarjeta de Crédito</TipoPago>
-      <Monto>15000000</Monto>
+      <Monto>1500</Monto>
       <Cuotas>24</Cuotas>
       <Detalles>Pago  a 2 años</Detalles>
       <FechaPago>2025-06-02T10:01:28.097273-03:00</FechaPago>
@@ -100,7 +100,7 @@
     <Pago>
       <ID>10</ID>
       <TipoPago>Financiación</TipoPago>
-      <Monto>34000000</Monto>
+      <Monto>3400</Monto>
       <Cuotas>48</Cuotas>
       <Detalles>pago financiado</Detalles>
       <FechaPago>2025-06-02T10:03:14.5247749-03:00</FechaPago>
@@ -136,7 +136,7 @@
     <Pago>
       <ID>11</ID>
       <TipoPago>Efectivo</TipoPago>
-      <Monto>400000000</Monto>
+      <Monto>4000</Monto>
       <Cuotas>0</Cuotas>
       <Detalles />
       <FechaPago>2025-06-02T11:41:21.3498402-03:00</FechaPago>
@@ -172,7 +172,7 @@
     <Pago>
       <ID>12</ID>
       <TipoPago>Efectivo</TipoPago>
-      <Monto>1000000</Monto>
+      <Monto>1000</Monto>
       <Cuotas>1</Cuotas>
       <Detalles>detalles</Detalles>
       <FechaPago>2025-06-09T07:35:44.4560778-03:00</FechaPago>
@@ -189,7 +189,7 @@
     </Vendedor>
     <Cliente>
       <ID>14</ID>
-      <Dni>36000000</Dni>
+      <Dni>100222</Dni>
       <Nombre>Zoe</Nombre>
       <Apellido>Francia</Apellido>
       <Contacto>zoe.francia@gmail.com</Contacto>
@@ -208,7 +208,7 @@
     <Pago>
       <ID>13</ID>
       <TipoPago>Efectivo</TipoPago>
-      <Monto>99999999</Monto>
+      <Monto>4000</Monto>
       <Cuotas>0</Cuotas>
       <Detalles />
       <FechaPago>2025-06-09T08:19:00.2773752-03:00</FechaPago>
@@ -244,7 +244,7 @@
     <Pago>
       <ID>14</ID>
       <TipoPago>Efectivo</TipoPago>
-      <Monto>989898989898</Monto>
+      <Monto>3000</Monto>
       <Cuotas>0</Cuotas>
       <Detalles />
       <FechaPago>2025-06-09T08:31:52.4383251-03:00</FechaPago>
@@ -280,12 +280,48 @@
     <Pago>
       <ID>15</ID>
       <TipoPago>Efectivo</TipoPago>
-      <Monto>10000000</Monto>
+      <Monto>2000</Monto>
       <Cuotas>0</Cuotas>
       <Detalles />
       <FechaPago>2025-06-09T15:59:58.7257925-03:00</FechaPago>
     </Pago>
-    <Estado>Facturada</Estado>
+    <Estado>Entregada</Estado>
     <Fecha>2025-06-09T15:59:58.8426914-03:00</Fecha>
+  </Venta>
+  <Venta>
+    <ID>9</ID>
+    <Vendedor>
+      <ID>1</ID>
+      <Nombre>admin</Nombre>
+      <FechaAlta>2025-06-11T14:36:46.507257-03:00</FechaAlta>
+    </Vendedor>
+    <Cliente>
+      <ID>13</ID>
+      <Dni>53815805</Dni>
+      <Nombre>Charo</Nombre>
+      <Apellido>Ortiz</Apellido>
+      <Contacto>charo.ortiz2014@gmail.com</Contacto>
+      <FechaRegistro>2025-05-30T09:03:50.4051418-03:00</FechaRegistro>
+    </Cliente>
+    <Vehiculo>
+      <ID>13</ID>
+      <Marca>Volkswagen</Marca>
+      <Modelo>Polo</Modelo>
+      <Año>2022</Año>
+      <Color>Azul</Color>
+      <Km>7000</Km>
+      <Dominio>KLM101</Dominio>
+      <Estado>Disponible</Estado>
+    </Vehiculo>
+    <Pago>
+      <ID>16</ID>
+      <TipoPago>Efectivo</TipoPago>
+      <Monto>10000</Monto>
+      <Cuotas>0</Cuotas>
+      <Detalles />
+      <FechaPago>2025-06-11T14:36:57.358714-03:00</FechaPago>
+    </Pago>
+    <Estado>Entregada</Estado>
+    <Fecha>2025-06-11T14:36:57.4770223-03:00</Fecha>
   </Venta>
 </ArrayOfVenta>
