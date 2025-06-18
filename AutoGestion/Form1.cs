@@ -1,6 +1,7 @@
 using AutoGestion.Servicios;
 using AutoGestion.Servicios.Composite;
 using AutoGestion.Vista;
+using Vista.UserControls.Backup;
 using Vista.UserControls.Dashboard;
 
 namespace AutoGestion
@@ -225,6 +226,31 @@ namespace AutoGestion
             control.Dock = DockStyle.Fill;
             panelContenido.Controls.Add(control);
 
+        }
+
+        private void backupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panelContenido.Controls.Clear();
+            var control = new UC_Backup();
+            control.Dock = DockStyle.Fill;
+            panelContenido.Controls.Add(control);
+        }
+
+        private void restoreToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panelContenido.Controls.Clear();
+            var control = new UC_Restore();
+            control.Dock = DockStyle.Fill;
+            panelContenido.Controls.Add(control);
+
+        }
+
+        private void bitacoraToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            panelContenido.Controls.Clear();
+            var control = new UC_Bitacora();
+            control.Dock = DockStyle.Fill;
+            panelContenido.Controls.Add(control);
         }
     }
 }

@@ -16,6 +16,15 @@
     <Compile Update="UserControls\AutorizarVenta\AutorizarVenta.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="UserControls\Backup\UC_Backup.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="UserControls\Backup\UC_Bitacora.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="UserControls\Backup\UC_Restore.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="UserControls\ConsultarComisiones\ConsultarComisiones.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfPago xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Pago>
+    <ID>1</ID>
+    <TipoPago>Efectivo</TipoPago>
+    <Monto>10000000000</Monto>
+    <Cuotas>0</Cuotas>
+    <Detalles />
+    <FechaPago>2025-06-01T10:03:01.8848735-03:00</FechaPago>
+  </Pago>
+  <Pago>
+    <ID>2</ID>
+    <TipoPago>Efectivo</TipoPago>
+    <Monto>9999999</Monto>
+    <Cuotas>0</Cuotas>
+    <Detalles />
+    <FechaPago>2025-06-02T07:47:27.2155512-03:00</FechaPago>
+  </Pago>
+  <Pago>
+    <ID>3</ID>
+    <TipoPago>Efectivo</TipoPago>
+    <Monto>5555555</Monto>
+    <Cuotas>0</Cuotas>
+    <Detalles />
+    <FechaPago>2025-06-02T07:53:09.0233532-03:00</FechaPago>
+  </Pago>
+  <Pago>
+    <ID>4</ID>
+    <TipoPago>Efectivo</TipoPago>
+    <Monto>2222222</Monto>
+    <Cuotas>0</Cuotas>
+    <Detalles />
+    <FechaPago>2025-06-02T08:29:18.863677-03:00</FechaPago>
+  </Pago>
+  <Pago>
+    <ID>5</ID>
+    <TipoPago>Efectivo</TipoPago>
+    <Monto>9898989898</Monto>
+    <Cuotas>0</Cuotas>
+    <Detalles />
+    <FechaPago>2025-06-02T08:32:20.8163196-03:00</FechaPago>
+  </Pago>
+  <Pago>
+    <ID>6</ID>
+    <TipoPago>Efectivo</TipoPago>
+    <Monto>2323232323</Monto>
+    <Cuotas>0</Cuotas>
+    <Detalles />
+    <FechaPago>2025-06-02T09:29:23.0189234-03:00</FechaPago>
+  </Pago>
+  <Pago>
+    <ID>7</ID>
+    <TipoPago>Efectivo</TipoPago>
+    <Monto>4747474747</Monto>
+    <Cuotas>0</Cuotas>
+    <Detalles />
+    <FechaPago>2025-06-02T09:49:31.8332223-03:00</FechaPago>
+  </Pago>
+  <Pago>
+    <ID>8</ID>
+    <TipoPago>Efectivo</TipoPago>
+    <Monto>10000000</Monto>
+    <Cuotas>0</Cuotas>
+    <Detalles>Compra en efectivo, sin cuotas.</Detalles>
+    <FechaPago>2025-06-02T10:00:08.2471696-03:00</FechaPago>
+  </Pago>
+  <Pago>
+    <ID>9</ID>
+    <TipoPago>Tarjeta de Crédito</TipoPago>
+    <Monto>15000000</Monto>
+    <Cuotas>24</Cuotas>
+    <Detalles>Pago  a 2 años</Detalles>
+    <FechaPago>2025-06-02T10:01:28.097273-03:00</FechaPago>
+  </Pago>
+  <Pago>
+    <ID>10</ID>
+    <TipoPago>Financiación</TipoPago>
+    <Monto>34000000</Monto>
+    <Cuotas>48</Cuotas>
+    <Detalles>pago financiado</Detalles>
+    <FechaPago>2025-06-02T10:03:14.5247749-03:00</FechaPago>
+  </Pago>
+  <Pago>
+    <ID>11</ID>
+    <TipoPago>Efectivo</TipoPago>
+    <Monto>400000000</Monto>
+    <Cuotas>0</Cuotas>
+    <Detalles />
+    <FechaPago>2025-06-02T11:41:21.3498402-03:00</FechaPago>
+  </Pago>
+  <Pago>
+    <ID>12</ID>
+    <TipoPago>Efectivo</TipoPago>
+    <Monto>1000000</Monto>
+    <Cuotas>1</Cuotas>
+    <Detalles>detalles</Detalles>
+    <FechaPago>2025-06-09T07:35:44.4560778-03:00</FechaPago>
+  </Pago>
+  <Pago>
+    <ID>13</ID>
+    <TipoPago>Efectivo</TipoPago>
+    <Monto>99999999</Monto>
+    <Cuotas>0</Cuotas>
+    <Detalles />
+    <FechaPago>2025-06-09T08:19:00.2773752-03:00</FechaPago>
+  </Pago>
+  <Pago>
+    <ID>14</ID>
+    <TipoPago>Efectivo</TipoPago>
+    <Monto>989898989898</Monto>
+    <Cuotas>0</Cuotas>
+    <Detalles />
+    <FechaPago>2025-06-09T08:31:52.4383251-03:00</FechaPago>
+  </Pago>
+  <Pago>
+    <ID>15</ID>
+    <TipoPago>Efectivo</TipoPago>
+    <Monto>10000000</Monto>
+    <Cuotas>0</Cuotas>
+    <Detalles />
+    <FechaPago>2025-06-09T15:59:58.7257925-03:00</FechaPago>
+  </Pago>
+  <Pago>
+    <ID>16</ID>
+    <TipoPago>Efectivo</TipoPago>
+    <Monto>123123123</Monto>
+    <Cuotas>0</Cuotas>
+    <Detalles />
+    <FechaPago>2025-06-11T14:36:57.358714-03:00</FechaPago>
+  </Pago>
+</ArrayOfPago>

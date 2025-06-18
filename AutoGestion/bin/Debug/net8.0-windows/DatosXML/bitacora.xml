@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfBitacora xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Bitacora>
+    <FechaRegistro>2025-06-18T11:33:55.507355-03:00</FechaRegistro>
+    <Detalle>backup</Detalle>
+    <UsuarioID>1</UsuarioID>
+    <UsuarioNombre>admin</UsuarioNombre>
+  </Bitacora>
+  <Bitacora>
+    <FechaRegistro>2025-06-18T11:34:40.9937889-03:00</FechaRegistro>
+    <Detalle>restore</Detalle>
+    <UsuarioID>1</UsuarioID>
+    <UsuarioNombre>admin</UsuarioNombre>
+  </Bitacora>
+  <Bitacora>
+    <FechaRegistro>2025-06-18T11:39:24.38949-03:00</FechaRegistro>
+    <Detalle>restore</Detalle>
+    <UsuarioID>1</UsuarioID>
+    <UsuarioNombre>admin</UsuarioNombre>
+  </Bitacora>
+  <Bitacora>
+    <FechaRegistro>2025-06-18T11:52:47.5826985-03:00</FechaRegistro>
+    <Detalle>backup</Detalle>
+    <UsuarioID>1</UsuarioID>
+    <UsuarioNombre>admin</UsuarioNombre>
+  </Bitacora>
+  <Bitacora>
+    <FechaRegistro>2025-06-18T11:54:08.7491364-03:00</FechaRegistro>
+    <Detalle>restore</Detalle>
+    <UsuarioID>1</UsuarioID>
+    <UsuarioNombre>admin</UsuarioNombre>
+  </Bitacora>
+  <Bitacora>
+    <FechaRegistro>2025-06-18T14:49:58.6216882-03:00</FechaRegistro>
+    <Detalle>backup</Detalle>
+    <UsuarioID>1</UsuarioID>
+    <UsuarioNombre>admin</UsuarioNombre>
+  </Bitacora>
+  <Bitacora>
+    <FechaRegistro>2025-06-18T14:50:50.018992-03:00</FechaRegistro>
+    <Detalle>restore</Detalle>
+    <UsuarioID>1</UsuarioID>
+    <UsuarioNombre>admin</UsuarioNombre>
+  </Bitacora>
+</ArrayOfBitacora>
