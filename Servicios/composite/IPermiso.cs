@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace AutoGestion.Servicios.Composite
+﻿namespace AutoGestion.Servicios.Composite
 
 {
     public interface IPermiso

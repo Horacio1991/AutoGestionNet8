@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace AutoGestion.DAO.Modelos
+﻿namespace AutoGestion.DAO.Modelos
 {
     public class RolSerializable
     {

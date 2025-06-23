@@ -7,10 +7,12 @@ namespace AutoGestion.Servicios.Composite
     [Serializable]
     public class PermisoCompuesto : IPermiso
     {
-        public int ID { get; set; } // ✅ NECESARIO PARA GeneradorID
-
+        // Identificador único para el permiso compuesto.
+        public int ID { get; set; } 
+        
         public string Nombre { get; set; }
 
+        // Lista interna de hijos: pueden ser PermisoSimple o más PermisoCompuesto
         private List<IPermiso> _hijos = new();
 
         public void Agregar(IPermiso permiso)

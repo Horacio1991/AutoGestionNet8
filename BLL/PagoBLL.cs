@@ -1,11 +1,12 @@
 ﻿using AutoGestion.Entidades;
 using AutoGestion.DAO.Repositorios;
-using System.Collections.Generic;
+
 
 namespace AutoGestion.BLL
 {
     public class PagoBLL
     {
+        // Repositorio genérico que persiste List<Pago> en "DatosXML/pagos.xml"
         private readonly XmlRepository<Pago> _repo = new("pagos.xml");
 
         
@@ -17,9 +18,5 @@ namespace AutoGestion.BLL
             return true;
         }
 
-        public List<Pago> ObtenerTodosLosPagos()
-        {
-            return _repo.ObtenerTodos();
-        }
     }
 }

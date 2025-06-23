@@ -10,8 +10,11 @@ namespace AutoGestion.Servicios.Pdf
     {
         public static void Generar(Venta venta, string rutaDestino)
         {
+            // Crea el documento PDF
             Document doc = new Document();
+            // Abre un flujo de archivo para escribir el PDF
             PdfWriter.GetInstance(doc, new FileStream(rutaDestino, FileMode.Create));
+            // Abre el documento para agregar contenido
             doc.Open();
 
             var titulo = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16);

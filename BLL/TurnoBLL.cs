@@ -1,18 +1,18 @@
 ﻿using AutoGestion.Entidades;
 using AutoGestion.DAO.Repositorios;
 using AutoGestion.Servicios.Utilidades;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+
 
 namespace AutoGestion.BLL
 {
     public class TurnoBLL
     {
+        // Repositorio que lee/escribe List<Turno> en "DatosXML/turnos.xml"
         private readonly XmlRepository<Turno> _repo = new("turnos.xml");
 
         public bool EstaDisponible(DateTime fecha, TimeSpan hora, Vehiculo vehiculo)
         {
+            // Comprueba si ya existe un turno para la misma fecha, hora y vehículo
             return !_repo.ObtenerTodos().Any(t =>
                 t.Fecha.Date == fecha.Date &&
                 t.Hora == hora &&
@@ -35,6 +35,8 @@ namespace AutoGestion.BLL
             _repo.Agregar(turno);
         }
 
+        // Devuelve los turnos que ya cumplieron (fecha pasada o hoy con hora pasada)
+        // Usado para registrar asistencia
         public List<Turno> ObtenerTurnosCumplidos()
         {
             var lista = _repo.ObtenerTodos();
@@ -54,10 +56,5 @@ namespace AutoGestion.BLL
             }
         }
 
-
-        public List<Turno> ObtenerTodos()
-        {
-            return _repo.ObtenerTodos();
-        }
     }
 }

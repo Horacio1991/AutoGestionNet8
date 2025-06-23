@@ -1,13 +1,13 @@
 ﻿using AutoGestion.Entidades;
 using AutoGestion.DAO.Repositorios;
 using AutoGestion.Servicios.Utilidades;
-using System;
-using System.Collections.Generic;
+
 
 namespace AutoGestion.BLL
 {
     public class TasaBLL
     {
+        // Repositorio donde se guardarán las tasaciones en formato XML
         private readonly XmlRepository<Tasacion> _repo = new("tasaciones.xml");
 
         public void RegistrarTasacion(OfertaCompra oferta, decimal valorFinal)
@@ -21,11 +21,6 @@ namespace AutoGestion.BLL
             };
 
             _repo.Agregar(tasacion);
-        }
-
-        public List<Tasacion> ObtenerTodas()
-        {
-            return _repo.ObtenerTodos();
         }
 
         public RangoTasacion CalcularRangoTasacion(string modelo, string estadoMotor, int kilometraje)

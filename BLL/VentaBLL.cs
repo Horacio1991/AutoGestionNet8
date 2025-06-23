@@ -1,12 +1,12 @@
 ﻿using AutoGestion.Entidades;
 using AutoGestion.DAO.Repositorios;
-using System.Collections.Generic;
-using System.Linq;
+
 
 namespace AutoGestion.BLL
 {
     public class VentaBLL
     {
+        // Repositorio XML donde se guardan todas las ventas
         private readonly XmlRepository<Venta> _repo = new("ventas.xml");
         private readonly VehiculoBLL _vehiculoBLL = new();
 
@@ -15,6 +15,7 @@ namespace AutoGestion.BLL
             return _repo.ObtenerTodos();
         }
 
+        // obtiene todas las ventas pendientes (no facturadas)
         public List<Venta> ObtenerVentasPendientes()
         {
             return _repo.ObtenerTodos()
@@ -34,6 +35,7 @@ namespace AutoGestion.BLL
             return _repo.ObtenerTodos()[index];
         }
 
+        // Cambia estado de venta a Autorizada o la rechaza si ya hay una venta autorizada para el mismo vehículo
         public bool AutorizarVenta(int ventaId)
         {
             var lista = _repo.ObtenerTodos();

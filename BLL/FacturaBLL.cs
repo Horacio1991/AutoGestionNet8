@@ -1,13 +1,13 @@
 ﻿using AutoGestion.Entidades;
 using AutoGestion.DAO.Repositorios;
 using AutoGestion.Servicios.Utilidades;
-using System.Collections.Generic;
-using System.Linq;
+
 
 namespace AutoGestion.BLL
 {
     public class FacturaBLL
     {
+        // Repositorio que persiste List<Factura> en DatosXML/facturas.xml
         private readonly XmlRepository<Factura> _repo = new("facturas.xml");
 
         public Factura EmitirFactura(Factura factura)
@@ -22,9 +22,6 @@ namespace AutoGestion.BLL
             return factura;
         }
 
-        public List<Factura> ObtenerTodas()
-        {
-            return _repo.ObtenerTodos();
-        }
+       
     }
 }

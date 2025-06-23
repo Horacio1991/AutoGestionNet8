@@ -12,6 +12,7 @@ namespace AutoGestion.Entidades
         public string Contacto { get; set; }
         public DateTime FechaAlta { get; set; } = DateTime.Now;
 
+        // Devuelve una representación lrhinle del vendedor
         public override string ToString()
         {
             return $"{Nombre} {Apellido} ({DNI})";

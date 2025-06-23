@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
-namespace AutoGestion.Entidades
+﻿namespace AutoGestion.Entidades
 {
+    //Clase preparada para serializar a XML
     [Serializable]
     public class Cliente
     {
@@ -15,6 +9,7 @@ namespace AutoGestion.Entidades
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public string Contacto { get; set; }
+        // Fecha y hora de registro del cliente. Se inicializa automaticamente cuando se instanacia
         public DateTime FechaRegistro { get; set; } = DateTime.Now;
     }
 }

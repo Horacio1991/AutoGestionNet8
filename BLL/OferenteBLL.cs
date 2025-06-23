@@ -1,12 +1,12 @@
 ﻿using AutoGestion.Entidades;
 using AutoGestion.DAO.Repositorios;
-using System.Collections.Generic;
-using System.Linq;
+
 
 namespace AutoGestion.BLL
 {
     public class OferenteBLL
     {
+        // Respositoiro que persiste en DatosXML/oferentes.xml
         private readonly XmlRepository<Oferente> _repo = new("oferentes.xml");
 
         public Oferente BuscarPorDni(string dni)

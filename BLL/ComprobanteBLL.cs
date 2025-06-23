@@ -1,7 +1,5 @@
 ﻿using AutoGestion.Entidades;
 using AutoGestion.DAO.Repositorios;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace AutoGestion.BLL
 {

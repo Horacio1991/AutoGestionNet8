@@ -1,8 +1,4 @@
 ﻿using AutoGestion.DAO.Modelos;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Xml.Serialization;
 
 namespace AutoGestion.Servicios.Utilidades
@@ -10,6 +6,8 @@ namespace AutoGestion.Servicios.Utilidades
 {
     public static class GeneradorID
     {
+        // Diccionario para mapear tipos a nombres de archivos XML
+        // Asocia el nombre de la clase con el nombre del archivo XML correspondiente
         private static readonly Dictionary<string, string> NombresArchivos = new()
         {
             { "Cliente", "clientes.xml" },
@@ -32,14 +30,18 @@ namespace AutoGestion.Servicios.Utilidades
 
         public static int ObtenerID<T>()
         {
+            //Nombre de la clase (por ejemplo, "Cliente", "Vehiculo", etc.)
             string tipo = typeof(T).Name;
 
+            // Determina el nombre del archivo XML basado en el tipo
             string archivo = NombresArchivos.ContainsKey(tipo)
                 ? NombresArchivos[tipo]
                 : tipo.ToLower() + "s.xml";
 
+            // Ruta completa al archivo XML
             string ruta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DatosXML", archivo);
 
+            // Si el archivo no existe, retorna 1 (primer ID disponible)
             if (!File.Exists(ruta))
                 return 1;
 
@@ -52,6 +54,7 @@ namespace AutoGestion.Servicios.Utilidades
                 return lista.Any() ? lista.Max(u => u.ID) + 1 : 1;
             }
 
+            // Para otros tipos, usamos el tipo genérico T
             var serializerT = new XmlSerializer(typeof(List<T>));
             using var streamT = new FileStream(ruta, FileMode.Open);
             var listaT = (List<T>)serializerT.Deserialize(streamT);

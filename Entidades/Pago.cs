@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AutoGestion.Entidades
+﻿namespace AutoGestion.Entidades
 {
     [Serializable]
     public class Pago
     {
-        public int ID { get; set; } // ID único para el pago
-        public string TipoPago { get; set; } // Contado o Financiado
+        public int ID { get; set; }
+        // Contado o Financiado
+        public string TipoPago { get; set; } 
         public decimal Monto { get; set; }
-        public int Cuotas { get; set; } // Solo si es financiado
+        // Solo si es financiado
+        public int Cuotas { get; set; } 
         public string Detalles { get; set; }
         public DateTime FechaPago { get; set; } = DateTime.Now;
     }

@@ -1,13 +1,12 @@
 ﻿using AutoGestion.Entidades;
 using AutoGestion.DAO.Repositorios;
 using AutoGestion.Servicios.Utilidades;
-using System;
-using System.Collections.Generic;
 
 namespace AutoGestion.BLL
 {
     public class ComisionBLL
     {
+        // repositorio que almacena las comisiones en un archivo XML
         private readonly XmlRepository<Comision> _repo = new("comisiones.xml");
 
         public void Registrar(Comision comision)
@@ -15,11 +14,6 @@ namespace AutoGestion.BLL
             comision.ID = GeneradorID.ObtenerID<Comision>();
             comision.Fecha = DateTime.Now;
             _repo.Agregar(comision);
-        }
-
-        public List<Comision> ObtenerTodas()
-        {
-            return _repo.ObtenerTodos();
         }
 
         public List<Comision> ObtenerComisionesPorVendedorYFiltros(int idVendedor, string estado, DateTime desde, DateTime hasta)

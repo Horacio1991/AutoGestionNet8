@@ -10,8 +10,11 @@ namespace AutoGestion.Servicios.Pdf
     {
         public static void Generar(Factura factura, string rutaDestino)
         {
+            // Crea el documento PDF
             Document doc = new Document();
+            // Abre un flujo de archivo para escribir el PDF
             PdfWriter.GetInstance(doc, new FileStream(rutaDestino, FileMode.Create));
+            // Abre el documento para agregar contenido
             doc.Open();
 
             var titulo = FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 16);
@@ -35,6 +38,7 @@ namespace AutoGestion.Servicios.Pdf
             doc.Add(new Paragraph($"Forma de Pago: {factura.FormaPago}", normal));
             doc.Add(new Paragraph($"Precio Total: ${factura.Precio}", normal));
 
+            // Cierra el documento
             doc.Close();
         }
     }

@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AutoGestion.Entidades
+﻿namespace AutoGestion.Entidades
 
 {
     [Serializable]
     public class Vehiculo
     {
-        public int ID { get; set; } // ID único para el vehículo
+        public int ID { get; set; } 
         public string Marca { get; set; }
         public string Modelo { get; set; }
         public int Año { get; set; }

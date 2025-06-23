@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AutoGestion.Entidades
+﻿namespace AutoGestion.Entidades
 {
     [Serializable]
     public class Turno
     {
         public int ID { get; set; }
+        // Cliuene que solicita el turno
         public Cliente Cliente { get; set; }
+        // Vehiculo que se atiende en el turno
         public Vehiculo Vehiculo { get; set; }
         public DateTime Fecha { get; set; }
         public TimeSpan Hora { get; set; }

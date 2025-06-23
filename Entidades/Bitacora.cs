@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace Entidades
 {
+    [Serializable]
     public class Bitacora
     {
+        // Fecha y hora del registro
         public DateTime FechaRegistro { get; set; }
-        public string Detalle { get; set; } // "backup" o "restore"
+        // "backup" o "restore"
+        public string Detalle { get; set; }
+        //Usuario que realizó la acción
         public int UsuarioID { get; set; }
+        // Nombre del usuario que realizó la acción
         public string UsuarioNombre { get; set; }
     }
 }

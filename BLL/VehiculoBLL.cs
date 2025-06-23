@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoGestion.Entidades;
+﻿using AutoGestion.Entidades;
 using AutoGestion.DAO.Repositorios;
 using AutoGestion.Servicios.Utilidades;
 
@@ -12,8 +7,10 @@ namespace AutoGestion.BLL
 {
     public class VehiculoBLL
     {
+        // Repositorio genérico que persiste List<Vehiculo> en DatosXML/vehiculos.xml
         private readonly XmlRepository<Vehiculo> _repo = new("vehiculos.xml");
 
+        // Busca vehiculos disponibles por modelo y disponibilidad
         public List<Vehiculo> BuscarVehiculosPorModelo(string modelo)
         {
             return _repo.ObtenerTodos()
@@ -21,6 +18,7 @@ namespace AutoGestion.BLL
                         .ToList();
         }
 
+        // Devuelve vehiculos similares por modelo o marca (Segun la cadena de texto ingresada)
         public List<Vehiculo> BuscarVehiculosSimilares(string modelo)
         {
             var lista = _repo.ObtenerTodos();
@@ -31,6 +29,7 @@ namespace AutoGestion.BLL
             ).ToList();
         }
 
+        // Cambia el estado de un vehiculo en stock (Ej: "Vendido", "Disponible", etc.)
         public void ActualizarEstadoStock(Vehiculo vehiculo, string estado)
         {
             var lista = _repo.ObtenerTodos();
@@ -38,17 +37,6 @@ namespace AutoGestion.BLL
             if (v != null)
             {
                 v.Estado = estado;
-                _repo.GuardarLista(lista);
-            }
-        }
-
-        public void ActualizarDatosVehiculo(Vehiculo vehiculo, string datosTecnicos)
-        {
-            var lista = _repo.ObtenerTodos();
-            var v = lista.FirstOrDefault(x => x.Dominio == vehiculo.Dominio);
-            if (v != null)
-            {
-                v.Estado = datosTecnicos;
                 _repo.GuardarLista(lista);
             }
         }
@@ -81,26 +69,6 @@ namespace AutoGestion.BLL
             }
         }
 
-        public void ActualizarVehiculo(Vehiculo vehiculo)
-        {
-            var lista = _repo.ObtenerTodos();
-            var existente = lista.FirstOrDefault(v => v.ID == vehiculo.ID);
-
-            if (existente != null)
-            {
-                // Copia los datos del objeto recibido al que está en la lista
-                existente.Marca = vehiculo.Marca;
-                existente.Modelo = vehiculo.Modelo;
-                existente.Año = vehiculo.Año;
-                existente.Color = vehiculo.Color;
-                existente.Km = vehiculo.Km;
-                existente.Dominio = vehiculo.Dominio;
-                existente.Estado = vehiculo.Estado;
-
-                _repo.GuardarLista(lista);
-            }
-        }
-
         public void AgregarVehiculoAlStock(Vehiculo vehiculo)
         {
             var lista = _repo.ObtenerTodos();
@@ -109,15 +77,6 @@ namespace AutoGestion.BLL
             lista.Add(vehiculo);
             _repo.GuardarLista(lista);
         }
-
-
-
-
-
-
-
-
-
 
     }
 }
