@@ -2,6 +2,7 @@
 
 namespace AutoGestion.Vista.Modelos
 {
+    //Para mostrar en un combobox con una descripción amigable
     public class OfertaComboItem
     {
         public OfertaCompra Oferta { get; set; }

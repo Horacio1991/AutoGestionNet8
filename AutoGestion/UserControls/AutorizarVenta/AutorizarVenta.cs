@@ -7,6 +7,7 @@ namespace AutoGestion.Vista
     public partial class AutorizarVenta : UserControl
     {
         private readonly VentaBLL _ventaBLL = new();
+        // Lista de ventas pendientes que se cargará al iniciar la pantalla
         private List<Venta> _ventasPendientes = new();
 
         public AutorizarVenta()
@@ -39,9 +40,11 @@ namespace AutoGestion.Vista
 
         private void btnAutorizar_Click(object sender, EventArgs e)
         {
+            // obtiene la fila seleccionada en el DataGridView
             var vistaSeleccionada = dgvVentas.CurrentRow?.DataBoundItem as VentaVista;
             if (vistaSeleccionada == null) return;
 
+            // Encuentra la venta real en la lista de ventas pendientes
             var ventaReal = _ventasPendientes.FirstOrDefault(v => v.ID == vistaSeleccionada.ID);
 
             if (ventaReal == null)
@@ -62,9 +65,11 @@ namespace AutoGestion.Vista
 
         private void btnRechazar_Click(object sender, EventArgs e)
         {
+            // obtiene la fila seleccionada en el DataGridView
             var vistaSeleccionada = dgvVentas.CurrentRow?.DataBoundItem as VentaVista;
             if (vistaSeleccionada == null) return;
 
+            // Verifica que se haya ingresado un motivo de rechazo
             string motivo = txtMotivoRechazo.Text.Trim();
             if (string.IsNullOrEmpty(motivo))
             {
@@ -72,6 +77,7 @@ namespace AutoGestion.Vista
                 return;
             }
 
+            // Encuentra la venta real en la lista de ventas pendientes
             var ventaReal = _ventasPendientes.FirstOrDefault(v => v.ID == vistaSeleccionada.ID);
 
             if (ventaReal == null)

@@ -37,7 +37,10 @@
     <ID>5</ID>
     <Nombre>prueba</Nombre>
     <Clave>MQAyADMA</Clave>
-    <Permisos />
+    <RolNombre>Administracion</RolNombre>
+    <Permisos>
+      <string>Administrativos</string>
+    </Permisos>
   </UsuarioSerializable>
   <UsuarioSerializable>
     <ID>6</ID>

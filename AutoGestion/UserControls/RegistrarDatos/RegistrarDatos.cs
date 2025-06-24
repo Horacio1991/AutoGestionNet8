@@ -10,6 +10,7 @@ namespace AutoGestion.Vista
         private readonly EvaluacionBLL _evaluacionBLL = new();
         private readonly VehiculoBLL _vehiculoBLL = new();
 
+        // Guarda en memoria la oferta seleeccionada 
         private OfertaCompra _ofertaSeleccionada;
 
         public RegistrarDatos()

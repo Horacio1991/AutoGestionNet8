@@ -18,7 +18,7 @@ namespace AutoGestion.Vista
         {
             try
             {
-                List<Vehiculo> lista = _vehiculoBLL.ObtenerTodos(); // <-- método nuevo que ahora vamos a crear
+                List<Vehiculo> lista = _vehiculoBLL.ObtenerTodos(); 
                 dgvResultados.DataSource = null;
                 dgvResultados.DataSource = lista;
             }

@@ -1,18 +1,16 @@
-﻿using AutoGestion.BLL;
-using AutoGestion.Servicios;
+﻿using AutoGestion.Servicios;
 using BLL;
-using Entidades;
-using System;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
+
 
 namespace Vista.UserControls.Backup
 {
     public partial class UC_Backup : UserControl
     {
+        // Carpeta donde se guardan los datos XML actuales
         private readonly string rutaDatos = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DatosXML");
+        // Carpeta principal donde se guardan los backups
         private readonly string rutaBackups = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Backups");
+        
         private readonly BitacoraBLL _bitacoraBLL = new();
 
         public UC_Backup()
@@ -25,6 +23,7 @@ namespace Vista.UserControls.Backup
         {
             try
             {
+                // me aseguro que la carpeta de backups exista
                 if (!Directory.Exists(rutaBackups))
                     Directory.CreateDirectory(rutaBackups);
 
@@ -37,6 +36,7 @@ namespace Vista.UserControls.Backup
                 var archivos = Directory.GetFiles(rutaDatos, "*.xml")
                                         .Where(a => !a.EndsWith("bitacora.xml", StringComparison.OrdinalIgnoreCase));
 
+                //Copiar los archivos a la nueva carpeta de backup
                 foreach (var archivo in archivos)
                 {
                     string nombre = Path.GetFileName(archivo);
@@ -44,7 +44,8 @@ namespace Vista.UserControls.Backup
                 }
 
                 // Registrar backup en bitácora
-                var usuario = Sesion.UsuarioActual;
+                var usuario = Sesion.UsuarioActual; //Recuperar el usuario actual de la sesión
+               // Si usuario no es null , registrar el backup
                 _bitacoraBLL.Registrar("backup", usuario?.ID ?? 0, usuario?.Nombre ?? "Desconocido");
 
                 MessageBox.Show("Backup realizado con éxito.");

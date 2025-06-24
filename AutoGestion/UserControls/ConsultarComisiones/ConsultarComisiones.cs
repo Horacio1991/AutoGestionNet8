@@ -8,6 +8,7 @@ namespace AutoGestion.Vista
     public partial class ConsultarComisiones : UserControl
     {
         private readonly ComisionBLL _comisionBLL = new();
+        //Lista para almacenar las comisiones filtradas
         private List<Comision> _comisionesFiltradas;
 
         public ConsultarComisiones()

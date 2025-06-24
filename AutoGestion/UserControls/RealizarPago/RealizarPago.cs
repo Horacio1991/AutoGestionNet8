@@ -13,8 +13,10 @@ namespace AutoGestion.Vista
         private readonly VentaBLL _ventaBLL = new();
         private readonly PagoBLL _pagoBLL = new();
 
+        // Cliente seleccionado después de buscar por DNI
         private Cliente clienteSeleccionado = null;
 
+        // Objeto vendedor que representa al usuario actual
         Vendedor vendedor = new Vendedor
         {
             ID = Sesion.UsuarioActual.ID,
@@ -95,6 +97,7 @@ namespace AutoGestion.Vista
                 int.TryParse(txtCuotas.Text.Trim(), out int cuotas);
                 string otros = txtOtrosDatos.Text.Trim();
 
+                // Se crea un objeto pago con los datos ingresados
                 Pago pago = new Pago
                 {
                     ID = GeneradorID.ObtenerID<Pago>(),
@@ -107,6 +110,7 @@ namespace AutoGestion.Vista
                 // Guardar el pago antes de usarlo
                 _pagoBLL.RegistrarPago(pago);
 
+                // Crear la venta con el pago registrado y el vehículo seleccionado en estado pendiente
                 Venta venta = new Venta
                 {
                     ID = GeneradorID.ObtenerID<Venta>(),

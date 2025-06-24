@@ -1,5 +1,6 @@
 ﻿namespace AutoGestion.Vista.Modelos
 {
+    // Para presentar en la interfaz la información de las ventas y sus comisiones sugeridas
     public class VentaComisionVista
     {
         public int ID { get; set; }

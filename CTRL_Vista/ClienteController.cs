@@ -1,11 +1,7 @@
 ﻿using AutoGestion.Entidades;
 using AutoGestion.BLL;
 using AutoGestion.Servicios.Utilidades;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace AutoGestion.CTRL_Vista
 {
@@ -31,7 +27,7 @@ namespace AutoGestion.CTRL_Vista
             {
                 Cliente nuevo = new Cliente
                 {
-                    ID = GeneradorID.ObtenerID<Cliente>(), // <-- ESTA LÍNEA ES LA CLAVE
+                    ID = GeneradorID.ObtenerID<Cliente>(), 
                     Dni = dni,
                     Nombre = nombre,
                     Apellido = apellido,

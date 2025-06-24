@@ -10,6 +10,7 @@ namespace AutoGestion.Vista
     {
         private readonly OfertaBLL _ofertaBLL = new();
         private readonly EvaluacionBLL _evaluacionBLL = new();
+        //Lista de ofertas disponibles para inspección
         private List<OfertaCompra> _ofertasDisponibles;
 
 
@@ -22,8 +23,9 @@ namespace AutoGestion.Vista
 
         private void CargarOfertas()
         {
+            // Carga las ofertas que tienen fecha de inspección registrada
             _ofertasDisponibles = _ofertaBLL.ObtenerOfertasConInspeccion();
-
+            // Convierto cada OfertaCompra en un OfertaComboItem para el ComboBox
             var items = _ofertasDisponibles.Select(o => new OfertaComboItem { Oferta = o }).ToList();
 
             cmbOfertas.DataSource = null;

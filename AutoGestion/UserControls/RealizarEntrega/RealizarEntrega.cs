@@ -9,6 +9,7 @@ namespace AutoGestion.Vista
     public partial class RealizarEntrega : UserControl
     {
         private readonly VentaBLL _ventaBLL = new();
+        //Guarda en memoria las ventas que ya fueron facturadas
         private List<Venta> _ventasFacturadas = new();
 
         public RealizarEntrega()
@@ -19,8 +20,10 @@ namespace AutoGestion.Vista
 
         private void CargarVentas()
         {
+            // Carga las ventas facturadas desde el BLL
             _ventasFacturadas = _ventaBLL.ObtenerVentasFacturadas();
 
+            // Transforma las ventas a una lista de vistas para el DataGridView
             var vista = _ventasFacturadas.Select(v => new VentaVista
             {
                 ID = v.ID,
@@ -47,7 +50,9 @@ namespace AutoGestion.Vista
                 return;
             }
 
+            // Obtener el objeto modelado de la fila seleccionada
             var seleccion = dgvVentas.CurrentRow.DataBoundItem as VentaVista;
+            // Recuperar la venta original usando el ID
             var venta = _ventasFacturadas.FirstOrDefault(v => v.ID == seleccion.ID);
 
             if (venta == null)

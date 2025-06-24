@@ -11,7 +11,7 @@ namespace AutoGestion.Vista
         public ABMUsuarios()
         {
             InitializeComponent();
-            CargarUsuarios();
+            CargarUsuarios(); //LLena el DataGridView al iniciar la pantalla
             txtID.ReadOnly = true;
             txtClave.UseSystemPasswordChar = true;
         }
@@ -31,6 +31,7 @@ namespace AutoGestion.Vista
             dgvUsuarios.Columns["Clave"].Width = 150;
         }
 
+        // el boton valida los datos ingresados y agrega un nuevo usuario al XML
         private void btnAgregar_Click_1(object sender, EventArgs e)
         {
             string nombre = txtNombre.Text.Trim();
@@ -42,6 +43,7 @@ namespace AutoGestion.Vista
                 return;
             }
 
+            // Carga la lista actual de usuarios y verifica si el nombre ya existe
             var usuarios = UsuarioXmlService.Leer();
             if (usuarios.Any(u => u.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase)))
             {
@@ -49,6 +51,7 @@ namespace AutoGestion.Vista
                 return;
             }
 
+            // Crea un nuevo usuario con un ID generado y la contraseña encriptada
             var nuevo = new Usuario
             {
                 ID = GeneradorID.ObtenerID<Usuario>(),
@@ -64,6 +67,7 @@ namespace AutoGestion.Vista
             LimpiarCampos();
         }
 
+        // El boton elimina el usuario seleccionado del XML
         private void btnEliminar_Click_1(object sender, EventArgs e)
         {
             string nombre = txtNombre.Text.Trim();
@@ -84,6 +88,7 @@ namespace AutoGestion.Vista
             }
         }
 
+        // Alterna la visibilidad de la contraseña en el campo de texto
         private void chkVerClave_CheckedChanged_1(object sender, EventArgs e)
         {
             txtClave.UseSystemPasswordChar = !chkVerClave.Checked;
@@ -107,8 +112,10 @@ namespace AutoGestion.Vista
             chkVerClave.Checked = false;
         }
 
+        // El boton modifica los datos del usuario seleccionado en el XML
         private void btnModificar_Click(object sender, EventArgs e)
         {
+            // Valida ID seleccionado
             if (!int.TryParse(txtID.Text, out int id))
             {
                 MessageBox.Show("Seleccione un usuario válido de la lista.");

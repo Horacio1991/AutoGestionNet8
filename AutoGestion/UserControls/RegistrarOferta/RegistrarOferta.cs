@@ -9,7 +9,7 @@ namespace AutoGestion.Vista
     {
         private readonly OferenteBLL _oferenteBLL = new();
         private readonly OfertaBLL _ofertaBLL = new();
-        private Oferente _oferenteActual = null;
+        //private Oferente _oferenteActual = null;
 
         public RegistrarOferta()
         {

@@ -1,13 +1,6 @@
 ﻿using AutoGestion.Servicios;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+
 
 namespace Vista.UserControls.Backup
 {
@@ -22,6 +15,7 @@ namespace Vista.UserControls.Backup
 
         private void CargarBitacora()
         {
+            // Obtiene todos los registros ordenados por fecha de registro
             var lista = BitacoraService.ObtenerTodo();
 
             if (rbSoloBackups.Checked)
@@ -29,6 +23,7 @@ namespace Vista.UserControls.Backup
             else if (rbSoloRestores.Checked)
                 lista = lista.Where(b => b.Detalle.ToLower() == "restore").ToList();
 
+            // Asigna la lista filtrada al DataGridView
             dgvBitacora.DataSource = lista.Select(b => new
             {
                 Fecha = b.FechaRegistro.ToString("g"),
@@ -42,6 +37,7 @@ namespace Vista.UserControls.Backup
             dgvBitacora.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }
 
+        // Cada vez que se cambie el filtro, se recargará la bitácora
         private void rbTodos_CheckedChanged_1(object sender, EventArgs e) => CargarBitacora();
         private void rbSoloBackups_CheckedChanged_1(object sender, EventArgs e) => CargarBitacora();
         private void rbSoloRestores_CheckedChanged_1(object sender, EventArgs e) => CargarBitacora();

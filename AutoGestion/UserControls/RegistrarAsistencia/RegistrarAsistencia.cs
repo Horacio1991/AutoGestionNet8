@@ -7,6 +7,7 @@ namespace AutoGestion.Vista
     public partial class RegistrarAsistencia : UserControl
     {
         private readonly TurnoBLL _turnoBLL = new();
+        // lista en memoria de los turnos cumplidos
         private List<Turno> _turnosCumplidos;
 
         public RegistrarAsistencia()

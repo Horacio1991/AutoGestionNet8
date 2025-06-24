@@ -10,6 +10,7 @@ namespace AutoGestion.Vista
         private readonly VentaBLL _ventaBLL = new();
         private readonly ComisionBLL _comisionBLL = new();
 
+        //lista en memoria de ventas sin comisión asignada
         private List<Venta> _ventasSinComision;
 
         public RegistrarComision()

@@ -7,14 +7,17 @@ namespace AutoGestion.Vista
 {
     public partial class AsignarRoles : UserControl
     {
+        // Listado de permisos completos cargados desde permisos.xml
         private List<PermisoCompleto> _permisos = new();
-        private List<PermisoCompuesto> _roles = new(); // lista de roles
+        // Listado de roles (permiso compuesto) cargados desde roles.xml
+        private List<PermisoCompuesto> _roles = new(); 
 
 
         public AsignarRoles()
         {
             InitializeComponent();
             CargarCombos();
+            // Lee los permisos desde el XML y los carga en memoria
             _permisos = PermisoCompletoXmlService.Leer();
             CargarTreeViewPermisos();
             CargarTreeViewUsuarios();
@@ -37,6 +40,7 @@ namespace AutoGestion.Vista
             cmbPermisoMenu.SelectedIndexChanged += cmbPermisoMenu_SelectedIndexChanged;
         }
 
+        // Inicializa los comboBox de menu e item para crear nuevos PermisoCompleto
         private void cmbPermisoMenu_SelectedIndexChanged(object sender, EventArgs e)
         {
             cmbPermisoItem.Items.Clear();
@@ -91,10 +95,7 @@ namespace AutoGestion.Vista
             }
         }
 
-
-
-
-
+        //Agrega un nuevo permiso completo al XML y lo muestra en el TreeView
         private void btnAltaPermiso_Click(object sender, EventArgs e)
         {
             string nombrePermiso = txtNombrePermiso.Text.Trim();
@@ -107,10 +108,12 @@ namespace AutoGestion.Vista
                 return;
             }
 
+            //Buscar si ya existe un permiso con el mismo nombre
             var permisoExistente = _permisos.FirstOrDefault(p => p.Nombre == nombrePermiso);
 
             if (permisoExistente != null)
             {
+                // agregar el item al menu correspondiente si no existe
                 var menuExistente = permisoExistente.MenuItems.FirstOrDefault(m => m.Menu == menuSeleccionado);
                 if (menuExistente != null)
                 {
@@ -126,6 +129,7 @@ namespace AutoGestion.Vista
                 }
                 else
                 {
+                    // Si el menu no existe, lo creamos y agregamos el item
                     permisoExistente.MenuItems.Add(new MenuPermiso
                     {
                         Menu = menuSeleccionado,
@@ -135,6 +139,7 @@ namespace AutoGestion.Vista
             }
             else
             {
+                // Si no existe, creamos un nuevo PermisoCompleto
                 var nuevoPermiso = new PermisoCompleto
                 {
                     ID = GeneradorID.ObtenerID<PermisoCompleto>(),
@@ -164,7 +169,7 @@ namespace AutoGestion.Vista
             {
                 TreeNode permisoNode = new TreeNode(permiso.Nombre)
                 {
-                    Tag = permiso // ✅ ASIGNAMOS EL OBJETO AL NODO
+                    Tag = permiso //ASIGNAMOS EL OBJETO AL NODO
                 };
 
                 foreach (var menu in permiso.MenuItems)
@@ -190,7 +195,7 @@ namespace AutoGestion.Vista
             }
         }
 
-
+        // Elimina un permiso completo seleccionado del TreeView y del XML
         private void btnEliminarPermiso_Click(object sender, EventArgs e)
         {
             if (tvPermisos.SelectedNode == null || tvPermisos.SelectedNode.Tag is not PermisoCompleto permisoSeleccionado)
@@ -286,7 +291,7 @@ namespace AutoGestion.Vista
             if (e.Node?.Tag is PermisoCompuesto rol)
             {
                 txtNombreRol.Text = rol.Nombre;
-                CargarTreeViewPermisosPorRol(rol); // ✅
+                CargarTreeViewPermisosPorRol(rol); 
             }
         }
 

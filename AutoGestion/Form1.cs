@@ -1,4 +1,4 @@
-using AutoGestion.Servicios;
+using AutoGestion.Servicios; 
 using AutoGestion.Servicios.Composite;
 using AutoGestion.Vista;
 using Vista.UserControls.Backup;
@@ -25,6 +25,7 @@ namespace AutoGestion
             AplicarPermisos(usuario.Rol);
         }
 
+        // Recorre el menu principal y oculta las opciones dependiendo el rol
         private void AplicarPermisos(IPermiso rol)
         {
             if (rol == null)
@@ -51,6 +52,8 @@ namespace AutoGestion
             }
         }
 
+        // Devuelve true si el permiso contiene un PermisoCompleto,
+        // donde el nombre o el menú coincidan con el texto proporcionado
         private bool TienePermiso(IPermiso rol, string texto)
         {
             if (rol == null || string.IsNullOrWhiteSpace(texto))
@@ -79,6 +82,7 @@ namespace AutoGestion
             return false;
         }
 
+        // Metodos para cargar UserControls en el panel de contenido
         private void mnuRegistrarCliente_Click_1(object sender, EventArgs e)
         {
             panelContenido.Controls.Clear();

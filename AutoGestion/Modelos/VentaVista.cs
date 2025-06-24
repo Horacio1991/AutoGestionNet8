@@ -3,6 +3,7 @@ using System;
 
 namespace AutoGestion.Vista.Modelos
 {
+    // Para mostrar información de ventas en una vista
     public class VentaVista
     {
         public int ID { get; set; }
