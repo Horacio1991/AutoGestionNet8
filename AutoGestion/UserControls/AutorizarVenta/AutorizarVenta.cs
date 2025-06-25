@@ -1,14 +1,12 @@
-﻿using AutoGestion.Entidades;
-using AutoGestion.BLL;
-using AutoGestion.Vista.Modelos;
+﻿using AutoGestion.CTRL_Vista;
+using AutoGestion.CTRL_Vista.Modelos;
 
 namespace AutoGestion.Vista
 {
     public partial class AutorizarVenta : UserControl
     {
-        private readonly VentaBLL _ventaBLL = new();
-        // Lista de ventas pendientes que se cargará al iniciar la pantalla
-        private List<Venta> _ventasPendientes = new();
+        private readonly VentaController _ctrl = new();
+        private List<VentaDto> _ventas;
 
         public AutorizarVenta()
         {
@@ -18,80 +16,49 @@ namespace AutoGestion.Vista
 
         private void CargarVentas()
         {
-            _ventasPendientes = _ventaBLL.ObtenerVentasConEstadoPendiente();
-
-            List<VentaVista> vista = _ventasPendientes.Select(v => new VentaVista
-            {
-                ID = v.ID,
-                Cliente = $"{v.Cliente?.Nombre} {v.Cliente?.Apellido}",
-                Vehiculo = $"{v.Vehiculo?.Marca} {v.Vehiculo?.Modelo} ({v.Vehiculo?.Dominio})",
-                TipoPago = v.Pago?.TipoPago,
-                Monto = v.Pago?.Monto ?? 0,
-                Estado = v.Estado,
-                Fecha = v.Fecha.ToShortDateString()
-            }).ToList();
-
-            dgvVentas.DataSource = null;
-            dgvVentas.DataSource = vista;
+            _ventas = _ctrl.ObtenerVentasPendientes();
+            dgvVentas.DataSource = _ventas;
             dgvVentas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvVentas.ReadOnly = true;
             dgvVentas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
         }
 
         private void btnAutorizar_Click(object sender, EventArgs e)
         {
-            // obtiene la fila seleccionada en el DataGridView
-            var vistaSeleccionada = dgvVentas.CurrentRow?.DataBoundItem as VentaVista;
-            if (vistaSeleccionada == null) return;
+            // Obtenemos el DTO seleccionado
+            if (dgvVentas.CurrentRow?.DataBoundItem is not VentaDto dto) return;
 
-            // Encuentra la venta real en la lista de ventas pendientes
-            var ventaReal = _ventasPendientes.FirstOrDefault(v => v.ID == vistaSeleccionada.ID);
-
-            if (ventaReal == null)
-            {
-                MessageBox.Show("No se pudo encontrar la venta.");
-                return;
-            }
-
-            bool exito = _ventaBLL.AutorizarVenta(ventaReal.ID);
-
-            if (exito)
-                MessageBox.Show("Venta autorizada.");
-            else
-                MessageBox.Show("La venta fue rechazada automáticamente: el vehículo ya fue vendido.");
+            bool ok = _ctrl.AutorizarVenta(dto.ID);
+            MessageBox.Show(ok
+                ? "✅ Venta autorizada."
+                : "❌ La venta fue rechazada: el vehículo ya está vendido.",
+                "Autorizar venta",
+                MessageBoxButtons.OK,
+                ok ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
 
             CargarVentas();
         }
 
         private void btnRechazar_Click(object sender, EventArgs e)
         {
-            // obtiene la fila seleccionada en el DataGridView
-            var vistaSeleccionada = dgvVentas.CurrentRow?.DataBoundItem as VentaVista;
-            if (vistaSeleccionada == null) return;
+            if (dgvVentas.CurrentRow?.DataBoundItem is not VentaDto dto) return;
 
-            // Verifica que se haya ingresado un motivo de rechazo
             string motivo = txtMotivoRechazo.Text.Trim();
             if (string.IsNullOrEmpty(motivo))
             {
-                MessageBox.Show("Debe ingresar el motivo del rechazo.");
+                MessageBox.Show("Por favor, ingresa un motivo.", "Validación",
+                                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
-            // Encuentra la venta real en la lista de ventas pendientes
-            var ventaReal = _ventasPendientes.FirstOrDefault(v => v.ID == vistaSeleccionada.ID);
-
-            if (ventaReal == null)
-            {
-                MessageBox.Show("No se pudo encontrar la venta.");
-                return;
-            }
-
-            bool exito = _ventaBLL.RechazarVenta(ventaReal.ID, motivo);
-
-            if (exito)
-                MessageBox.Show("Venta rechazada.");
-            else
-                MessageBox.Show("No se pudo rechazar la venta.");
+            bool ok = _ctrl.RechazarVenta(dto.ID, motivo);
+            MessageBox.Show(ok
+                ? "✅ Venta rechazada."
+                : "❌ No se pudo rechazar la venta.",
+                "Rechazar venta",
+                MessageBoxButtons.OK,
+                ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
 
             CargarVentas();
         }

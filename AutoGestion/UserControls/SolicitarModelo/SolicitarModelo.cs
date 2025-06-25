@@ -1,12 +1,12 @@
-﻿using AutoGestion.Entidades;
-using AutoGestion.BLL;
+﻿using AutoGestion.CTRL_Vista;
+using AutoGestion.CTRL_Vista.Modelos;
 
 
 namespace AutoGestion.Vista
 {
     public partial class SolicitarModelo : UserControl
     {
-        private readonly VehiculoBLL _vehiculoBLL = new();
+        private readonly VehiculoController _controller = new();
 
         public SolicitarModelo()
         {
@@ -16,57 +16,59 @@ namespace AutoGestion.Vista
 
         private void CargarTodosLosVehiculos()
         {
-            try
-            {
-                List<Vehiculo> lista = _vehiculoBLL.ObtenerTodos(); 
-                dgvResultados.DataSource = null;
-                dgvResultados.DataSource = lista;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error al cargar vehículos: " + ex.Message);
-            }
+            // Traigo todos los vehiculos ya mapeados a DTO
+            var lista = _controller.ObtenerDisponibles();
+            dgvResultados.DataSource = lista;
+            FormatearGrid();
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            try
+            string texto = txtModelo.Text.Trim();
+            if (string.IsNullOrEmpty(texto))
             {
-                string modelo = txtModelo.Text.Trim();
-                if (string.IsNullOrEmpty(modelo))
-                {
-                    MessageBox.Show("Por favor ingrese un modelo.");
-                    return;
-                }
-
-                List<Vehiculo> lista = _vehiculoBLL.BuscarVehiculosPorModelo(modelo);
-
-                if (lista.Count == 0)
-                {
-                    lista = _vehiculoBLL.BuscarVehiculosSimilares(modelo);
-
-                    if (lista.Count == 0)
-                    {
-                        MessageBox.Show("No se encontraron vehículos disponibles.");
-                    }
-                    else
-                    {
-                        MessageBox.Show("No se encontraron coincidencias exactas. Se muestran vehículos similares.");
-                    }
-                }
-
-                dgvResultados.DataSource = null;
-                dgvResultados.DataSource = lista;
+                MessageBox.Show("Por favor ingrese un modelo.");
+                return;
             }
-            catch (Exception ex)
+
+            // 1) Intento por modelo exacto
+            var exactos = _controller.BuscarPorModelo(texto);
+            if (exactos.Count > 0)
             {
-                MessageBox.Show("Error al buscar vehículos: " + ex.Message);
+                dgvResultados.DataSource = exactos;
             }
+            else
+            {
+                // 2) Fallback: por misma marca
+                var porMarca = _controller.BuscarPorMarca(texto);
+                if (porMarca.Count > 0)
+                {
+                    MessageBox.Show("No se encontraron coincidencias exactas. Mostrando vehículos de la misma marca.");
+                    dgvResultados.DataSource = porMarca;
+                }
+                else
+                {
+                    MessageBox.Show("No se encontraron vehículos disponibles.");
+                    dgvResultados.DataSource = new List<VehiculoDto>();
+                }
+            }
+
+            FormatearGrid();
         }
 
         private void btnMostrarTodos_Click(object sender, EventArgs e)
         {
+            txtModelo.Clear();
             CargarTodosLosVehiculos();
         }
+
+        private void FormatearGrid()
+        {
+            dgvResultados.AutoGenerateColumns = true;  // sólo las propiedades del DTO
+            dgvResultados.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvResultados.ReadOnly = true;
+            dgvResultados.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+        }
+
     }
 }

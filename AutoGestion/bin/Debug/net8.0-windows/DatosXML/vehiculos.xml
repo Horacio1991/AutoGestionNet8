@@ -118,7 +118,7 @@
     <Color>Rojo</Color>
     <Km>10000</Km>
     <Dominio>HIJ999</Dominio>
-    <Estado>Disponible</Estado>
+    <Estado>En Proceso</Estado>
   </Vehiculo>
   <Vehiculo>
     <ID>13</ID>
@@ -218,6 +218,6 @@
     <Color>Verde Oscuro</Color>
     <Km>100</Km>
     <Dominio>ZX 404 YC</Dominio>
-    <Estado>Disponible</Estado>
+    <Estado>En Proceso</Estado>
   </Vehiculo>
 </ArrayOfVehiculo>

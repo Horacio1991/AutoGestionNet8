@@ -112,4 +112,20 @@
     <Contacto>zoe.francia@gmail.com</Contacto>
     <FechaRegistro>2025-06-09T07:35:03.1423603-03:00</FechaRegistro>
   </Cliente>
+  <Cliente>
+    <ID>15</ID>
+    <Dni>25000000</Dni>
+    <Nombre>Yamila</Nombre>
+    <Apellido>Uronich</Apellido>
+    <Contacto>yami@gmail.com</Contacto>
+    <FechaRegistro>2025-06-25T14:44:55.7084011-03:00</FechaRegistro>
+  </Cliente>
+  <Cliente>
+    <ID>16</ID>
+    <Dni>123123</Dni>
+    <Nombre>prueba</Nombre>
+    <Apellido>prueba</Apellido>
+    <Contacto>prueba@prueba.com</Contacto>
+    <FechaRegistro>2025-06-25T14:45:14.1375059-03:00</FechaRegistro>
+  </Cliente>
 </ArrayOfCliente>

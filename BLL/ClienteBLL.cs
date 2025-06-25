@@ -1,5 +1,6 @@
-﻿using AutoGestion.Entidades;
-using AutoGestion.DAO.Repositorios;
+﻿using AutoGestion.DAO.Repositorios;
+using AutoGestion.Entidades;
+using AutoGestion.Servicios.Utilidades;
 
 namespace AutoGestion.BLL
 {
@@ -22,6 +23,7 @@ namespace AutoGestion.BLL
 
         public Cliente RegistrarCliente(Cliente cliente)
         {
+            cliente.ID = GeneradorID.ObtenerID<Cliente>();
             cliente.FechaRegistro = DateTime.Now;
             // Agrega el cliente a l lista y lo guarda en el repositorio XML
             _repo.Agregar(cliente);

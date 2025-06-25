@@ -1,6 +1,5 @@
-﻿using AutoGestion.Entidades;
-using AutoGestion.BLL;
-using AutoGestion.Vista.Modelos;
+﻿using AutoGestion.CTRL_Vista;
+using AutoGestion.CTRL_Vista.Modelos;
 using AutoGestion.Servicios.Pdf;
 
 
@@ -8,9 +7,8 @@ namespace AutoGestion.Vista
 {
     public partial class RealizarEntrega : UserControl
     {
-        private readonly VentaBLL _ventaBLL = new();
-        //Guarda en memoria las ventas que ya fueron facturadas
-        private List<Venta> _ventasFacturadas = new();
+        private readonly EntregaController _ctrl = new();
+        private List<VentaDto> _ventas;
 
         public RealizarEntrega()
         {
@@ -20,23 +18,10 @@ namespace AutoGestion.Vista
 
         private void CargarVentas()
         {
-            // Carga las ventas facturadas desde el BLL
-            _ventasFacturadas = _ventaBLL.ObtenerVentasFacturadas();
-
-            // Transforma las ventas a una lista de vistas para el DataGridView
-            var vista = _ventasFacturadas.Select(v => new VentaVista
-            {
-                ID = v.ID,
-                Cliente = $"{v.Cliente?.Nombre} {v.Cliente?.Apellido}",
-                Vehiculo = $"{v.Vehiculo?.Marca} {v.Vehiculo?.Modelo} ({v.Vehiculo?.Dominio})",
-                TipoPago = v.Pago?.TipoPago,
-                Monto = v.Pago?.Monto ?? 0,
-                Estado = v.Estado,
-                Fecha = v.Fecha.ToShortDateString()
-            }).ToList();
-
+            // Pedimos los DTOs al controller
+            _ventas = _ctrl.ObtenerVentasParaEntrega();
             dgvVentas.DataSource = null;
-            dgvVentas.DataSource = vista;
+            dgvVentas.DataSource = _ventas;
             dgvVentas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvVentas.ReadOnly = true;
             dgvVentas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -46,40 +31,33 @@ namespace AutoGestion.Vista
         {
             if (dgvVentas.CurrentRow == null)
             {
-                MessageBox.Show("Debe seleccionar una venta.");
+                MessageBox.Show("Debe seleccionar una venta.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Obtener el objeto modelado de la fila seleccionada
-            var seleccion = dgvVentas.CurrentRow.DataBoundItem as VentaVista;
-            // Recuperar la venta original usando el ID
-            var venta = _ventasFacturadas.FirstOrDefault(v => v.ID == seleccion.ID);
+            // Obtenemos el DTO seleccionado
+            var dto = dgvVentas.CurrentRow.DataBoundItem as VentaDto;
+            if (dto == null) return;
 
-            if (venta == null)
-            {
-                MessageBox.Show("No se pudo encontrar la venta.");
-                return;
-            }
-
-            // Mostrar diálogo para elegir dónde guardar el comprobante
-            using SaveFileDialog dialogo = new SaveFileDialog
+            // Diálogo para elegir ruta de PDF
+            using var dialogo = new SaveFileDialog
             {
                 Filter = "Archivo PDF (*.pdf)|*.pdf",
-                FileName = $"Comprobante_Entrega_{venta.ID}.pdf"
+                FileName = $"Comprobante_Entrega_{dto.ID}.pdf"
             };
+            if (dialogo.ShowDialog() != DialogResult.OK) return;
 
-            if (dialogo.ShowDialog() != DialogResult.OK)
-                return;
+            // Marcamos la entrega en BLL
+            _ctrl.ConfirmarEntrega(dto.ID);
 
-            string rutaDestino = dialogo.FileName;
+            // Recuperamos la entidad completa sólo para el PDF
+            var ventaEntity = _ctrl.ObtenerEntidad(dto.ID);
+            GeneradorComprobantePDF.Generar(ventaEntity, dialogo.FileName);
 
-            // Marcar como entregada
-            _ventaBLL.MarcarComoEntregada(venta.ID);
+            MessageBox.Show("Entrega registrada y comprobante guardado correctamente.",
+                            "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            // Generar comprobante en PDF
-            GeneradorComprobantePDF.Generar(venta, rutaDestino);
-
-            MessageBox.Show("Entrega registrada y comprobante guardado correctamente.");
+            // Refrescamos la lista
             CargarVentas();
         }
 

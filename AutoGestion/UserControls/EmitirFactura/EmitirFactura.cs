@@ -1,15 +1,14 @@
-﻿using AutoGestion.Entidades;
-using AutoGestion.BLL;
-using AutoGestion.Vista.Modelos;
+﻿using AutoGestion.CTRL_Vista;
+using AutoGestion.CTRL_Vista.Modelos;
 using AutoGestion.Servicios.Pdf;
 
 namespace AutoGestion.Vista
 {
     public partial class EmitirFactura : UserControl
     {
-        private readonly VentaBLL _ventaBLL = new();
-        private readonly FacturaBLL _facturaBLL = new();
-        private List<Venta> _ventasOriginales;
+        private readonly VentaController _ventaController = new();
+        private readonly FacturaController _facturaController = new();
+        private List<VentaDto> _ventasParaFacturar;
 
 
         public EmitirFactura()
@@ -21,18 +20,11 @@ namespace AutoGestion.Vista
         // Carga el datagrid con las ventas que ya estan autorizadas
         private void CargarVentas()
         {
-            // Filtra las ventas autorizadas unicamente
-            var ventas = _ventaBLL.ObtenerVentasPendientes()
-                                  .Where(v => v.Estado == "Autorizada")
-                                  .ToList();
-
-            // Se guarda la lista original para despues localizar el objeto venta
-            _ventasOriginales = ventas;
-
-            var vistas = ventas.Select(v => VentaVista.DesdeVenta(v)).ToList();
+            _ventasParaFacturar = _ventaController
+                .ObtenerVentasParaFacturar();
 
             dgvVentas.DataSource = null;
-            dgvVentas.DataSource = vistas;
+            dgvVentas.DataSource = _ventasParaFacturar;
             dgvVentas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvVentas.ReadOnly = true;
             dgvVentas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -41,62 +33,68 @@ namespace AutoGestion.Vista
         //Toma la venta seleccionada, la graba y la marca como facturada. Genera un PDF con la factura.
         private void btnEmitir_Click_1(object sender, EventArgs e)
         {
-            // Verifica que haya una fila seleccionada en el DataGridView
-            if (dgvVentas.CurrentRow == null)
+            // 1) Validar selección
+            var dto = dgvVentas.CurrentRow?.DataBoundItem as VentaDto;
+            if (dto == null)
             {
-                MessageBox.Show("Seleccione una venta para emitir la factura.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(
+                    "Seleccione una venta para emitir la factura.",
+                    "Aviso",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
                 return;
             }
 
-            // obtengo el indice de la fila seleccionada
-            int index = dgvVentas.CurrentRow.Index;
-            // Recuperamos la venta real a partir de la lista original
-            var venta = _ventasOriginales[index];
-            // Se crea la factura
-            var factura = new Factura
-            {
-                Cliente = venta.Cliente,
-                Vehiculo = venta.Vehiculo,
-                Precio = venta.Total,
-                Fecha = DateTime.Now,
-                FormaPago = venta.Pago?.TipoPago ?? "Desconocido"
-            };
-
-            string resumen = $"Cliente: {factura.Cliente.Nombre} {factura.Cliente.Apellido}\n" +
-                             $"Vehículo: {factura.Vehiculo.Marca} {factura.Vehiculo.Modelo} ({factura.Vehiculo.Dominio})\n" +
-                             $"Forma de Pago: {factura.FormaPago}\n" +
-                             $"Precio: ${factura.Precio}\n" +
-                             $"Fecha: {factura.Fecha.ToShortDateString()}";
-
-            DialogResult result = MessageBox.Show(
+            // 2) Mostrar vista previa
+            string resumen =
+                $"Cliente: {dto.Cliente}\n" +
+                $"Vehículo: {dto.Vehiculo}\n" +
+                $"Forma de Pago: {dto.TipoPago}\n" +
+                $"Precio: ${dto.Monto:N2}\n" +
+                $"Fecha: {dto.Fecha}";
+            var resultado = MessageBox.Show(
                 resumen + "\n\n¿Desea emitir esta factura?",
                 "Vista previa de factura",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question
             );
+            if (resultado != DialogResult.Yes) return;
 
-            if (result == DialogResult.Yes)
+            try
             {
-                //Guarda la factura en el XML
-                _facturaBLL.EmitirFactura(factura);
-                // Marca la venta como facturada
-                _ventaBLL.MarcarComoFacturada(venta.ID);
+                // 3) Emitir la factura (persistir + marcar venta)
+                var factura = _facturaController.EmitirFactura(dto.ID);
 
-                // Abre el diálogo para guardar el PDF (el usuario elige la ubicación)
-                using SaveFileDialog dialogo = new SaveFileDialog
+                // 4) Guardar PDF
+                using var dlg = new SaveFileDialog
                 {
                     Filter = "Archivo PDF (*.pdf)|*.pdf",
                     FileName = $"Factura_{factura.ID}.pdf"
                 };
-
-                if (dialogo.ShowDialog() != DialogResult.OK)
+                if (dlg.ShowDialog() != DialogResult.OK)
                     return;
 
-                string rutaDestino = dialogo.FileName;
-                GeneradorFacturaPDF.Generar(factura, rutaDestino);
+                GeneradorFacturaPDF.Generar(factura, dlg.FileName);
 
-                MessageBox.Show("Factura emitida correctamente.");
+                MessageBox.Show(
+                    "Factura emitida correctamente.",
+                    "Éxito",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+
+                // 5) Recargar listado (la venta ya no estará “Autorizada”)
                 CargarVentas();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Error al emitir la factura: " + ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
             }
         }
 

@@ -54,7 +54,9 @@ namespace AutoGestion.BLL
 
         public List<Vehiculo> ObtenerDisponibles()
         {
-            return _repo.ObtenerTodos().Where(v => v.Estado == "Disponible").ToList();
+            return _repo.ObtenerTodos()
+                .Where(v => v.Estado == VehiculoEstados.Disponible)
+                .ToList();
         }
 
         public void ActualizarEstadoVehiculo(Vehiculo vehiculo, string nuevoEstado)

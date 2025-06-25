@@ -63,4 +63,25 @@
     </Vehiculo>
     <FechaInspeccion>2025-06-09T08:32:19.05</FechaInspeccion>
   </OfertaCompra>
+  <OfertaCompra>
+    <ID>4</ID>
+    <Oferente>
+      <ID>12</ID>
+      <Dni>36168344</Dni>
+      <Nombre>Belen</Nombre>
+      <Apellido>Uronich</Apellido>
+      <Contacto>beluronich@gmail.com</Contacto>
+    </Oferente>
+    <Vehiculo>
+      <ID>4</ID>
+      <Marca>Ford</Marca>
+      <Modelo>Focus II</Modelo>
+      <Año>100</Año>
+      <Color>Rojo</Color>
+      <Km>100</Km>
+      <Dominio>AD 123 CB</Dominio>
+      <Estado>En evaluación</Estado>
+    </Vehiculo>
+    <FechaInspeccion>2025-06-26T16:20:27.763</FechaInspeccion>
+  </OfertaCompra>
 </ArrayOfOfertaCompra>

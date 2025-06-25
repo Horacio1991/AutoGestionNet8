@@ -1,7 +1,5 @@
-﻿using AutoGestion.Entidades;
-using AutoGestion.BLL;
-using AutoGestion.Servicios.Utilidades;
-
+﻿using AutoGestion.BLL;
+using AutoGestion.CTRL_Vista.Modelos;
 
 namespace AutoGestion.CTRL_Vista
 {
@@ -9,38 +7,26 @@ namespace AutoGestion.CTRL_Vista
     {
         private readonly ClienteBLL _clienteBLL = new();
 
-        public Cliente BuscarCliente(string dni)
+        // Busca un cliente y devuelve DTO o null
+        public ClienteDto BuscarCliente(string dni)
         {
-            try
-            {
-                return _clienteBLL.BuscarClientePorDNI(dni);
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("Error al buscar cliente", ex);
-            }
+            var c = _clienteBLL.BuscarClientePorDNI(dni);
+            return c is null ? null : ClienteDto.FromEntity(c);
         }
 
-        public Cliente RegistrarCliente(string dni, string nombre, string apellido, string contacto)
+        // Registra un nuevo cliente y devuelve su DTO
+        public ClienteDto RegistrarCliente(string dni, string nombre, string apellido, string contacto)
         {
-            try
+            var entidad = new Entidades.Cliente
             {
-                Cliente nuevo = new Cliente
-                {
-                    ID = GeneradorID.ObtenerID<Cliente>(), 
-                    Dni = dni,
-                    Nombre = nombre,
-                    Apellido = apellido,
-                    Contacto = contacto,
-                    FechaRegistro = DateTime.Now
-                };
-
-                return _clienteBLL.RegistrarCliente(nuevo);
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("Error al registrar cliente", ex);
-            }
+                Dni = dni,
+                Nombre = nombre,
+                Apellido = apellido,
+                Contacto = contacto,
+                FechaRegistro = DateTime.Now
+            };
+            var registrado = _clienteBLL.RegistrarCliente(entidad);
+            return ClienteDto.FromEntity(registrado);
         }
     }
 }

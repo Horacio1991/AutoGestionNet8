@@ -222,6 +222,7 @@
             dgvVehiculos.Name = "dgvVehiculos";
             dgvVehiculos.Size = new Size(306, 213);
             dgvVehiculos.TabIndex = 19;
+            dgvVehiculos.SelectionChanged += dgvVehiculos_SelectionChanged;
             // 
             // RealizarPago
             // 

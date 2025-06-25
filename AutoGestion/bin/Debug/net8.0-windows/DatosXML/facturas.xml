@@ -384,4 +384,76 @@
     <Precio>123123123</Precio>
     <Fecha>2025-06-11T14:37:05.6113591-03:00</Fecha>
   </Factura>
+  <Factura>
+    <ID>17</ID>
+    <Cliente>
+      <ID>12</ID>
+      <Dni>36168344</Dni>
+      <Nombre>Belen</Nombre>
+      <Apellido>Uronich</Apellido>
+      <Contacto>beluronich@gmail.com</Contacto>
+      <FechaRegistro>2025-05-29T09:28:55.5673067-03:00</FechaRegistro>
+    </Cliente>
+    <Vehiculo>
+      <ID>12</ID>
+      <Marca>Chevrolet</Marca>
+      <Modelo>Onix</Modelo>
+      <Año>2021</Año>
+      <Color>Rojo</Color>
+      <Km>10000</Km>
+      <Dominio>HIJ999</Dominio>
+      <Estado>Disponible</Estado>
+    </Vehiculo>
+    <FormaPago>Efectivo</FormaPago>
+    <Precio>10000000</Precio>
+    <Fecha>2025-06-25T08:52:33.0595851-03:00</Fecha>
+  </Factura>
+  <Factura>
+    <ID>18</ID>
+    <Cliente>
+      <ID>15</ID>
+      <Dni>25000000</Dni>
+      <Nombre>Yamila</Nombre>
+      <Apellido>Uronich</Apellido>
+      <Contacto>yami@gmail.com</Contacto>
+      <FechaRegistro>2025-06-25T14:44:55.7084011-03:00</FechaRegistro>
+    </Cliente>
+    <Vehiculo>
+      <ID>18</ID>
+      <Marca>Toyota</Marca>
+      <Modelo>Etios</Modelo>
+      <Año>2021</Año>
+      <Color>Negro</Color>
+      <Km>12000</Km>
+      <Dominio>ZAB606</Dominio>
+      <Estado>Disponible</Estado>
+    </Vehiculo>
+    <FormaPago>Efectivo</FormaPago>
+    <Precio>1000000000</Precio>
+    <Fecha>2025-06-25T15:16:38.7862383-03:00</Fecha>
+  </Factura>
+  <Factura>
+    <ID>19</ID>
+    <Cliente>
+      <ID>0</ID>
+      <Dni>36168344</Dni>
+      <Nombre>Belen</Nombre>
+      <Apellido>Uronich</Apellido>
+      <Contacto>beluronich@gmail.com</Contacto>
+      <FechaRegistro>2025-06-25T15:48:02.6122209-03:00</FechaRegistro>
+    </Cliente>
+    <Vehiculo>
+      <ID>22</ID>
+      <Marca>Chevrolet</Marca>
+      <Modelo>Corsa III</Modelo>
+      <Año>100</Año>
+      <Color>Verde Oscuro</Color>
+      <Km>100</Km>
+      <Dominio>ZX 404 YC</Dominio>
+      <Estado>Disponible</Estado>
+    </Vehiculo>
+    <FormaPago>Efectivo</FormaPago>
+    <Precio>40000000</Precio>
+    <Fecha>2025-06-25T15:48:58.7129858-03:00</Fecha>
+  </Factura>
 </ArrayOfFactura>
