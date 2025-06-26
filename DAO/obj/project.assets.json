@@ -98,11 +98,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Educaccion\\Desktop\\TP-NET8\\AutoGestionNet8\\DAO\\DAO.csproj",
+      "projectUniqueName": "C:\\Users\\Educaccion\\Desktop\\TPFINAL\\AutoGestionNet8\\DAO\\DAO.csproj",
       "projectName": "DAO",
-      "projectPath": "C:\\Users\\Educaccion\\Desktop\\TP-NET8\\AutoGestionNet8\\DAO\\DAO.csproj",
+      "projectPath": "C:\\Users\\Educaccion\\Desktop\\TPFINAL\\AutoGestionNet8\\DAO\\DAO.csproj",
       "packagesPath": "C:\\Users\\Educaccion\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Educaccion\\Desktop\\TP-NET8\\AutoGestionNet8\\DAO\\obj\\",
+      "outputPath": "C:\\Users\\Educaccion\\Desktop\\TPFINAL\\AutoGestionNet8\\DAO\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -123,8 +123,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Educaccion\\Desktop\\TP-NET8\\AutoGestionNet8\\Entidades\\Entidades.csproj": {
-              "projectPath": "C:\\Users\\Educaccion\\Desktop\\TP-NET8\\AutoGestionNet8\\Entidades\\Entidades.csproj"
+            "C:\\Users\\Educaccion\\Desktop\\TPFINAL\\AutoGestionNet8\\Entidades\\Entidades.csproj": {
+              "projectPath": "C:\\Users\\Educaccion\\Desktop\\TPFINAL\\AutoGestionNet8\\Entidades\\Entidades.csproj"
             }
           }
         }

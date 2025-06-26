@@ -78,4 +78,56 @@
     <ValorFinal>2300000</ValorFinal>
     <Fecha>2025-06-09T08:33:58.9507738-03:00</Fecha>
   </Tasacion>
+  <Tasacion>
+    <ID>4</ID>
+    <Oferta>
+      <ID>1</ID>
+      <Oferente>
+        <ID>11</ID>
+        <Dni>36084790</Dni>
+        <Nombre>Santiago</Nombre>
+        <Apellido>Ortiz</Apellido>
+        <Contacto>santiago.ortiz@gmail.com</Contacto>
+      </Oferente>
+      <Vehiculo>
+        <ID>1</ID>
+        <Marca>Chevrolet</Marca>
+        <Modelo>Corsa II</Modelo>
+        <Año>100</Año>
+        <Color>Verde</Color>
+        <Km>100</Km>
+        <Dominio>IWY960</Dominio>
+        <Estado>En evaluación</Estado>
+      </Vehiculo>
+      <FechaInspeccion>2025-05-30T15:53:46.9790114-03:00</FechaInspeccion>
+    </Oferta>
+    <ValorFinal>22500000</ValorFinal>
+    <Fecha>2025-06-26T09:19:31.9060203-03:00</Fecha>
+  </Tasacion>
+  <Tasacion>
+    <ID>5</ID>
+    <Oferta>
+      <ID>2</ID>
+      <Oferente>
+        <ID>12</ID>
+        <Dni>36168344</Dni>
+        <Nombre>Belen</Nombre>
+        <Apellido>Uronich</Apellido>
+        <Contacto>beluronich@gmail.com</Contacto>
+      </Oferente>
+      <Vehiculo>
+        <ID>2</ID>
+        <Marca>Ford</Marca>
+        <Modelo>Focus</Modelo>
+        <Año>100</Año>
+        <Color>Bordo</Color>
+        <Km>100</Km>
+        <Dominio>ABC999</Dominio>
+        <Estado>En evaluación</Estado>
+      </Vehiculo>
+      <FechaInspeccion>2025-05-30T15:53:46.9790114-03:00</FechaInspeccion>
+    </Oferta>
+    <ValorFinal>30000000</ValorFinal>
+    <Fecha>2025-06-26T09:32:32.7345809-03:00</Fecha>
+  </Tasacion>
 </ArrayOfTasacion>
