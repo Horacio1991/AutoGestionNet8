@@ -10,5 +10,6 @@
         // Vehiculo que se ofrece comprar
         public Vehiculo Vehiculo { get; set; }
         public DateTime FechaInspeccion { get; set; }
+        public string Estado { get; set; } = "En evaluación";
     }
 }

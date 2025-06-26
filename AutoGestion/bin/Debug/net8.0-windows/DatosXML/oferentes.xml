@@ -84,4 +84,32 @@
     <Apellido>Uronich</Apellido>
     <Contacto>beluronich@gmail.com</Contacto>
   </Oferente>
+  <Oferente>
+    <ID>13</ID>
+    <Dni>95000000</Dni>
+    <Nombre>Wachington</Nombre>
+    <Apellido>Mamani</Apellido>
+    <Contacto>mamani@gmail.com</Contacto>
+  </Oferente>
+  <Oferente>
+    <ID>14</ID>
+    <Dni>999999999</Dni>
+    <Nombre>asd</Nombre>
+    <Apellido>asd</Apellido>
+    <Contacto>asd@asd.com</Contacto>
+  </Oferente>
+  <Oferente>
+    <ID>15</ID>
+    <Dni>8888888888</Dni>
+    <Nombre>Pepe</Nombre>
+    <Apellido>Mujica</Apellido>
+    <Contacto>pepe@gmail.com</Contacto>
+  </Oferente>
+  <Oferente>
+    <ID>16</ID>
+    <Dni>11111111111</Dni>
+    <Nombre>Prueba</Nombre>
+    <Apellido>prueba</Apellido>
+    <Contacto>prueba@gmail.com</Contacto>
+  </Oferente>
 </ArrayOfOferente>

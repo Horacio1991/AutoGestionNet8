@@ -1,17 +1,13 @@
-﻿using AutoGestion.Entidades;
-using AutoGestion.BLL;
+﻿using AutoGestion.CTRL_Vista;
+using AutoGestion.DTOs;
 
 
 namespace AutoGestion.Vista
 {
     public partial class RegistrarDatos : UserControl
     {
-        private readonly OfertaBLL _ofertaBLL = new();
-        private readonly EvaluacionBLL _evaluacionBLL = new();
-        private readonly VehiculoBLL _vehiculoBLL = new();
-
-        // Guarda en memoria la oferta seleeccionada 
-        private OfertaCompra _ofertaSeleccionada;
+        private readonly RegistrarDatosController _ctrl = new();
+        private OfertaRegistroDto _dto;
 
         public RegistrarDatos()
         {
@@ -21,65 +17,64 @@ namespace AutoGestion.Vista
 
         private void btnBuscarOferta_Click(object sender, EventArgs e)
         {
-            string dominio = txtDominio.Text.Trim();
-
+            var dominio = txtDominio.Text.Trim();
             if (string.IsNullOrEmpty(dominio))
             {
-                MessageBox.Show("Ingrese un dominio.");
+                MessageBox.Show("Ingrese un dominio.", "Aviso",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            var ofertasSinRegistrar = _ofertaBLL.ObtenerOfertasSinRegistrar();
-            var oferta = ofertasSinRegistrar
-                .FirstOrDefault(o => o.Vehiculo.Dominio.Equals(dominio, StringComparison.OrdinalIgnoreCase));
-
-            if (oferta == null)
+            _dto = _ctrl.ObtenerOfertaPorDominio(dominio);
+            if (_dto == null)
             {
-                MessageBox.Show("No se encontró ninguna oferta pendiente para ese dominio.");
+                MessageBox.Show("No se encontró oferta o evaluación para ese dominio.",
+                                "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LimpiarCampos();
                 return;
             }
 
-            var evaluacion = _evaluacionBLL.ObtenerEvaluacionAsociada(oferta);
-
-            if (evaluacion == null)
-            {
-                MessageBox.Show("No se encontró evaluación técnica para la oferta.");
-                LimpiarCampos();
-                return;
-            }
-
-            _ofertaSeleccionada = oferta;
-
-            txtEvaluacion.Text = $"Motor: {evaluacion.EstadoMotor}, Chasis: {evaluacion.EstadoInterior}, Documentación: {evaluacion.EstadoDocumentacion}";
+            txtEvaluacion.Text = _dto.EvaluacionTexto;
         }
+
 
         private void btnRegistrar_Click(object sender, EventArgs e)
         {
-            if (_ofertaSeleccionada == null)
+            if (_dto == null)
             {
-                MessageBox.Show("Debe buscar una oferta primero.");
+                MessageBox.Show("Busque primero una oferta válida.",
+                                "Error", MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+                return;
+            }
+            if (cmbEstadoStock.SelectedIndex < 0)
+            {
+                MessageBox.Show("Seleccione un estado de stock.",
+                                "Error", MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
                 return;
             }
 
-            if (cmbEstadoStock.SelectedIndex == -1)
+            var input = new RegistrarDatosInputDto
             {
-                MessageBox.Show("Seleccione el estado final del vehículo.");
-                return;
-            }
+                OfertaID = _dto.OfertaID,
+                EstadoStock = cmbEstadoStock.SelectedItem.ToString()
+            };
 
-            // Actualiza el estado elegido
-            string estadoElegido = cmbEstadoStock.SelectedItem.ToString();
-            _vehiculoBLL.ActualizarEstadoVehiculo(_ofertaSeleccionada.Vehiculo, estadoElegido);
-
-            // Si el estado es "Disponible", lo agregamos al stock
-            if (estadoElegido == "Disponible")
+            try
             {
-                _vehiculoBLL.AgregarVehiculoAlStock(_ofertaSeleccionada.Vehiculo);
+                _ctrl.RegistrarDatos(input);
+                MessageBox.Show("Datos guardados correctamente.",
+                                "Éxito", MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+                LimpiarCampos();
             }
-
-            MessageBox.Show("Vehículo registrado correctamente en el sistema.");
-            LimpiarCampos();
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al guardar: {ex.Message}",
+                                "Error", MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+            }
         }
 
         private void LimpiarCampos()
@@ -87,7 +82,7 @@ namespace AutoGestion.Vista
             txtDominio.Clear();
             txtEvaluacion.Clear();
             cmbEstadoStock.SelectedIndex = -1;
-            _ofertaSeleccionada = null;
+            _dto = null;
         }
     }
 }

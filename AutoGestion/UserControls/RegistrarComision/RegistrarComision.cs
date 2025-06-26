@@ -1,17 +1,13 @@
-﻿using AutoGestion.Entidades;
-using AutoGestion.BLL;
-using AutoGestion.Vista.Modelos;
+﻿using AutoGestion.CTRL_Vista;
+using AutoGestion.DTOs;
 
 
 namespace AutoGestion.Vista
 {
     public partial class RegistrarComision : UserControl
     {
-        private readonly VentaBLL _ventaBLL = new();
-        private readonly ComisionBLL _comisionBLL = new();
-
-        //lista en memoria de ventas sin comisión asignada
-        private List<Venta> _ventasSinComision;
+        private readonly ComisionController _ctrl = new();
+        private List<VentaComisionDto> _ventas;
 
         public RegistrarComision()
         {
@@ -21,93 +17,107 @@ namespace AutoGestion.Vista
 
         private void CargarVentas()
         {
-            _ventasSinComision = _ventaBLL.ObtenerVentasSinComisionAsignada();
+            _ventas = _ctrl.ObtenerVentasSinComision();
 
-            List<VentaComisionVista> vista = _ventasSinComision.Select(v => new VentaComisionVista
-            {
-                ID = v.ID,
-                Cliente = $"{v.Cliente?.Nombre} {v.Cliente?.Apellido}",
-                Vendedor = v.Vendedor?.Nombre,
-                Vehiculo = $"{v.Vehiculo?.Marca} {v.Vehiculo?.Modelo}",
-                MontoVenta = v.Total,
-                ComisionSugerida = v.Total * 0.05m,
-                Fecha = v.Fecha.ToShortDateString()
-            }).ToList();
+            // Creamos un anonimo para atar los nombres de columna que tenemos
+            var tabla = _ventas
+                .Select(v => new
+                {
+                    VentaID = v.VentaID,
+                    Cliente = v.Cliente,
+                    Vendedor = v.Vendedor,
+                    Vehículo = v.VehiculoResumen,
+                    MontoVenta = v.MontoVenta,
+                    ComisionSug = v.ComisionSugerida,
+                    FechaVenta = v.FechaVenta
+                })
+                .ToList();
 
             dgvVentas.DataSource = null;
-            dgvVentas.DataSource = vista;
+            dgvVentas.DataSource = tabla;
             dgvVentas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvVentas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvVentas.ReadOnly = true;
         }
 
         private void btnConfirmar_Click_1(object sender, EventArgs e)
         {
-            var seleccion = dgvVentas.CurrentRow?.DataBoundItem as VentaComisionVista;
-            if (seleccion == null) return;
-
-            if (!decimal.TryParse(txtComisionFinal.Text, out decimal valorFinal))
+            if (dgvVentas.CurrentRow == null)
             {
-                MessageBox.Show("Ingrese un valor válido para la comisión.");
+                MessageBox.Show("Seleccione una fila.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            var venta = _ventasSinComision.FirstOrDefault(v => v.ID == seleccion.ID);
+            // Recupero el ID de la venta
+            int ventaId = Convert.ToInt32(dgvVentas.CurrentRow.Cells["VentaID"].Value);
 
-            if (venta == null)
+            // Valido monto ingresado
+            if (!decimal.TryParse(txtComisionFinal.Text.Trim(), out decimal monto))
             {
-                MessageBox.Show("No se encontró la venta seleccionada.");
+                MessageBox.Show("Ingrese un valor numérico válido para la comisión.", "Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            var comision = new Comision
+            // Armo el DTO y lo envío al controller
+            var dto = new ComisionInputDto
             {
-                Venta = venta,
-                Porcentaje = valorFinal / venta.Total,
-                Monto = valorFinal,
-                Estado = "Aprobada"
+                VentaID = ventaId,
+                Monto = monto,
+                Estado = "Aprobada",
+                MotivoRechazo = null
             };
 
-            _comisionBLL.Registrar(comision);
-            MessageBox.Show("Comisión registrada correctamente.");
+            bool ok = _ctrl.RegistrarComision(dto);
+            MessageBox.Show(ok
+                ? "✅ Comisión aprobada."
+                : "❌ Error al aprobar la comisión.");
 
+            // Refrescar lista y limpiar inputs
+            txtComisionFinal.Clear();
+            txtMotivoRechazo.Clear();
             CargarVentas();
         }
 
+
         private void btnRechazar_Click(object sender, EventArgs e)
         {
-            var seleccion = dgvVentas.CurrentRow?.DataBoundItem as VentaComisionVista;
-            if (seleccion == null) return;
+            if (dgvVentas.CurrentRow == null)
+            {
+                MessageBox.Show("Seleccione una fila.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
+            // Recupero ID de la venta
+            int ventaId = Convert.ToInt32(dgvVentas.CurrentRow.Cells["VentaID"].Value);
+
+            // Valido que informe un motivo
             string motivo = txtMotivoRechazo.Text.Trim();
             if (string.IsNullOrEmpty(motivo))
             {
-                MessageBox.Show("Debe ingresar el motivo del rechazo.");
+                MessageBox.Show("Debe ingresar el motivo del rechazo.", "Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            var venta = _ventasSinComision.FirstOrDefault(v => v.ID == seleccion.ID);
-
-            if (venta == null)
+            var dto = new ComisionInputDto
             {
-                MessageBox.Show("No se encontró la venta seleccionada.");
-                return;
-            }
-
-            var comision = new Comision
-            {
-                Venta = venta,
-                Porcentaje = 0,
-                Monto = 0,
+                VentaID = ventaId,
+                Monto = 0m,
                 Estado = "Rechazada",
                 MotivoRechazo = motivo
             };
 
-            _comisionBLL.Registrar(comision);
-            MessageBox.Show("Comisión rechazada correctamente.");
+            bool ok = _ctrl.RegistrarComision(dto);
+            MessageBox.Show(ok
+                ? "✅ Comisión rechazada."
+                : "❌ Error al rechazar la comisión.");
 
+            // Refrescar y limpiar
+            txtComisionFinal.Clear();
+            txtMotivoRechazo.Clear();
             CargarVentas();
-            txtMotivoRechazo.Clear();  // Limpiar campo después
         }
 
-        
     }
 }

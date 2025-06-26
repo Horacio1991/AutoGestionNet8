@@ -1,5 +1,6 @@
-﻿using AutoGestion.Entidades;
-using AutoGestion.DAO.Repositorios;
+﻿using AutoGestion.DAO.Repositorios;
+using AutoGestion.Entidades;
+using AutoGestion.Servicios.Utilidades;
 
 namespace AutoGestion.BLL
 {
@@ -10,15 +11,22 @@ namespace AutoGestion.BLL
 
         public void RegistrarOferta(OfertaCompra oferta)
         {
-            oferta.ID = ObtenerNuevoID();
-            _repo.Agregar(oferta);
-        }
+            // Le asignamos un ID único si aún no lo tiene
+            if (oferta.ID == 0)
+                oferta.ID = GeneradorID.ObtenerID<OfertaCompra>();
 
-        private int ObtenerNuevoID()
-        {
+            // También aseguramos que el vehículo tenga su propio ID
+            if (oferta.Vehiculo.ID == 0)
+                oferta.Vehiculo.ID = GeneradorID.ObtenerID<Vehiculo>();
+
             var lista = _repo.ObtenerTodos();
-            return lista.Any() ? lista.Max(o => o.ID) + 1 : 1;
+            lista.Add(oferta);
+            _repo.GuardarLista(lista);
         }
+        public List<OfertaCompra> ObtenerOfertasSinRegistrar()
+          => _repo.ObtenerTodos()
+                  .Where(o => o.Estado == "En evaluación")
+                  .ToList();
 
         public List<OfertaCompra> ObtenerTodas()
         {
@@ -45,14 +53,48 @@ namespace AutoGestion.BLL
                 .ToList();
         }
 
-        // obtiene las ofertas de los vehiculos que no estan registrados en el stock
-        public List<OfertaCompra> ObtenerOfertasSinRegistrar()
+        public void ActualizarEstado(OfertaCompra oferta, string nuevoEstado)
         {
-            var ofertas = ObtenerTodas();
-            var vehiculosRegistrados = new VehiculoBLL().ObtenerTodos().Select(v => v.Dominio).ToList();
-
-            return ofertas.Where(o => !vehiculosRegistrados.Contains(o.Vehiculo.Dominio)).ToList();
+            var all = _repo.ObtenerTodos().ToList();
+            var ent = all.FirstOrDefault(x => x.ID == oferta.ID);
+            if (ent == null) throw new ApplicationException("Oferta no encontrada");
+            ent.Estado = nuevoEstado;
+            _repo.GuardarLista(all);
         }
+
+        /// <summary>
+        /// Quita la oferta de la lista (para que no vuelva a aparecer en ObtenerOfertasSinRegistrar).
+        /// </summary>
+        public void MarcarOfertaProcesada(int ofertaID)
+        {
+            // 1) Carga todas las ofertas
+            var lista = _repo.ObtenerTodos();
+
+            // 2) Busca la que corresponde
+            var oferta = lista.FirstOrDefault(o => o.ID == ofertaID);
+            if (oferta == null) return;
+
+            // 3) La quita de la lista y guarda
+            lista.Remove(oferta);
+            _repo.GuardarLista(lista);
+        }
+
+        public List<OfertaCompra> ObtenerOfertasPendientes()
+            => _repo.ObtenerTodos()
+            .Where(o => o.Estado == "EnEvaluacion")
+            .ToList();
+
+        public void ActualizarOferta(OfertaCompra oferta)
+        {
+            var lista = _repo.ObtenerTodos();
+            var idx = lista.FindIndex(x => x.ID == oferta.ID);
+            if (idx >= 0)
+            {
+                lista[idx] = oferta;
+                _repo.GuardarLista(lista);
+            }
+        }
+
 
     }
 }

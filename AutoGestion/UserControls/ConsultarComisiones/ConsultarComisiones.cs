@@ -26,27 +26,27 @@ namespace AutoGestion.Vista
             dtpHasta.Value = DateTime.Today;
         }
 
-        private void btnFiltrar_Click_1(object sender, EventArgs e)
-        {
-            string estado = cmbEstado.SelectedItem.ToString();
-            DateTime desde = dtpDesde.Value.Date;
-            DateTime hasta = dtpHasta.Value.Date;
+        private void btnFiltrar_Click_1(object sender, EventArgs e) { }
+        //{
+        //    string estado = cmbEstado.SelectedItem.ToString();
+        //    DateTime desde = dtpDesde.Value.Date;
+        //    DateTime hasta = dtpHasta.Value.Date;
 
-            _comisionesFiltradas = _comisionBLL.ObtenerComisionesPorVendedorYFiltros(
-                Sesion.UsuarioActual.ID, estado, desde, hasta);
+        //    _comisionesFiltradas = _comisionBLL.ObtenerComisionesPorVendedorYFiltros(
+        //        Sesion.UsuarioActual.ID, estado, desde, hasta);
 
-            dgvComisiones.DataSource = _comisionesFiltradas.Select(c => new
-            {
-                ID = c.ID,
-                Fecha = c.Fecha.ToShortDateString(),
-                Cliente = $"{c.Venta.Cliente.Nombre} {c.Venta.Cliente.Apellido}",
-                Vehiculo = $"{c.Venta.Vehiculo.Marca} {c.Venta.Vehiculo.Modelo}",
-                Monto = c.Monto,
-                Estado = c.Estado
-            }).ToList();
+        //    dgvComisiones.DataSource = _comisionesFiltradas.Select(c => new
+        //    {
+        //        ID = c.ID,
+        //        Fecha = c.Fecha.ToShortDateString(),
+        //        Cliente = $"{c.Venta.Cliente.Nombre} {c.Venta.Cliente.Apellido}",
+        //        Vehiculo = $"{c.Venta.Vehiculo.Marca} {c.Venta.Vehiculo.Modelo}",
+        //        Monto = c.Monto,
+        //        Estado = c.Estado
+        //    }).ToList();
 
-            dgvComisiones.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-        }
+        //    dgvComisiones.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        //}
 
         private void btnDetalle_Click(object sender, EventArgs e)
         {

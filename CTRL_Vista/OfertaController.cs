@@ -10,52 +10,42 @@ namespace AutoGestion.CTRL_Vista
         private readonly OferenteBLL _oferenteBll = new();
         private readonly OfertaBLL _ofertaBll = new();
 
-        /// <summary> Busca un oferente por DNI y lo retorna como DTO, o null. </summary>
+        /// <summary>
+        /// Busca un oferente por DNI y lo retorna como DTO, o null si no existe.
+        /// </summary>
         public OferenteDto BuscarOferente(string dni)
         {
-            var ent = _oferenteBll.BuscarPorDni(dni);
-            return ent is null
+            var entidad = _oferenteBll.BuscarPorDni(dni);
+            return entidad is null
                 ? null
-                : OferenteDto.FromEntity(ent);
+                : OferenteDto.FromEntity(entidad);
         }
 
-        /// <summary> Registra un nuevo oferente y devuelve su DTO. </summary>
-        public OferenteDto RegistrarOferente(OferenteDto dto)
-        {
-            var ent = new Ent.Oferente
-            {
-                ID = GeneradorID.ObtenerID<Ent.Oferente>(),
-                Dni = dto.Dni,
-                Nombre = dto.Nombre,
-                Apellido = dto.Apellido,
-                Contacto = dto.Contacto
-            };
-            _oferenteBll.GuardarOferente(ent);
-            return OferenteDto.FromEntity(ent);
-        }
-
-        /// <summary> Crea y guarda una nueva oferta (y su vehículo). </summary>
+        /// <summary>
+        /// Registra un oferente nuevo (si no existía) y la oferta.
+        /// </summary>
         public bool RegistrarOferta(OfertaInputDto dto)
         {
-            // 1) Asegura que el oferente exista
-            var entOferente = _oferenteBll.BuscarPorDni(dto.Oferente.Dni)
-                              ?? new Ent.Oferente
-                              {
-                                  ID = GeneradorID.ObtenerID<Ent.Oferente>(),
-                                  Dni = dto.Oferente.Dni,
-                                  Nombre = dto.Oferente.Nombre,
-                                  Apellido = dto.Oferente.Apellido,
-                                  Contacto = dto.Oferente.Contacto
-                              };
-            if (entOferente.ID == 0)
+            // 1) Busco al oferente; si no existe, lo creo y guardo
+            var entOferente = _oferenteBll.BuscarPorDni(dto.Oferente.Dni);
+            if (entOferente == null)
+            {
+                entOferente = new Ent.Oferente
+                {
+                    ID = GeneradorID.ObtenerID<Ent.Oferente>(),
+                    Dni = dto.Oferente.Dni,
+                    Nombre = dto.Oferente.Nombre,
+                    Apellido = dto.Oferente.Apellido,
+                    Contacto = dto.Oferente.Contacto
+                };
                 _oferenteBll.GuardarOferente(entOferente);
+            }
 
-            // 2) Genera ID para el vehículo
+            // 2) Genero ID para el vehículo basándome en las ofertas previas
             var previas = _ofertaBll.ObtenerTodas();
-            int lastVehId = previas
-                .Select(o => o.Vehiculo?.ID ?? 0)
-                .DefaultIfEmpty(0)
-                .Max();
+            int lastVehId = previas.Select(o => o.Vehiculo?.ID ?? 0)
+                                  .DefaultIfEmpty(0)
+                                  .Max();
 
             var entVeh = new Ent.Vehiculo
             {
@@ -69,7 +59,7 @@ namespace AutoGestion.CTRL_Vista
                 Estado = "En evaluación"
             };
 
-            // 3) Arma la oferta
+            // 3) Armo la oferta con su nuevo ID
             var entOferta = new Ent.OfertaCompra
             {
                 ID = GeneradorID.ObtenerID<Ent.OfertaCompra>(),
@@ -78,8 +68,9 @@ namespace AutoGestion.CTRL_Vista
                 FechaInspeccion = dto.FechaInspeccion
             };
 
-            // 4) Guarda
+            // 4) Guardo la oferta
             _ofertaBll.RegistrarOferta(entOferta);
+
             return true;
         }
     }

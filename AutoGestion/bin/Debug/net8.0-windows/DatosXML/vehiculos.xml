@@ -220,4 +220,34 @@
     <Dominio>ZX 404 YC</Dominio>
     <Estado>En Proceso</Estado>
   </Vehiculo>
+  <Vehiculo>
+    <ID>23</ID>
+    <Marca>Toyota</Marca>
+    <Modelo>Prisma</Modelo>
+    <Año>100</Año>
+    <Color>rojo</Color>
+    <Km>0</Km>
+    <Dominio>cvb123</Dominio>
+    <Estado>Disponible</Estado>
+  </Vehiculo>
+  <Vehiculo>
+    <ID>24</ID>
+    <Marca>Peugeot</Marca>
+    <Modelo>Partner</Modelo>
+    <Año>100</Año>
+    <Color>Rojo</Color>
+    <Km>100</Km>
+    <Dominio>qaz123</Dominio>
+    <Estado>Disponible</Estado>
+  </Vehiculo>
+  <Vehiculo>
+    <ID>25</ID>
+    <Marca>patito</Marca>
+    <Modelo>3arroyos</Modelo>
+    <Año>1</Año>
+    <Color>Verde</Color>
+    <Km>1</Km>
+    <Dominio>wsx321</Dominio>
+    <Estado>En Proceso</Estado>
+  </Vehiculo>
 </ArrayOfVehiculo>

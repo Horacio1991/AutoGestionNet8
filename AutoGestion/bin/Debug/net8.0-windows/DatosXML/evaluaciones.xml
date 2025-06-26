@@ -40,4 +40,44 @@
     <EstadoDocumentacion>Bueno</EstadoDocumentacion>
     <Observaciones>Todo esta OK</Observaciones>
   </EvaluacionTecnica>
+  <EvaluacionTecnica>
+    <ID>5</ID>
+    <EstadoMotor>bueno</EstadoMotor>
+    <EstadoCarroceria>bueno</EstadoCarroceria>
+    <EstadoInterior>bueno</EstadoInterior>
+    <EstadoDocumentacion>bueno</EstadoDocumentacion>
+    <Observaciones>Bueno</Observaciones>
+  </EvaluacionTecnica>
+  <EvaluacionTecnica>
+    <ID>7</ID>
+    <EstadoMotor>ok</EstadoMotor>
+    <EstadoCarroceria>ok</EstadoCarroceria>
+    <EstadoInterior>ok</EstadoInterior>
+    <EstadoDocumentacion>ok</EstadoDocumentacion>
+    <Observaciones>ok</Observaciones>
+  </EvaluacionTecnica>
+  <EvaluacionTecnica>
+    <ID>7</ID>
+    <EstadoMotor>asd</EstadoMotor>
+    <EstadoCarroceria>asd</EstadoCarroceria>
+    <EstadoInterior>asd</EstadoInterior>
+    <EstadoDocumentacion>asd</EstadoDocumentacion>
+    <Observaciones>asd</Observaciones>
+  </EvaluacionTecnica>
+  <EvaluacionTecnica>
+    <ID>9</ID>
+    <EstadoMotor>bueno</EstadoMotor>
+    <EstadoCarroceria>bueno</EstadoCarroceria>
+    <EstadoInterior>muy bueno</EstadoInterior>
+    <EstadoDocumentacion>bueno</EstadoDocumentacion>
+    <Observaciones>Auto perfecto</Observaciones>
+  </EvaluacionTecnica>
+  <EvaluacionTecnica>
+    <ID>10</ID>
+    <EstadoMotor>ok</EstadoMotor>
+    <EstadoCarroceria>ok</EstadoCarroceria>
+    <EstadoInterior>ok</EstadoInterior>
+    <EstadoDocumentacion>ok</EstadoDocumentacion>
+    <Observaciones>ok prueba</Observaciones>
+  </EvaluacionTecnica>
 </ArrayOfEvaluacionTecnica>

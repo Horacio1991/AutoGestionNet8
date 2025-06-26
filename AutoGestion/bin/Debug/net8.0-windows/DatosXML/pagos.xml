@@ -160,4 +160,20 @@
     <Detalles>Se hace en 3 pagos en efectivo</Detalles>
     <FechaPago>2025-06-25T15:48:02.5210934-03:00</FechaPago>
   </Pago>
+  <Pago>
+    <ID>21</ID>
+    <TipoPago>Efectivo</TipoPago>
+    <Monto>10000000000</Monto>
+    <Cuotas>1</Cuotas>
+    <Detalles>123</Detalles>
+    <FechaPago>2025-06-26T15:57:50.4104286-03:00</FechaPago>
+  </Pago>
+  <Pago>
+    <ID>22</ID>
+    <TipoPago>Efectivo</TipoPago>
+    <Monto>123</Monto>
+    <Cuotas>1</Cuotas>
+    <Detalles>123</Detalles>
+    <FechaPago>2025-06-26T16:18:00.276677-03:00</FechaPago>
+  </Pago>
 </ArrayOfPago>

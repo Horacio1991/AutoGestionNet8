@@ -8,7 +8,6 @@ namespace AutoGestion.Vista
     public partial class RegistrarOferta : UserControl
     {
         private readonly OfertaController _ctrl = new();
-        private OferenteDto _oferente;
 
         public RegistrarOferta()
         {
@@ -17,19 +16,19 @@ namespace AutoGestion.Vista
 
         private void btnBuscarOferente_Click_1(object sender, EventArgs e)
         {
-            var dni = txtDni.Text.Trim();
+            string dni = txtDni.Text.Trim();
             if (string.IsNullOrEmpty(dni))
             {
                 MessageBox.Show("Ingrese un DNI válido.");
                 return;
             }
 
-            _oferente = _ctrl.BuscarOferente(dni);
-            if (_oferente != null)
+            var dto = _ctrl.BuscarOferente(dni);
+            if (dto != null)
             {
-                txtNombre.Text = _oferente.Nombre;
-                txtApellido.Text = _oferente.Apellido;
-                txtContacto.Text = _oferente.Contacto;
+                txtNombre.Text = dto.Nombre;
+                txtApellido.Text = dto.Apellido;
+                txtContacto.Text = dto.Contacto;
                 MessageBox.Show("Oferente encontrado.");
             }
             else
@@ -45,53 +44,50 @@ namespace AutoGestion.Vista
 
         private void btnGuardarOferta_Click(object sender, EventArgs e)
         {
-            // -- Validaciones básicas --
-            if (string.IsNullOrWhiteSpace(txtDni.Text)
-             || string.IsNullOrWhiteSpace(txtNombre.Text)
-             || string.IsNullOrWhiteSpace(txtApellido.Text)
-             || string.IsNullOrWhiteSpace(txtContacto.Text)
-             || string.IsNullOrWhiteSpace(txtMarca.Text)
-             || string.IsNullOrWhiteSpace(txtModelo.Text)
-             || string.IsNullOrWhiteSpace(txtColor.Text)
-             || string.IsNullOrWhiteSpace(txtDominio.Text))
+            // Validaciones...
+            if (string.IsNullOrWhiteSpace(txtDni.Text) ||
+                string.IsNullOrWhiteSpace(txtNombre.Text) ||
+                string.IsNullOrWhiteSpace(txtApellido.Text) ||
+                string.IsNullOrWhiteSpace(txtContacto.Text) ||
+                string.IsNullOrWhiteSpace(txtMarca.Text) ||
+                string.IsNullOrWhiteSpace(txtModelo.Text) ||
+                string.IsNullOrWhiteSpace(txtColor.Text) ||
+                string.IsNullOrWhiteSpace(txtDominio.Text))
             {
-                MessageBox.Show("Complete todos los campos.");
+                MessageBox.Show("Complete todos los campos.", "Atención",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // 1) Prepara los DTOs de entrada
-            var dtoOferente = new OferenteDto
+            var dto = new OfertaInputDto
             {
-                Dni = txtDni.Text.Trim(),
-                Nombre = txtNombre.Text.Trim(),
-                Apellido = txtApellido.Text.Trim(),
-                Contacto = txtContacto.Text.Trim()
-            };
-
-            var dtoVehiculo = new VehiculoDto
-            {
-                Marca = txtMarca.Text.Trim(),
-                Modelo = txtModelo.Text.Trim(),
-                Año = (int)numAnio.Value,
-                Color = txtColor.Text.Trim(),
-                Dominio = txtDominio.Text.Trim(),
-                Km = (int)numKm.Value
-            };
-
-            var input = new OfertaInputDto
-            {
-                Oferente = dtoOferente,
-                Vehiculo = dtoVehiculo,
+                Oferente = new OferenteDto
+                {
+                    Dni = txtDni.Text.Trim(),
+                    Nombre = txtNombre.Text.Trim(),
+                    Apellido = txtApellido.Text.Trim(),
+                    Contacto = txtContacto.Text.Trim()
+                },
+                Vehiculo = new VehiculoDto
+                {
+                    Marca = txtMarca.Text.Trim(),
+                    Modelo = txtModelo.Text.Trim(),
+                    Año = (int)numAnio.Value,
+                    Color = txtColor.Text.Trim(),
+                    Dominio = txtDominio.Text.Trim(),
+                    Km = (int)numKm.Value
+                },
                 FechaInspeccion = dtpFechaInspeccion.Value
             };
 
-            // 2) Llama al controller
-            bool ok = _ctrl.RegistrarOferta(input);
+            bool ok = _ctrl.RegistrarOferta(dto);
             MessageBox.Show(ok
-                ? "Oferta registrada correctamente."
-                : "Ocurrió un error al registrar la oferta.");
+                ? "Oferta y vehículo guardados correctamente."
+                : "Error al registrar la oferta.",
+                "Resultado", MessageBoxButtons.OK,
+                ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
 
-            // 3) Limpia el formulario
+            // Limpio
             txtDni.Clear();
             txtNombre.Clear();
             txtApellido.Clear();
@@ -103,8 +99,6 @@ namespace AutoGestion.Vista
             numAnio.Value = numAnio.Minimum;
             numKm.Value = 0;
         }
-
-
 
     }
 }

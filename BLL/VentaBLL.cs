@@ -138,6 +138,13 @@ namespace AutoGestion.BLL
                         .ToList();
         }
 
+        public List<Venta> ObtenerVentasAutorizadas()
+        {
+            return _repo.ObtenerTodos()
+                        .Where(v => string.Equals(v.Estado, "Autorizada", StringComparison.OrdinalIgnoreCase))
+                        .ToList();
+        }
+
 
     }
 }
