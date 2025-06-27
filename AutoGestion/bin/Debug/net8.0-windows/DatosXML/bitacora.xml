@@ -42,4 +42,22 @@
     <UsuarioID>1</UsuarioID>
     <UsuarioNombre>admin</UsuarioNombre>
   </Bitacora>
+  <Bitacora>
+    <FechaRegistro>2025-06-27T11:32:07.9074779-03:00</FechaRegistro>
+    <Detalle>backup</Detalle>
+    <UsuarioID>1</UsuarioID>
+    <UsuarioNombre>admin</UsuarioNombre>
+  </Bitacora>
+  <Bitacora>
+    <FechaRegistro>2025-06-27T11:32:37.1646118-03:00</FechaRegistro>
+    <Detalle>restore</Detalle>
+    <UsuarioID>1</UsuarioID>
+    <UsuarioNombre>admin</UsuarioNombre>
+  </Bitacora>
+  <Bitacora>
+    <FechaRegistro>2025-06-27T11:33:07.6911613-03:00</FechaRegistro>
+    <Detalle>restore</Detalle>
+    <UsuarioID>1</UsuarioID>
+    <UsuarioNombre>admin</UsuarioNombre>
+  </Bitacora>
 </ArrayOfBitacora>

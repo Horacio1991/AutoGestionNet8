@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfOfertaCompra xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <OfertaCompra>
+    <ID>1</ID>
+    <Oferente>
+      <ID>17</ID>
+      <Dni>55555555</Dni>
+      <Nombre>Hugo</Nombre>
+      <Apellido>Perez</Apellido>
+      <Contacto>hugo@gmail.com</Contacto>
+    </Oferente>
+    <Vehiculo>
+      <ID>23</ID>
+      <Marca>Toyota</Marca>
+      <Modelo>Etios</Modelo>
+      <Año>100</Año>
+      <Color>Violeta</Color>
+      <Km>100</Km>
+      <Dominio>ASD321</Dominio>
+      <Estado>Disponible</Estado>
+    </Vehiculo>
+    <FechaInspeccion>2025-06-27T07:53:03.9250681-03:00</FechaInspeccion>
+    <Estado>Registrada</Estado>
+  </OfertaCompra>
+</ArrayOfOfertaCompra>
