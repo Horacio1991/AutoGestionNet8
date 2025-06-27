@@ -42,5 +42,23 @@ namespace AutoGestion.CTRL_Vista
 
             return _comisionBll.RegistrarComision(com);
         }
+
+        /// Obtiene las comisiones de un vendedor según filtros de estado y fecha.
+        /// </summary>
+        public List<ComisionListDto> ObtenerComisiones(
+            int vendedorId,
+            string estado,
+            DateTime desde,
+            DateTime hasta)
+        {
+            var entidades = _comisionBll.ObtenerComisionesPorVendedorYFiltros(
+                vendedorId, estado, desde, hasta);
+
+            var lista = new List<ComisionListDto>();
+            foreach (var c in entidades)
+                lista.Add(ComisionListDto.FromEntity(c));
+            return lista;
+        }
     }
 }
+

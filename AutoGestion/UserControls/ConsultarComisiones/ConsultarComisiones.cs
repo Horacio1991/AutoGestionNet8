@@ -1,24 +1,20 @@
-﻿using AutoGestion.Entidades;
-using AutoGestion.BLL;
-using AutoGestion.Servicios;
+﻿using AutoGestion.CTRL_Vista;
+using AutoGestion.DTOs;
+using AutoGestion.Servicios; // Para Sesion
 
 
 namespace AutoGestion.Vista
 {
     public partial class ConsultarComisiones : UserControl
     {
-        private readonly ComisionBLL _comisionBLL = new();
-        //Lista para almacenar las comisiones filtradas
-        private List<Comision> _comisionesFiltradas;
+        private readonly ComisionController _ctrl = new ComisionController();
+        private List<ComisionListDto> _comisionesFiltradas;
 
         public ConsultarComisiones()
         {
             InitializeComponent();
-            ConfigurarControles();
-        }
 
-        private void ConfigurarControles()
-        {
+            // Inicializo filtros por defecto
             txtVendedor.Text = Sesion.UsuarioActual.Nombre;
             cmbEstado.Items.AddRange(new[] { "Aprobada", "Rechazada" });
             cmbEstado.SelectedIndex = 0;
@@ -26,47 +22,48 @@ namespace AutoGestion.Vista
             dtpHasta.Value = DateTime.Today;
         }
 
-        private void btnFiltrar_Click_1(object sender, EventArgs e) { }
-        //{
-        //    string estado = cmbEstado.SelectedItem.ToString();
-        //    DateTime desde = dtpDesde.Value.Date;
-        //    DateTime hasta = dtpHasta.Value.Date;
+        private void btnFiltrar_Click_1(object sender, EventArgs e)
+        {
+            var estado = cmbEstado.SelectedItem.ToString();
+            var desde = dtpDesde.Value.Date;
+            var hasta = dtpHasta.Value.Date;
+            var vendedorId = Sesion.UsuarioActual.ID;
 
-        //    _comisionesFiltradas = _comisionBLL.ObtenerComisionesPorVendedorYFiltros(
-        //        Sesion.UsuarioActual.ID, estado, desde, hasta);
+            _comisionesFiltradas = _ctrl.ObtenerComisiones(
+                vendedorId, estado, desde, hasta);
 
-        //    dgvComisiones.DataSource = _comisionesFiltradas.Select(c => new
-        //    {
-        //        ID = c.ID,
-        //        Fecha = c.Fecha.ToShortDateString(),
-        //        Cliente = $"{c.Venta.Cliente.Nombre} {c.Venta.Cliente.Apellido}",
-        //        Vehiculo = $"{c.Venta.Vehiculo.Marca} {c.Venta.Vehiculo.Modelo}",
-        //        Monto = c.Monto,
-        //        Estado = c.Estado
-        //    }).ToList();
+            dgvComisiones.DataSource = _comisionesFiltradas
+                .Select(c => new
+                {
+                    c.ID,
+                    c.Fecha,
+                    c.Cliente,
+                    c.Vehiculo,
+                    c.Monto,
+                    c.Estado
+                })
+                .ToList();
 
-        //    dgvComisiones.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-        //}
+            dgvComisiones.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvComisiones.ReadOnly = true;
+            dgvComisiones.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+        }
+
 
         private void btnDetalle_Click(object sender, EventArgs e)
         {
             if (dgvComisiones.CurrentRow == null) return;
 
             int id = Convert.ToInt32(dgvComisiones.CurrentRow.Cells["ID"].Value);
-            var comision = _comisionesFiltradas.FirstOrDefault(c => c.ID == id);
+            var com = _comisionesFiltradas.FirstOrDefault(c => c.ID == id);
+            if (com == null) return;
 
-            if (comision == null) return;
-
-            if (comision.Estado == "Aprobada")
-            {
+            if (com.Estado == "Aprobada")
                 MessageBox.Show("✅ Comisión aprobada.");
-            }
             else
-            {
-                MessageBox.Show($"❌ Comisión rechazada. Motivo: {comision.MotivoRechazo}");
-            }
+                MessageBox.Show($"❌ Comisión rechazada.\nMotivo: {com.MotivoRechazo}");
         }
 
-        
+
     }
 }

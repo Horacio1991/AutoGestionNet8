@@ -33,5 +33,33 @@ namespace AutoGestion.BLL
                    .Where(v => !conCom.Contains(v.ID))
                    .ToList();
         }
+
+        /// <summary>
+        /// Trae las comisiones de un vendedor dentro de un rango de fechas y estado.
+        /// </summary>
+        public List<Comision> ObtenerComisionesPorVendedorYFiltros(
+            int vendedorId,
+            string estado,
+            DateTime desde,
+            DateTime hasta)
+        {
+            // Leer todas
+            var todas = _repo.ObtenerTodos();
+
+            // Filtrar
+            return todas
+                .Where(c =>
+                    c.Venta?.Vendedor != null &&
+                    c.Venta.Vendedor.ID == vendedorId &&
+                    c.Estado.Equals(estado, StringComparison.OrdinalIgnoreCase) &&
+                    c.Fecha.Date >= desde.Date &&
+                    c.Fecha.Date <= hasta.Date
+                )
+                .OrderByDescending(c => c.Fecha)
+                .ToList();
+        }
     }
+
+
 }
+
