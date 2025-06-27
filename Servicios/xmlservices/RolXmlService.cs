@@ -1,32 +1,33 @@
 ﻿using System.Xml.Serialization;
-using AutoGestion.Servicios.Composite;// Define PermisoCompuesto
+using AutoGestion.Servicios.Composite;
 
 namespace AutoGestion.Servicios.XmlServices
-
 {
+    /// <summary>
+    /// Lee y guarda la lista de roles (PermisoCompuesto),
+    /// serializando también sus hijos (PermisoSimple o PermisoCompuesto).
+    /// </summary>
     public static class RolXmlService
     {
-        // Ruta del archivo XML donde se guardarán los roles
-        private static readonly string ruta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DatosXML", "roles.xml");
-
-        public static void Guardar(List<PermisoCompuesto> roles)
-        {
-            // Crea el archivo rolex.xml, crea un serializador XML y serializa la lista de roles en el archivo
-            using var writer = new StreamWriter(ruta);
-            var serializer = new XmlSerializer(typeof(List<PermisoCompuesto>));
-            serializer.Serialize(writer, roles);
-        }
+        private static readonly string _ruta = Path.Combine(
+            AppDomain.CurrentDomain.BaseDirectory, "DatosXML", "roles.xml");
 
         public static List<PermisoCompuesto> Leer()
         {
-            // Si no existe el archivo, devuelve una lista vacía
-            if (!File.Exists(ruta))
+            if (!File.Exists(_ruta))
                 return new List<PermisoCompuesto>();
 
-            // Abre el archivo en modo lectura, crea un serializador XML y deserializa el contenido del archivo en una lista de roles
-            using var reader = new StreamReader(ruta);
-            var serializer = new XmlSerializer(typeof(List<PermisoCompuesto>));
-            return (List<PermisoCompuesto>)serializer.Deserialize(reader);
+            using var reader = new StreamReader(_ruta);
+            var ser = new XmlSerializer(typeof(List<PermisoCompuesto>));
+            return (List<PermisoCompuesto>)ser.Deserialize(reader);
+        }
+
+        public static void Guardar(List<PermisoCompuesto> roles)
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(_ruta)!);
+            using var writer = new StreamWriter(_ruta);
+            var ser = new XmlSerializer(typeof(List<PermisoCompuesto>));
+            ser.Serialize(writer, roles);
         }
     }
 }

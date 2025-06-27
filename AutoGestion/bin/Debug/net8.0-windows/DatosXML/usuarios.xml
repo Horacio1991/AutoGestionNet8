@@ -4,48 +4,20 @@
     <ID>1</ID>
     <Nombre>admin</Nombre>
     <Clave>MQAyADMA</Clave>
-    <Permisos />
   </UsuarioSerializable>
   <UsuarioSerializable>
     <ID>2</ID>
-    <Nombre>Diego</Nombre>
+    <Nombre>Horacio</Nombre>
     <Clave>MQAyADMA</Clave>
-    <RolNombre>Vendedor</RolNombre>
-    <Permisos>
-      <string>Vendedores</string>
-    </Permisos>
   </UsuarioSerializable>
   <UsuarioSerializable>
     <ID>3</ID>
-    <Nombre>Oscar</Nombre>
+    <Nombre>Belen</Nombre>
     <Clave>MQAyADMA</Clave>
-    <RolNombre>Compras</RolNombre>
-    <Permisos>
-      <string>Compradores</string>
-    </Permisos>
   </UsuarioSerializable>
   <UsuarioSerializable>
     <ID>4</ID>
-    <Nombre>Mariela</Nombre>
+    <Nombre>Charo</Nombre>
     <Clave>MQAyADMA</Clave>
-    <RolNombre>Administracion</RolNombre>
-    <Permisos>
-      <string>Administrativos</string>
-    </Permisos>
-  </UsuarioSerializable>
-  <UsuarioSerializable>
-    <ID>5</ID>
-    <Nombre>prueba</Nombre>
-    <Clave>MQAyADMA</Clave>
-    <RolNombre>Administracion</RolNombre>
-    <Permisos>
-      <string>Administrativos</string>
-    </Permisos>
-  </UsuarioSerializable>
-  <UsuarioSerializable>
-    <ID>6</ID>
-    <Nombre>prueba2</Nombre>
-    <Clave>MQAyADMA</Clave>
-    <Permisos />
   </UsuarioSerializable>
 </ArrayOfUsuarioSerializable>

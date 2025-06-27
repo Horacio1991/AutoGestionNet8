@@ -59,27 +59,11 @@ namespace AutoGestion
             if (rol == null || string.IsNullOrWhiteSpace(texto))
                 return false;
 
-            foreach (var hijo in rol.ObtenerHijos())
-            {
-                if (hijo is PermisoCompleto pc)
-                {
-                    // Coincidencia directa por nombre
-                    if (string.Equals(pc.Nombre, texto, StringComparison.OrdinalIgnoreCase))
-                        return true;
-
-                    // Coincidencia por menú
-                    foreach (var menu in pc.MenuItems)
-                    {
-                        if (string.Equals(menu.Menu, texto, StringComparison.OrdinalIgnoreCase))
-                            return true;
-
-                        if (menu.Items.Any(item => string.Equals(item, texto, StringComparison.OrdinalIgnoreCase)))
-                            return true;
-                    }
-                }
-            }
-
-            return false;
+            // Cada hijo de un rol debería ser un PermisoSimple
+            // con Nombre == nombre de pantalla o menú.
+            return rol
+                .ObtenerHijos()
+                .Any(p => string.Equals(p.Nombre, texto, StringComparison.OrdinalIgnoreCase));
         }
 
         // Metodos para cargar UserControls en el panel de contenido

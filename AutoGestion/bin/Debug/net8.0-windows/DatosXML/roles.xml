@@ -6,10 +6,10 @@
   </PermisoCompuesto>
   <PermisoCompuesto>
     <ID>2</ID>
-    <Nombre>Compras</Nombre>
+    <Nombre>Encargado Compras</Nombre>
   </PermisoCompuesto>
   <PermisoCompuesto>
     <ID>3</ID>
-    <Nombre>Administracion</Nombre>
+    <Nombre>Administrativos</Nombre>
   </PermisoCompuesto>
 </ArrayOfPermisoCompuesto>
