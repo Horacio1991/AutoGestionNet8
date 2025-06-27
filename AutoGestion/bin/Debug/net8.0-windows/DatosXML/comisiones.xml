@@ -3,44 +3,88 @@
   <Comision>
     <ID>1</ID>
     <Venta>
-      <ID>2</ID>
+      <ID>1</ID>
       <Vendedor>
-        <ID>3</ID>
-        <Nombre>Belen</Nombre>
-        <FechaAlta>2025-06-02T10:01:02.8047323-03:00</FechaAlta>
+        <ID>1</ID>
+        <Nombre>admin</Nombre>
+        <FechaAlta>2025-06-27T07:58:03.3856017-03:00</FechaAlta>
       </Vendedor>
       <Cliente>
-        <ID>2</ID>
-        <Dni>30000002</Dni>
-        <Nombre>Lucía</Nombre>
-        <Apellido>Gómez</Apellido>
-        <Contacto>lucia.gomez@mail.com</Contacto>
-        <FechaRegistro>2024-05-02T00:00:00</FechaRegistro>
+        <ID>0</ID>
+        <Dni>36084790</Dni>
+        <Nombre>Horacio</Nombre>
+        <Apellido>Ortiz</Apellido>
+        <Contacto>horacio0291@gmail.com</Contacto>
+        <FechaRegistro>2025-06-27T07:58:03.3854389-03:00</FechaRegistro>
       </Cliente>
       <Vehiculo>
-        <ID>9</ID>
-        <Marca>Nissan</Marca>
-        <Modelo>Versa</Modelo>
-        <Año>2019</Año>
-        <Color>Azul</Color>
-        <Km>27000</Km>
-        <Dominio>YZA666</Dominio>
+        <ID>1</ID>
+        <Marca>Ford</Marca>
+        <Modelo>Focus</Modelo>
+        <Año>2021</Año>
+        <Color>Gris</Color>
+        <Km>15000</Km>
+        <Dominio>ABC123</Dominio>
         <Estado>Disponible</Estado>
       </Vehiculo>
       <Pago>
-        <ID>9</ID>
-        <TipoPago>Tarjeta de Crédito</TipoPago>
-        <Monto>1500</Monto>
-        <Cuotas>24</Cuotas>
-        <Detalles>Pago  a 2 años</Detalles>
-        <FechaPago>2025-06-02T10:01:28.097273-03:00</FechaPago>
+        <ID>1</ID>
+        <TipoPago>Efectivo</TipoPago>
+        <Monto>3000000</Monto>
+        <Cuotas>3</Cuotas>
+        <Detalles>Compra el vehiculo en 3 cuotas de 1000000</Detalles>
+        <FechaPago>2025-06-27T07:58:03.3130049-03:00</FechaPago>
       </Pago>
       <Estado>Entregada</Estado>
-      <Fecha>2025-06-02T10:01:28.1045575-03:00</Fecha>
+      <Fecha>2025-06-27T07:58:03.3855345-03:00</Fecha>
     </Venta>
-    <Porcentaje>0.082</Porcentaje>
-    <Monto>123</Monto>
+    <Porcentaje>0.05</Porcentaje>
+    <Monto>150000</Monto>
     <Estado>Aprobada</Estado>
-    <Fecha>2025-06-26T16:02:12.5686411-03:00</Fecha>
+    <Fecha>2025-06-27T08:33:48.7344807-03:00</Fecha>
+  </Comision>
+  <Comision>
+    <ID>2</ID>
+    <Venta>
+      <ID>2</ID>
+      <Vendedor>
+        <ID>1</ID>
+        <Nombre>admin</Nombre>
+        <FechaAlta>2025-06-27T08:34:36.7681619-03:00</FechaAlta>
+      </Vendedor>
+      <Cliente>
+        <ID>0</ID>
+        <Dni>36168344</Dni>
+        <Nombre>Belen</Nombre>
+        <Apellido>Uronich</Apellido>
+        <Contacto>beluronich@gmail.com</Contacto>
+        <FechaRegistro>2025-06-27T08:34:36.768105-03:00</FechaRegistro>
+      </Cliente>
+      <Vehiculo>
+        <ID>3</ID>
+        <Marca>Volkswagen</Marca>
+        <Modelo>Golf</Modelo>
+        <Año>2019</Año>
+        <Color>Rojo</Color>
+        <Km>30000</Km>
+        <Dominio>GHI789</Dominio>
+        <Estado>Disponible</Estado>
+      </Vehiculo>
+      <Pago>
+        <ID>2</ID>
+        <TipoPago>Efectivo</TipoPago>
+        <Monto>10000000</Monto>
+        <Cuotas>10</Cuotas>
+        <Detalles>Paga en 10 cuotas</Detalles>
+        <FechaPago>2025-06-27T08:34:36.7043183-03:00</FechaPago>
+      </Pago>
+      <Estado>Entregada</Estado>
+      <Fecha>2025-06-27T08:34:36.7681618-03:00</Fecha>
+    </Venta>
+    <Porcentaje>0</Porcentaje>
+    <Monto>0</Monto>
+    <Estado>Rechazada</Estado>
+    <Fecha>2025-06-27T08:35:21.4042068-03:00</Fecha>
+    <MotivoRechazo>La venta de este vehiculo no genera comision</MotivoRechazo>
   </Comision>
 </ArrayOfComision>

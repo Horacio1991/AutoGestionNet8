@@ -1,9 +1,6 @@
-﻿// AutoGestion.DTOs/VentaComisionDto.cs
-using AutoGestion.Entidades;
-using System;
-
-namespace AutoGestion.DTOs
+﻿namespace AutoGestion.DTOs
 {
+    /// <summary> Los datos que se muestran en el grid de comisiones pendientes. </summary>
     public class VentaComisionDto
     {
         public int VentaID { get; set; }

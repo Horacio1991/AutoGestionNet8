@@ -1,8 +1,4 @@
-﻿// Archivo: AutoGestion.CTRL_Vista/ComisionController.cs
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using AutoGestion.BLL;
+﻿using AutoGestion.BLL;
 using AutoGestion.DTOs;
 using AutoGestion.Entidades;
 
@@ -13,7 +9,7 @@ namespace AutoGestion.CTRL_Vista
         private readonly ComisionBLL _comisionBll = new ComisionBLL();
         private readonly VentaBLL _ventaBll = new VentaBLL();
 
-        /// <summary> Lista de ventas sin comisión. </summary>
+        /// <summary>Ventas entregadas sin comisión</summary>
         public List<VentaComisionDto> ObtenerVentasSinComision()
         {
             var ventas = _comisionBll.ObtenerVentasSinComision();
@@ -29,12 +25,11 @@ namespace AutoGestion.CTRL_Vista
             }).ToList();
         }
 
-        /// <summary> Registra la comisión (aprobada o rechazada). </summary>
+        /// <summary>Registra la comisión (aprobada o rechazada)</summary>
         public bool RegistrarComision(ComisionInputDto dto)
         {
-            var venta = _ventaBll.ObtenerDetalleVenta(dto.VentaID);
-            if (venta == null)
-                throw new ApplicationException("Venta no encontrada.");
+            var venta = _ventaBll.ObtenerDetalleVenta(dto.VentaID)
+                       ?? throw new ApplicationException("Venta no encontrada.");
 
             var com = new Comision
             {
@@ -42,13 +37,10 @@ namespace AutoGestion.CTRL_Vista
                 Porcentaje = dto.Monto / venta.Total,
                 Monto = dto.Monto,
                 Estado = dto.Estado,
-                Fecha = DateTime.Now
+                MotivoRechazo = dto.Estado == "Rechazada" ? dto.MotivoRechazo : null
             };
 
-            if (dto.Estado == "Rechazada")
-                com.MotivoRechazo = dto.MotivoRechazo;
-
-            return _comisionBll.Registrar(com);
+            return _comisionBll.RegistrarComision(com);
         }
     }
 }

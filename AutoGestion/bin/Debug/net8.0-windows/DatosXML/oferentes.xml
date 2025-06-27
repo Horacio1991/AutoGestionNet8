@@ -112,4 +112,11 @@
     <Apellido>prueba</Apellido>
     <Contacto>prueba@gmail.com</Contacto>
   </Oferente>
+  <Oferente>
+    <ID>17</ID>
+    <Dni>55555555</Dni>
+    <Nombre>Hugo</Nombre>
+    <Apellido>Perez</Apellido>
+    <Contacto>hugo@gmail.com</Contacto>
+  </Oferente>
 </ArrayOfOferente>

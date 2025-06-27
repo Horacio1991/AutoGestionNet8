@@ -30,9 +30,10 @@ namespace AutoGestion.BLL
                         .ToList();
         }
 
-        public Venta ObtenerDetalleVenta(int index)
+        public Venta ObtenerDetalleVenta(int id)
         {
-            return _repo.ObtenerTodos()[index];
+            return _repo.ObtenerTodos()
+                        .FirstOrDefault(v => v.ID == id);
         }
 
         // Cambia estado de venta a Autorizada o la rechaza si ya hay una venta autorizada para el mismo vehículo
@@ -142,6 +143,13 @@ namespace AutoGestion.BLL
         {
             return _repo.ObtenerTodos()
                         .Where(v => string.Equals(v.Estado, "Autorizada", StringComparison.OrdinalIgnoreCase))
+                        .ToList();
+        }
+
+        public List<Venta> ObtenerVentasEntregadas()
+        {
+            return _repo.ObtenerTodos()
+                        .Where(v => v.Estado == "Entregada")
                         .ToList();
         }
 

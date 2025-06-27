@@ -1,8 +1,4 @@
-﻿// Archivo: AutoGestion.BLL/ComisionBLL.cs
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using AutoGestion.Entidades;
+﻿using AutoGestion.Entidades;
 using AutoGestion.DAO.Repositorios;
 using AutoGestion.Servicios.Utilidades;
 
@@ -14,9 +10,9 @@ namespace AutoGestion.BLL
         private readonly VentaBLL _ventaBll = new VentaBLL();
 
         /// <summary>
-        /// Registra la comisión y devuelve true si tuvo éxito.
+        /// Registra la comisión en XML.
         /// </summary>
-        public bool Registrar(Comision comision)
+        public bool RegistrarComision(Comision comision)
         {
             comision.ID = GeneradorID.ObtenerID<Comision>();
             comision.Fecha = DateTime.Now;
@@ -25,15 +21,17 @@ namespace AutoGestion.BLL
         }
 
         /// <summary>
-        /// Obtiene todas las ventas autorizadas que aún no tienen comisión asociada.
+        /// Devuelve las ventas entregadas que aún no tienen comisión.
         /// </summary>
         public List<Venta> ObtenerVentasSinComision()
         {
-            var todas = _ventaBll.ObtenerVentasAutorizadas();
+            var entregadas = _ventaBll.ObtenerVentasEntregadas();
             var conCom = _repo.ObtenerTodos()
                               .Select(c => c.Venta.ID)
                               .ToHashSet();
-            return todas.Where(v => !conCom.Contains(v.ID)).ToList();
+            return entregadas
+                   .Where(v => !conCom.Contains(v.ID))
+                   .ToList();
         }
     }
 }
