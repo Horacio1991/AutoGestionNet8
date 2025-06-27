@@ -1,246 +1,129 @@
-﻿using AutoGestion.BLL;
+﻿using AutoGestion.CTRL_Vista;
+using AutoGestion.DTOs;
 using System.Windows.Forms.DataVisualization.Charting;
-
 namespace Vista.UserControls.Dashboard
 {
     public partial class Dashboard : UserControl
     {
-        // Capa de negocio para obtener ventas
-        private readonly VentaBLL _ventaBLL = new();
+        private readonly DashboardController _ctrl = new();
 
         public Dashboard()
         {
             InitializeComponent();
 
-            // Configuramos el combo con los filtros de periodo
             cmbFiltroPeriodo.Items.AddRange(new object[]
             {
-                "Hoy",
-                "Últimos 7 días",
-                "Últimos 30 días"
+                "Hoy", "Últimos 7 días", "Últimos 30 días"
             });
-            cmbFiltroPeriodo.SelectedIndex = 0; // Por defecto "Hoy"
-
-            // Primera carga
+            cmbFiltroPeriodo.SelectedIndex = 0;
             AplicarFiltro();
         }
 
-        // Cuando cambia el filtro de periodo, recargamos todo
         private void cmbFiltroPeriodo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            AplicarFiltro();
-        }
+            => AplicarFiltro();
 
-       
+
         // Determina el rango de fechas según el filtro seleccionado
         // y actualiza ambos gráficos (ventas y ranking).
-       
-        private void AplicarFiltro()
-        {
-            DateTime hoy = DateTime.Today;
-            DateTime desde, hasta;
 
-            switch (cmbFiltroPeriodo.SelectedItem?.ToString())
+         private void AplicarFiltro()
+        {
+            DateTime hoy = DateTime.Today, desde, hasta;
+            switch (cmbFiltroPeriodo.SelectedItem as string)
             {
                 case "Hoy":
-                    desde = hasta = hoy;
-                    break;
+                    desde = hasta = hoy; break;
                 case "Últimos 7 días":
-                    desde = hoy.AddDays(-6);
-                    hasta = hoy;
-                    break;
+                    desde = hoy.AddDays(-6); hasta = hoy; break;
                 case "Últimos 30 días":
-                    desde = hoy.AddDays(-29);
-                    hasta = hoy;
-                    break;
+                    desde = hoy.AddDays(-29); hasta = hoy; break;
                 default:
-                    desde = hasta = hoy;
-                    break;
+                    desde = hasta = hoy; break;
             }
 
-            CargarVentas(desde, hasta);
-            CargarRanking(desde, hasta);
+            // 1) Total facturado
+            var total = _ctrl.ObtenerTotalFacturado(desde, hasta);
+            lblTotalFacturado.Text = $"{ObtenerTextoPeriodo()}: {total:C2}";
+
+            // 2) Ventas por día
+            var ventas = _ctrl.ObtenerVentasFiltradas(desde, hasta);
+            dgvVentas.DataSource = ventas;
+            dgvVentas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+            // 3) Rango de fechas para el gráfico
+            CargarGraficoVentas(ventas);
+
+            // 4) Ranking
+            var ranking = _ctrl.ObtenerRanking(desde, hasta);
+            dgvRanking.DataSource = ranking;
+            dgvRanking.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            CargarGraficoRanking(ranking);
         }
 
-        #region Ventas por día
-
-       
-        // Carga la tabla y gráfico de ventas facturadas/entregadas
-        // entre las fechas 'desde' y 'hasta'.
-       
-        private void CargarVentas(DateTime desde, DateTime hasta)
+        private void CargarGraficoVentas(List<DashboardVentaDto> ventas)
         {
-            // 1. Traer sólo las ventas facturadas o entregadas dentro del rango
-            var ventas = _ventaBLL.ObtenerTodas()
-                .Where(v =>
-                    (v.Estado == "Facturada" || v.Estado == "Entregada") &&
-                    v.Fecha.Date >= desde && v.Fecha.Date <= hasta
-                )
-                .ToList();
-
-            // 2. Mostrar en el DataGridView
-            dgvVentas.DataSource = ventas
-                .Select(v => new
-                {
-                    Fecha = v.Fecha.ToShortDateString(),
-                    Cliente = $"{v.Cliente?.Nombre} {v.Cliente?.Apellido}",
-                    Vehículo = $"{v.Vehiculo?.Marca} {v.Vehiculo?.Modelo} ({v.Vehiculo?.Dominio})",
-                    Total = v.Total
-                })
-                .ToList();
-            dgvVentas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvVentas.ReadOnly = true;
-            dgvVentas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-
-            // 3. Total facturado (se muestra en un Label)
-            decimal total = ventas.Sum(v => v.Total);
-            lblTotalFacturado.Text = $"{ObtenerTextoPeriodo()}: ${total:N2}";
-
-            // 4. Agrupar por fecha para el gráfico de barras
-            var agrupadas = ventas
-                .GroupBy(v => v.Fecha.Date)
-                .OrderBy(g => g.Key)
-                .Select(g => new
-                {
-                    Fecha = g.Key.ToString("dd/MM/yyyy"),
-                    Total = g.Sum(v => v.Total)
-                })
-                .ToList();
-
-            // 5. Preparamos el chart
             chartVentas.Series.Clear();
-            chartVentas.ChartAreas[0].AxisX.CustomLabels.Clear();
-
             var serie = new Series("Ventas")
             {
                 ChartType = SeriesChartType.Column,
-                IsValueShownAsLabel = true,
-                Color = Color.SkyBlue
+                IsValueShownAsLabel = true
             };
+            chartVentas.ChartAreas[0].AxisX.CustomLabels.Clear();
 
-            int idx = 1;
-            foreach (var item in agrupadas)
+            var porDia = ventas
+                .GroupBy(v => v.Fecha)
+                .Select(g => new { Fecha = g.Key, Total = g.Sum(x => x.Total) })
+                .ToList();
+
+            for (int i = 0; i < porDia.Count; i++)
             {
-                // El eje X maneja índices numéricos; luego ponemos etiquetas manuales
-                serie.Points.AddXY(idx, item.Total);
-                serie.Points[idx - 1].ToolTip = $"{item.Fecha}: ${item.Total:N0}";
-
-                // Etiqueta debajo de cada barra con la fecha
-                chartVentas.ChartAreas[0].AxisX.CustomLabels.Add(new CustomLabel
-                {
-                    FromPosition = idx - 0.5,
-                    ToPosition = idx + 0.5,
-                    Text = item.Fecha
-                });
-
-                idx++;
+                var item = porDia[i];
+                serie.Points.AddXY(i + 1, item.Total);
+                // Tooltip con fecha y total
+                serie.Points[i].ToolTip = $"{item.Fecha}: {item.Total:C2}";
+                chartVentas.ChartAreas[0].AxisX.CustomLabels.Add(
+                    new CustomLabel(i + 0.5, i + 1.5, item.Fecha, 0, LabelMarkStyle.None)
+                );
             }
 
             chartVentas.Series.Add(serie);
-
-            // Uniformizar ancho de columnas y márgenes
-            serie["PointWidth"] = "0.2";
-            chartVentas.ChartAreas[0].AxisX.IsMarginVisible = true;
-
-            // Títulos y formato de ejes
-            var areaV = chartVentas.ChartAreas[0];
-            areaV.AxisX.Title = "Día con ventas";
-            areaV.AxisX.Interval = 1;
-            areaV.AxisX.LabelStyle.Angle = 0;
-
-            areaV.AxisY.Title = "Monto Vendido ($)";
-            areaV.AxisY.LabelStyle.Format = "C0";
-
-            // Opcional: ocultar la leyenda
+            chartVentas.ChartAreas[0].AxisX.Interval = 1;
             chartVentas.Legends[0].Enabled = false;
         }
 
-        #endregion
 
-        #region Ranking de vendedores
-
-      
-        /// Muestra un ranking horizontal de facturación por vendedor
-        /// dentro del mismo rango de fechas.
-      
-        private void CargarRanking(DateTime desde, DateTime hasta)
+        private void CargarGraficoRanking(List<DashboardRankingDto> ranking)
         {
-            // 1. Mismo filtro de ventas
-            var ventas = _ventaBLL.ObtenerTodas()
-                .Where(v =>
-                    (v.Estado == "Facturada" || v.Estado == "Entregada") &&
-                    v.Fecha.Date >= desde && v.Fecha.Date <= hasta
-                )
-                .ToList();
-
-            // 2. Agrupar por vendedor y ordenar de mayor a menor total
-            var ranking = ventas
-                .GroupBy(v => v.Vendedor?.Nombre)
-                .Where(g => !string.IsNullOrWhiteSpace(g.Key))
-                .Select(g => new
-                {
-                    Vendedor = g.Key,
-                    Total = g.Sum(v => v.Total)
-                })
-                .OrderByDescending(x => x.Total)
-                .ToList();
-
-            // 3. Mostrar en la tabla
-            dgvRanking.DataSource = ranking;
-            dgvRanking.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvRanking.ReadOnly = true;
-            dgvRanking.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-
-            // 4. Preparar gráfico de barras horizontales
             chartRanking.Series.Clear();
-            chartRanking.ChartAreas[0].AxisY.CustomLabels.Clear();
-
-            var serie = new Series("Facturación")
+            var serie = new Series("Ranking")
             {
                 ChartType = SeriesChartType.Bar,
-                IsValueShownAsLabel = true,
-                Color = Color.MediumSeaGreen
+                IsValueShownAsLabel = true
             };
+            chartRanking.ChartAreas[0].AxisY.CustomLabels.Clear();
 
-            int idx = 1;
-            foreach (var item in ranking)
+            for (int i = 0; i < ranking.Count; i++)
             {
-                // Igual que antes, usamos índice numérico y etiquetas manuales
-                serie.Points.AddXY(idx, item.Total);
-                serie.Points[idx - 1].ToolTip = $"{item.Vendedor}: ${item.Total:N0}";
+                var item = ranking[i];
+                // Añadimos la barra:
+                serie.Points.AddXY(i + 1, item.Total);
+                // Y establecemos el tooltip:
+                serie.Points[i].ToolTip = $"{item.Vendedor}: {item.Total:C2}";
 
-                chartRanking.ChartAreas[0].AxisY.CustomLabels.Add(new CustomLabel
-                {
-                    FromPosition = idx - 0.5,
-                    ToPosition = idx + 0.5,
-                    Text = item.Vendedor
-                });
-
-                idx++;
+                // Seguimos poniendo la etiqueta en el eje Y:
+                chartRanking.ChartAreas[0].AxisY.CustomLabels.Add(
+                    new CustomLabel(i + 0.5, i + 1.5, item.Vendedor, 0, LabelMarkStyle.None)
+                );
             }
 
             chartRanking.Series.Add(serie);
-
-            // Configuración de ejes
-            var areaR = chartRanking.ChartAreas[0];
-            areaR.AxisX.Title = "Monto Vendido ($)";
-            areaR.AxisX.LabelStyle.Format = "C0";
-
-            areaR.AxisY.Title = "Vendedor";
-            areaR.AxisY.Interval = 1;
-            // Ocultamos las líneas y ticks para dejar sólo los nombres
-            areaR.AxisY.LabelStyle.Enabled = false;
-            areaR.AxisY.MajorTickMark.Enabled = false;
-            areaR.AxisY.LineWidth = 0;
-
+            chartRanking.ChartAreas[0].AxisY.Interval = 1;
             chartRanking.Legends[0].Enabled = false;
         }
 
-        #endregion
 
-        
         // Traduce el filtro seleccionado en el combo a un texto para el label.
-     
+
         private string ObtenerTextoPeriodo()
         {
             return cmbFiltroPeriodo.SelectedItem?.ToString() switch

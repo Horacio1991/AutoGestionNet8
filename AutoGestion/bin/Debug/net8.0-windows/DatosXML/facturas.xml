@@ -48,4 +48,28 @@
     <Precio>10000000</Precio>
     <Fecha>2025-06-27T08:34:53.4346765-03:00</Fecha>
   </Factura>
+  <Factura>
+    <ID>3</ID>
+    <Cliente>
+      <ID>0</ID>
+      <Dni>36168344</Dni>
+      <Nombre>Belen</Nombre>
+      <Apellido>Uronich</Apellido>
+      <Contacto>beluronich@gmail.com</Contacto>
+      <FechaRegistro>2025-06-27T11:09:29.874659-03:00</FechaRegistro>
+    </Cliente>
+    <Vehiculo>
+      <ID>18</ID>
+      <Marca>Toyota</Marca>
+      <Modelo>Etios</Modelo>
+      <Año>2021</Año>
+      <Color>Negro</Color>
+      <Km>12000</Km>
+      <Dominio>ZAB606</Dominio>
+      <Estado>Disponible</Estado>
+    </Vehiculo>
+    <FormaPago>Efectivo</FormaPago>
+    <Precio>43000000</Precio>
+    <Fecha>2025-06-27T11:10:14.2078631-03:00</Fecha>
+  </Factura>
 </ArrayOfFactura>

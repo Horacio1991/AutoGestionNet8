@@ -16,4 +16,12 @@
     <Detalles>Paga en 10 cuotas</Detalles>
     <FechaPago>2025-06-27T08:34:36.7043183-03:00</FechaPago>
   </Pago>
+  <Pago>
+    <ID>3</ID>
+    <TipoPago>Efectivo</TipoPago>
+    <Monto>43000000</Monto>
+    <Cuotas>1</Cuotas>
+    <Detalles>Pago contado</Detalles>
+    <FechaPago>2025-06-27T11:09:29.7561058-03:00</FechaPago>
+  </Pago>
 </ArrayOfPago>
