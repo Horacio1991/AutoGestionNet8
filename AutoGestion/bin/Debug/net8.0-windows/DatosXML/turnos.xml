@@ -122,7 +122,32 @@
     </Vehiculo>
     <Fecha>2025-06-09T00:00:00-03:00</Fecha>
     <Hora>PT0S</Hora>
-    <Asistencia>Pendiente</Asistencia>
-    <Observaciones />
+    <Asistencia>No asistió</Asistencia>
+    <Observaciones>No se presento</Observaciones>
+  </Turno>
+  <Turno>
+    <ID>6</ID>
+    <Cliente>
+      <ID>13</ID>
+      <Dni>53815805</Dni>
+      <Nombre>Charo</Nombre>
+      <Apellido>Ortiz</Apellido>
+      <Contacto>charo.ortiz2014@gmail.com</Contacto>
+      <FechaRegistro>2025-05-30T09:03:50.4051418-03:00</FechaRegistro>
+    </Cliente>
+    <Vehiculo>
+      <ID>23</ID>
+      <Marca>Toyota</Marca>
+      <Modelo>Etios</Modelo>
+      <Año>100</Año>
+      <Color>Violeta</Color>
+      <Km>100</Km>
+      <Dominio>ASD321</Dominio>
+      <Estado>Disponible</Estado>
+    </Vehiculo>
+    <Fecha>2025-06-27T00:00:00-03:00</Fecha>
+    <Hora>PT9H30M</Hora>
+    <Asistencia>Asistió</Asistencia>
+    <Observaciones>Le gusto el vehiculo</Observaciones>
   </Turno>
 </ArrayOfTurno>

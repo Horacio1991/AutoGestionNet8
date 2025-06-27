@@ -1,17 +1,18 @@
-﻿using AutoGestion.BLL;
+﻿using AutoGestion.CTRL_Vista;
+using AutoGestion.DTOs;
 
 
 namespace AutoGestion.Vista
 {
     public partial class RegistrarTurno : UserControl
     {
-        private readonly ClienteBLL _clienteBLL = new();
-        private readonly VehiculoBLL _vehiculoBLL = new();
-        private readonly TurnoBLL _turnoBLL = new();
+        private readonly RegistrarTurnoController _ctrl = new();
+        private List<VehiculoTurnoDto> _vehiculos;
 
         public RegistrarTurno()
         {
             InitializeComponent();
+            Load += RegistrarTurno_Load_1;
 
             dtpFecha.Format = DateTimePickerFormat.Short;
             dtpHora.Format = DateTimePickerFormat.Time;
@@ -21,25 +22,30 @@ namespace AutoGestion.Vista
 
         private void RegistrarTurno_Load_1(object sender, EventArgs e)
         {
+            CargarVehiculos();
+        }
+
+        private void CargarVehiculos()
+        {
+            _vehiculos = _ctrl.ObtenerVehiculosParaTurno();
             dgvVehiculos.DataSource = null;
-            dgvVehiculos.DataSource = _vehiculoBLL.ObtenerDisponibles()
+            dgvVehiculos.DataSource = _vehiculos
                 .Select(v => new
                 {
-                    Modelo = $"{v.Marca} {v.Modelo}",
-                    Dominio = v.Dominio
-                }).ToList();
-
-            dgvVehiculos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvVehiculos.ReadOnly = true;
-            dgvVehiculos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                    v.ID,
+                    v.Dominio,
+                    v.Marca,
+                    v.Modelo
+                })
+                .ToList();
+            dgvVehiculos.ClearSelection();
         }
 
         private void dgvVehiculos_CellClick_1(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
-            {
-                txtDominio.Text = dgvVehiculos.Rows[e.RowIndex].Cells["Dominio"].Value.ToString();
-            }
+            if (e.RowIndex < 0) return;
+            var row = dgvVehiculos.Rows[e.RowIndex];
+            txtDominio.Text = row.Cells["Dominio"].Value.ToString();
         }
 
         private void dtpHora_ValueChanged_1(object sender, EventArgs e)
@@ -54,45 +60,42 @@ namespace AutoGestion.Vista
 
         private void btnRegistrar_Click(object sender, EventArgs e)
         {
-            string dni = txtDniCliente.Text.Trim();
-            string dominio = txtDominio.Text.Trim();
+            var dni = txtDniCliente.Text.Trim();
+            var dominio = txtDominio.Text.Trim();
+            var fecha = dtpFecha.Value.Date;
+            var hora = dtpHora.Value.TimeOfDay;
 
             if (string.IsNullOrEmpty(dni) || string.IsNullOrEmpty(dominio))
             {
-                MessageBox.Show("Debe completar DNI y Dominio.");
+                MessageBox.Show("Ingrese DNI de cliente y dominio de vehículo.",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            var cliente = _clienteBLL.BuscarClientePorDNI(dni);
-            if (cliente == null)
+            var dto = new TurnoInputDto
             {
-                MessageBox.Show("Cliente no encontrado.");
-                return;
-            }
+                DniCliente = dni,
+                DominioVehiculo = dominio,
+                Fecha = fecha,
+                Hora = hora
+            };
 
-            var vehiculo = _vehiculoBLL.BuscarVehiculoPorDominio(dominio);
-            if (vehiculo == null || vehiculo.Estado != "Disponible")
+            try
             {
-                MessageBox.Show("Vehículo no disponible.");
-                return;
+                _ctrl.RegistrarTurno(dto);
+                MessageBox.Show("Turno registrado correctamente.",
+                                "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txtDniCliente.Clear();
+                txtDominio.Clear();
+                CargarVehiculos();
             }
-
-            DateTime fecha = dtpFecha.Value.Date;
-            TimeSpan hora = dtpHora.Value.TimeOfDay;
-
-            if (!_turnoBLL.EstaDisponible(fecha, hora, vehiculo))
+            catch (Exception ex)
             {
-                MessageBox.Show("Ya existe un turno para ese día y hora con ese vehículo.");
-                return;
+                MessageBox.Show($"No se pudo registrar el turno: {ex.Message}",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            _turnoBLL.RegistrarTurno(cliente, vehiculo, fecha, hora);
-            MessageBox.Show("Turno registrado con éxito.");
-
-            txtDniCliente.Clear();
-            txtDominio.Clear();
         }
 
-        
+
     }
 }
