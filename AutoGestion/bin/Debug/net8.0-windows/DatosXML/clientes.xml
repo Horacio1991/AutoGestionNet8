@@ -128,4 +128,12 @@
     <Contacto>prueba@prueba.com</Contacto>
     <FechaRegistro>2025-06-25T14:45:14.1375059-03:00</FechaRegistro>
   </Cliente>
+  <Cliente>
+    <ID>17</ID>
+    <Dni>987654321</Dni>
+    <Nombre>Prueba</Nombre>
+    <Apellido>Cliente</Apellido>
+    <Contacto>prueba@gmail.com</Contacto>
+    <FechaRegistro>2025-06-30T14:37:09.21801-03:00</FechaRegistro>
+  </Cliente>
 </ArrayOfCliente>

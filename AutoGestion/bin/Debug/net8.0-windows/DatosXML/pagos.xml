@@ -24,4 +24,12 @@
     <Detalles>Pago contado</Detalles>
     <FechaPago>2025-06-27T11:09:29.7561058-03:00</FechaPago>
   </Pago>
+  <Pago>
+    <ID>4</ID>
+    <TipoPago>Transferencia</TipoPago>
+    <Monto>45000000</Monto>
+    <Cuotas>1</Cuotas>
+    <Detalles>Transferencia en 1 pago</Detalles>
+    <FechaPago>2025-06-30T14:37:41.2452611-03:00</FechaPago>
+  </Pago>
 </ArrayOfPago>

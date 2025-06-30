@@ -72,4 +72,28 @@
     <Precio>43000000</Precio>
     <Fecha>2025-06-27T11:10:14.2078631-03:00</Fecha>
   </Factura>
+  <Factura>
+    <ID>4</ID>
+    <Cliente>
+      <ID>0</ID>
+      <Dni>987654321</Dni>
+      <Nombre>Prueba</Nombre>
+      <Apellido>Cliente</Apellido>
+      <Contacto>prueba@gmail.com</Contacto>
+      <FechaRegistro>2025-06-30T14:37:41.3991532-03:00</FechaRegistro>
+    </Cliente>
+    <Vehiculo>
+      <ID>2</ID>
+      <Marca>Chevrolet</Marca>
+      <Modelo>Cruze</Modelo>
+      <Año>2020</Año>
+      <Color>Negro</Color>
+      <Km>20000</Km>
+      <Dominio>DEF456</Dominio>
+      <Estado>Disponible</Estado>
+    </Vehiculo>
+    <FormaPago>Transferencia</FormaPago>
+    <Precio>45000000</Precio>
+    <Fecha>2025-06-30T14:37:52.4031569-03:00</Fecha>
+  </Factura>
 </ArrayOfFactura>

@@ -130,4 +130,47 @@
     <Estado>Aprobada</Estado>
     <Fecha>2025-06-27T11:10:51.6705329-03:00</Fecha>
   </Comision>
+  <Comision>
+    <ID>4</ID>
+    <Venta>
+      <ID>4</ID>
+      <Vendedor>
+        <ID>1</ID>
+        <Nombre>admin</Nombre>
+        <FechaAlta>2025-06-30T14:37:41.3992722-03:00</FechaAlta>
+      </Vendedor>
+      <Cliente>
+        <ID>0</ID>
+        <Dni>987654321</Dni>
+        <Nombre>Prueba</Nombre>
+        <Apellido>Cliente</Apellido>
+        <Contacto>prueba@gmail.com</Contacto>
+        <FechaRegistro>2025-06-30T14:37:41.3991532-03:00</FechaRegistro>
+      </Cliente>
+      <Vehiculo>
+        <ID>2</ID>
+        <Marca>Chevrolet</Marca>
+        <Modelo>Cruze</Modelo>
+        <Año>2020</Año>
+        <Color>Negro</Color>
+        <Km>20000</Km>
+        <Dominio>DEF456</Dominio>
+        <Estado>Disponible</Estado>
+      </Vehiculo>
+      <Pago>
+        <ID>4</ID>
+        <TipoPago>Transferencia</TipoPago>
+        <Monto>45000000</Monto>
+        <Cuotas>1</Cuotas>
+        <Detalles>Transferencia en 1 pago</Detalles>
+        <FechaPago>2025-06-30T14:37:41.2452611-03:00</FechaPago>
+      </Pago>
+      <Estado>Entregada</Estado>
+      <Fecha>2025-06-30T14:37:41.3992716-03:00</Fecha>
+    </Venta>
+    <Porcentaje>2.7360694</Porcentaje>
+    <Monto>123123123</Monto>
+    <Estado>Aprobada</Estado>
+    <Fecha>2025-06-30T14:38:49.390148-03:00</Fecha>
+  </Comision>
 </ArrayOfComision>
