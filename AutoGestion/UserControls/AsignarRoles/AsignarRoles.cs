@@ -1,12 +1,13 @@
-﻿using System;
+﻿using AutoGestion.DAO.Modelos;
+using AutoGestion.Servicios.Composite;
+using AutoGestion.Servicios.Encriptacion;
+using AutoGestion.Servicios.Utilidades;
+using AutoGestion.Servicios.XmlServices;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using AutoGestion.DAO.Modelos;
-using AutoGestion.Servicios.Composite;
-using AutoGestion.Servicios.Utilidades;
-using AutoGestion.Servicios.XmlServices;
 
 namespace AutoGestion.Vista
 {
@@ -64,7 +65,15 @@ namespace AutoGestion.Vista
 
             // Usuarios + asociación de rol
             tvUsuarios.AfterSelect += TvUsuarios_AfterSelect;
-            btnAsociarRolAUsuario.Click += BtnAsociarRolAUsuario_Click;
+            btnAsociarRolAUsuario.Click += btnAsociarRolAUsuario_Click_1;
+
+            // Usuarios
+            tvUsuarios.AfterSelect += TvUsuarios_AfterSelect;
+            btnAsociarRolAUsuario.Click += btnAsociarRolAUsuario_Click_1;
+            btnQuitarRolUsuario.Click += btnQuitarRolUsuario_Click;
+
+            // Nuevo: checkbox
+            chkEncriptar.CheckedChanged += ChkEncriptar_CheckedChanged;
         }
 
         #region Plantillas de Permisos compuestos
@@ -281,12 +290,39 @@ namespace AutoGestion.Vista
         {
             if (e.Node?.Tag is Usuario usr)
             {
+                // Cargar nombre
                 txtNombreUsuario.Text = usr.Nombre;
+                // Cargar ID
+                txtIdUsuario.Text = usr.ID.ToString();
+                // Cargar contraseña encriptada
+                txtContrasenaUsuario.Text = usr.Clave;
+                // Mostrar encriptada por defecto
+                chkEncriptar.Checked = false;
+
+                // Refrescar permisos
                 CargarTreeViewPermisosPorUsuario(usr);
             }
         }
 
-        private void BtnAsociarRolAUsuario_Click(object sender, EventArgs e)
+        // Maneja el CheckedChanged para mostrar/ocultar encriptación
+        private void ChkEncriptar_CheckedChanged(object sender, EventArgs e)
+        {
+            if (tvUsuarios.SelectedNode?.Tag is not Usuario usr)
+                return;
+
+            if (chkEncriptar.Checked)
+            {
+                // Muestro desencriptada
+                txtContrasenaUsuario.Text = Encriptacion.DesencriptarPassword(usr.Clave);
+            }
+            else
+            {
+                // Vuelvo a la encriptada
+                txtContrasenaUsuario.Text = usr.Clave;
+            }
+        }
+
+        private void btnAsociarRolAUsuario_Click_1(object sender, EventArgs e)
         {
             if (tvUsuarios.SelectedNode?.Tag is not Usuario usr)
             {
@@ -315,6 +351,40 @@ namespace AutoGestion.Vista
         }
 
         #endregion
+
+        private void btnQuitarRolUsuario_Click(object sender, EventArgs e)
+        {
+            // 1) Debe haber un usuario seleccionado
+            if (tvUsuarios.SelectedNode?.Tag is not Usuario usr)
+            {
+                MessageBox.Show("Seleccioná un usuario.");
+                return;
+            }
+
+            // 2) Verifico que tenga rol asignado
+            if (usr.Rol == null)
+            {
+                MessageBox.Show("Ese usuario no tiene ningún rol asignado.");
+                return;
+            }
+
+            // 3) Confirmación
+            var nombreRol = (usr.Rol as PermisoCompuesto)?.Nombre ?? "(desconocido)";
+            if (MessageBox.Show(
+                    $"¿Quitar el rol '{nombreRol}' al usuario '{usr.Nombre}'?",
+                    "Confirmar",
+                    MessageBoxButtons.YesNo) != DialogResult.Yes)
+                return;
+
+            // 4) Quito el rol y guardo en el XML
+            usr.Rol = null;
+            UsuarioXmlService.Guardar(_usuarios);
+
+            // 5) Refresco la vista de permisos del usuario (se quedará vacía)
+            CargarTreeViewPermisosPorUsuario(usr);
+
+            MessageBox.Show($"Se ha quitado el rol al usuario {usr.Nombre}.");
+        }
     }
 
     // Helper para inicialización inline

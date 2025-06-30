@@ -56,11 +56,8 @@
             btnQuitarPermisoRol = new Button();
             label18 = new Label();
             label19 = new Label();
-            label20 = new Label();
             btnAsociarRolAUsuario = new Button();
             btnQuitarRolUsuario = new Button();
-            btnAsociarPermisoUsuario = new Button();
-            btnQuitarPermisoUsuario = new Button();
             label21 = new Label();
             label22 = new Label();
             label23 = new Label();
@@ -257,7 +254,7 @@
             // label17
             // 
             label17.AutoSize = true;
-            label17.Location = new Point(587, 166);
+            label17.Location = new Point(546, 166);
             label17.Name = "label17";
             label17.Size = new Size(141, 15);
             label17.TabIndex = 32;
@@ -283,7 +280,7 @@
             // 
             // btnAsociarPermisoARol
             // 
-            btnAsociarPermisoARol.Location = new Point(587, 184);
+            btnAsociarPermisoARol.Location = new Point(546, 184);
             btnAsociarPermisoARol.Name = "btnAsociarPermisoARol";
             btnAsociarPermisoARol.Size = new Size(67, 60);
             btnAsociarPermisoARol.TabIndex = 36;
@@ -292,7 +289,7 @@
             // 
             // btnQuitarPermisoRol
             // 
-            btnQuitarPermisoRol.Location = new Point(660, 184);
+            btnQuitarPermisoRol.Location = new Point(619, 184);
             btnQuitarPermisoRol.Name = "btnQuitarPermisoRol";
             btnQuitarPermisoRol.Size = new Size(75, 60);
             btnQuitarPermisoRol.TabIndex = 35;
@@ -317,15 +314,6 @@
             label19.TabIndex = 41;
             label19.Text = "Roles a Usuario:";
             // 
-            // label20
-            // 
-            label20.AutoSize = true;
-            label20.Location = new Point(176, 166);
-            label20.Name = "label20";
-            label20.Size = new Size(110, 15);
-            label20.TabIndex = 42;
-            label20.Text = "Permisos a Usuario:";
-            // 
             // btnAsociarRolAUsuario
             // 
             btnAsociarRolAUsuario.Location = new Point(10, 184);
@@ -334,6 +322,7 @@
             btnAsociarRolAUsuario.TabIndex = 44;
             btnAsociarRolAUsuario.Text = "Asociar Rol a Usuario";
             btnAsociarRolAUsuario.UseVisualStyleBackColor = true;
+            btnAsociarRolAUsuario.Click += btnAsociarRolAUsuario_Click_1;
             // 
             // btnQuitarRolUsuario
             // 
@@ -343,24 +332,7 @@
             btnQuitarRolUsuario.TabIndex = 43;
             btnQuitarRolUsuario.Text = "Quitar Rol a Usuario";
             btnQuitarRolUsuario.UseVisualStyleBackColor = true;
-            // 
-            // btnAsociarPermisoUsuario
-            // 
-            btnAsociarPermisoUsuario.Location = new Point(176, 184);
-            btnAsociarPermisoUsuario.Name = "btnAsociarPermisoUsuario";
-            btnAsociarPermisoUsuario.Size = new Size(67, 60);
-            btnAsociarPermisoUsuario.TabIndex = 46;
-            btnAsociarPermisoUsuario.Text = "Asociar Permiso a Usuario";
-            btnAsociarPermisoUsuario.UseVisualStyleBackColor = true;
-            // 
-            // btnQuitarPermisoUsuario
-            // 
-            btnQuitarPermisoUsuario.Location = new Point(249, 184);
-            btnQuitarPermisoUsuario.Name = "btnQuitarPermisoUsuario";
-            btnQuitarPermisoUsuario.Size = new Size(75, 60);
-            btnQuitarPermisoUsuario.TabIndex = 45;
-            btnQuitarPermisoUsuario.Text = "Quitar Permiso a Usuario";
-            btnQuitarPermisoUsuario.UseVisualStyleBackColor = true;
+            btnQuitarRolUsuario.Click += btnQuitarRolUsuario_Click;
             // 
             // label21
             // 
@@ -456,11 +428,8 @@
             Controls.Add(label23);
             Controls.Add(label22);
             Controls.Add(label21);
-            Controls.Add(btnAsociarPermisoUsuario);
-            Controls.Add(btnQuitarPermisoUsuario);
             Controls.Add(btnAsociarRolAUsuario);
             Controls.Add(btnQuitarRolUsuario);
-            Controls.Add(label20);
             Controls.Add(label19);
             Controls.Add(label18);
             Controls.Add(btnAsociarPermisoARol);
@@ -525,11 +494,8 @@
         private Button btnQuitarPermisoRol;
         private Label label18;
         private Label label19;
-        private Label label20;
         private Button btnAsociarRolAUsuario;
         private Button btnQuitarRolUsuario;
-        private Button btnAsociarPermisoUsuario;
-        private Button btnQuitarPermisoUsuario;
         private Label label21;
         private Label label22;
         private Label label23;
