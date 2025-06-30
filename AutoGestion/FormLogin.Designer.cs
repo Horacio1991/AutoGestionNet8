@@ -39,7 +39,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Sans Serif Collection", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(172, 141);
+            label1.Location = new Point(466, 257);
             label1.Name = "label1";
             label1.Size = new Size(83, 51);
             label1.TabIndex = 0;
@@ -49,7 +49,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Sans Serif Collection", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(172, 192);
+            label2.Location = new Point(466, 308);
             label2.Name = "label2";
             label2.Size = new Size(110, 51);
             label2.TabIndex = 1;
@@ -57,7 +57,7 @@
             // 
             // txtClave
             // 
-            txtClave.Location = new Point(288, 202);
+            txtClave.Location = new Point(582, 318);
             txtClave.Name = "txtClave";
             txtClave.PasswordChar = '*';
             txtClave.Size = new Size(191, 23);
@@ -65,14 +65,14 @@
             // 
             // txtUsuario
             // 
-            txtUsuario.Location = new Point(288, 151);
+            txtUsuario.Location = new Point(582, 267);
             txtUsuario.Name = "txtUsuario";
             txtUsuario.Size = new Size(191, 23);
             txtUsuario.TabIndex = 1;
             // 
             // btnIngresar
             // 
-            btnIngresar.Location = new Point(288, 254);
+            btnIngresar.Location = new Point(582, 370);
             btnIngresar.Name = "btnIngresar";
             btnIngresar.Size = new Size(191, 44);
             btnIngresar.TabIndex = 3;
@@ -84,7 +84,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1264, 681);
             Controls.Add(btnIngresar);
             Controls.Add(txtUsuario);
             Controls.Add(txtClave);
@@ -92,6 +92,7 @@
             Controls.Add(label1);
             Name = "FormLogin";
             Text = "FormLogin";
+            WindowState = FormWindowState.Maximized;
             ResumeLayout(false);
             PerformLayout();
         }

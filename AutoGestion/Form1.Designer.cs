@@ -65,7 +65,7 @@
             menuPrincipal.Items.AddRange(new ToolStripItem[] { usuariosToolStripMenuItem, gestionVentasToolStripMenuItem, gestiónComprasToolStripMenuItem, gestiónComisionesToolStripMenuItem, gestiónTurnosToolStripMenuItem, seguridadToolStripMenuItem });
             menuPrincipal.Location = new Point(0, 0);
             menuPrincipal.Name = "menuPrincipal";
-            menuPrincipal.Size = new Size(800, 24);
+            menuPrincipal.Size = new Size(1264, 24);
             menuPrincipal.TabIndex = 0;
             menuPrincipal.Text = "menuStrip1";
             // 
@@ -219,42 +219,42 @@
             // mnuAsignarRoles
             // 
             mnuAsignarRoles.Name = "mnuAsignarRoles";
-            mnuAsignarRoles.Size = new Size(180, 22);
+            mnuAsignarRoles.Size = new Size(145, 22);
             mnuAsignarRoles.Text = "Asignar Roles";
             mnuAsignarRoles.Click += mnuAsignarRoles_Click;
             // 
             // dashboardToolStripMenuItem
             // 
             dashboardToolStripMenuItem.Name = "dashboardToolStripMenuItem";
-            dashboardToolStripMenuItem.Size = new Size(180, 22);
+            dashboardToolStripMenuItem.Size = new Size(145, 22);
             dashboardToolStripMenuItem.Text = "Dashboard";
             dashboardToolStripMenuItem.Click += dashboardToolStripMenuItem_Click;
             // 
             // backupToolStripMenuItem
             // 
             backupToolStripMenuItem.Name = "backupToolStripMenuItem";
-            backupToolStripMenuItem.Size = new Size(180, 22);
+            backupToolStripMenuItem.Size = new Size(145, 22);
             backupToolStripMenuItem.Text = "Backup";
             backupToolStripMenuItem.Click += backupToolStripMenuItem_Click;
             // 
             // restoreToolStripMenuItem
             // 
             restoreToolStripMenuItem.Name = "restoreToolStripMenuItem";
-            restoreToolStripMenuItem.Size = new Size(180, 22);
+            restoreToolStripMenuItem.Size = new Size(145, 22);
             restoreToolStripMenuItem.Text = "Restore";
             restoreToolStripMenuItem.Click += restoreToolStripMenuItem_Click;
             // 
             // bitacoraToolStripMenuItem
             // 
             bitacoraToolStripMenuItem.Name = "bitacoraToolStripMenuItem";
-            bitacoraToolStripMenuItem.Size = new Size(180, 22);
+            bitacoraToolStripMenuItem.Size = new Size(145, 22);
             bitacoraToolStripMenuItem.Text = "Bitacora";
             bitacoraToolStripMenuItem.Click += bitacoraToolStripMenuItem_Click;
             // 
             // mnuCerrarSesion
             // 
             mnuCerrarSesion.Name = "mnuCerrarSesion";
-            mnuCerrarSesion.Size = new Size(180, 22);
+            mnuCerrarSesion.Size = new Size(145, 22);
             mnuCerrarSesion.Text = "Cerrar Sesión";
             mnuCerrarSesion.Click += mnuCerrarSesion_Click_1;
             // 
@@ -262,19 +262,20 @@
             // 
             panelContenido.Location = new Point(0, 27);
             panelContenido.Name = "panelContenido";
-            panelContenido.Size = new Size(800, 424);
+            panelContenido.Size = new Size(1280, 720);
             panelContenido.TabIndex = 1;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1264, 681);
             Controls.Add(panelContenido);
             Controls.Add(menuPrincipal);
             MainMenuStrip = menuPrincipal;
             Name = "Form1";
             Text = "Form1";
+            WindowState = FormWindowState.Maximized;
             Load += Form1_Load;
             menuPrincipal.ResumeLayout(false);
             menuPrincipal.PerformLayout();
