@@ -84,4 +84,41 @@
     </HijosCompuestos>
     <HijosSimples />
   </PermisoCompuesto>
+  <PermisoCompuesto>
+    <ID>3</ID>
+    <Nombre>Compras</Nombre>
+    <HijosCompuestos>
+      <PermisoCompuesto>
+        <ID>4</ID>
+        <Nombre>Compradores</Nombre>
+        <HijosCompuestos>
+          <PermisoCompuesto>
+            <ID>4</ID>
+            <Nombre>Gestión Compras</Nombre>
+            <HijosCompuestos />
+            <HijosSimples>
+              <PermisoSimple>
+                <ID>1</ID>
+                <Nombre>Registrar Oferta</Nombre>
+              </PermisoSimple>
+              <PermisoSimple>
+                <ID>1</ID>
+                <Nombre>Evaluar Vehículo</Nombre>
+              </PermisoSimple>
+              <PermisoSimple>
+                <ID>1</ID>
+                <Nombre>Tasar Vehículo</Nombre>
+              </PermisoSimple>
+              <PermisoSimple>
+                <ID>1</ID>
+                <Nombre>Registrar Compra</Nombre>
+              </PermisoSimple>
+            </HijosSimples>
+          </PermisoCompuesto>
+        </HijosCompuestos>
+        <HijosSimples />
+      </PermisoCompuesto>
+    </HijosCompuestos>
+    <HijosSimples />
+  </PermisoCompuesto>
 </ArrayOfPermisoCompuesto>

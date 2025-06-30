@@ -17,12 +17,20 @@
     <ID>3</ID>
     <Nombre>Belen</Nombre>
     <Clave>MQAyADMA</Clave>
+    <RolNombre>Administrativo</RolNombre>
     <Permisos />
   </UsuarioSerializable>
   <UsuarioSerializable>
     <ID>4</ID>
     <Nombre>Charo</Nombre>
     <Clave>MQAyADMA</Clave>
+    <RolNombre>Compras</RolNombre>
+    <Permisos />
+  </UsuarioSerializable>
+  <UsuarioSerializable>
+    <ID>5</ID>
+    <Nombre>prueba</Nombre>
+    <Clave>cAByAHUAZQBiAGEA</Clave>
     <Permisos />
   </UsuarioSerializable>
 </ArrayOfUsuarioSerializable>

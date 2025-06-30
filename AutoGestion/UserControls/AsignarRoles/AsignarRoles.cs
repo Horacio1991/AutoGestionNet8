@@ -119,7 +119,11 @@ namespace AutoGestion.Vista
                     MessageBox.Show("Esa plantilla ya existe.");
                     return;
                 }
-                _plantillas.Add(new PermisoCompuesto { ID = GeneradorID.ObtenerID<PermisoCompuesto>(), Nombre = texto });
+                _plantillas.Add(new PermisoCompuesto
+                {
+                    ID = GeneradorID.ObtenerID<PermisoCompuesto>(),
+                    Nombre = texto
+                });
             }
             else if (sel.Tag is PermisoCompuesto pc)
             {
@@ -133,14 +137,21 @@ namespace AutoGestion.Vista
                 var sub = pc.Hijos
                             .OfType<PermisoCompuesto>()
                             .FirstOrDefault(m => m.Nombre == menuName)
-                          ?? new PermisoCompuesto { ID = GeneradorID.ObtenerID<PermisoCompuesto>(), Nombre = menuName }
-                             .Also(m => pc.Agregar(m));
+                          ?? new PermisoCompuesto
+                          {
+                              ID = GeneradorID.ObtenerID<PermisoCompuesto>(),
+                              Nombre = menuName
+                          }.Also(m => pc.Agregar(m));
 
                 // Si hay ítem seleccionado, añadirlo
                 if (cmbPermisoItem.SelectedItem is string itemName)
                 {
                     if (!sub.Hijos.OfType<PermisoSimple>().Any(i => i.Nombre == itemName))
-                        sub.Agregar(new PermisoSimple { ID = GeneradorID.ObtenerID<PermisoSimple>(), Nombre = itemName });
+                        sub.Agregar(new PermisoSimple
+                        {
+                            ID = GeneradorID.ObtenerID<PermisoSimple>(),
+                            Nombre = itemName
+                        });
                 }
             }
             else
@@ -149,10 +160,11 @@ namespace AutoGestion.Vista
                 return;
             }
 
-            // Guardar y refrescar
+            // Guardar cambios y refrescar el TreeView
             PermisoPlantillaXmlService.Guardar(_plantillas);
             CargarTreeViewPermisos();
-            txtNombrePermiso.Clear();
+
+            // ¡No borramos el texto de txtNombrePermiso para que puedas seguir agregando!
         }
 
         #endregion
@@ -242,7 +254,13 @@ namespace AutoGestion.Vista
         private void TvRoles_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (e.Node?.Tag is PermisoCompuesto rol)
+            {
+                // Cargo el nombre del rol en el TextBox
+                txtNombreRol.Text = rol.Nombre;
+
+                // Y refresco el árbol de permisos para ese rol
                 CargarTreeViewPermisosPorRol(rol);
+            }
         }
 
         private void CargarTreeViewPermisosPorRol(PermisoCompuesto rol)

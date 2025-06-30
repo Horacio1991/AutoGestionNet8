@@ -383,35 +383,35 @@
             // 
             tvUsuarios.Location = new Point(10, 280);
             tvUsuarios.Name = "tvUsuarios";
-            tvUsuarios.Size = new Size(163, 226);
+            tvUsuarios.Size = new Size(163, 417);
             tvUsuarios.TabIndex = 52;
             // 
             // tvRoles
             // 
             tvRoles.Location = new Point(179, 280);
             tvRoles.Name = "tvRoles";
-            tvRoles.Size = new Size(161, 226);
+            tvRoles.Size = new Size(161, 417);
             tvRoles.TabIndex = 53;
             // 
             // tvPermisos
             // 
             tvPermisos.Location = new Point(346, 280);
             tvPermisos.Name = "tvPermisos";
-            tvPermisos.Size = new Size(162, 226);
+            tvPermisos.Size = new Size(162, 417);
             tvPermisos.TabIndex = 54;
             // 
             // tvPermisosPorRol
             // 
             tvPermisosPorRol.Location = new Point(514, 280);
             tvPermisosPorRol.Name = "tvPermisosPorRol";
-            tvPermisosPorRol.Size = new Size(163, 226);
+            tvPermisosPorRol.Size = new Size(163, 417);
             tvPermisosPorRol.TabIndex = 55;
             // 
             // tvPermisosPorUsuario
             // 
             tvPermisosPorUsuario.Location = new Point(683, 280);
             tvPermisosPorUsuario.Name = "tvPermisosPorUsuario";
-            tvPermisosPorUsuario.Size = new Size(210, 226);
+            tvPermisosPorUsuario.Size = new Size(210, 417);
             tvPermisosPorUsuario.TabIndex = 56;
             // 
             // AsignarRoles
@@ -459,7 +459,7 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Name = "AsignarRoles";
-            Size = new Size(898, 509);
+            Size = new Size(1280, 720);
             ResumeLayout(false);
             PerformLayout();
         }
