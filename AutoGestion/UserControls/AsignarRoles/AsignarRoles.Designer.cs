@@ -52,12 +52,12 @@
             label17 = new Label();
             btnAltaPermiso = new Button();
             btnEliminarPermiso = new Button();
-            btnAsociarPermisoRol = new Button();
+            btnAsociarPermisoARol = new Button();
             btnQuitarPermisoRol = new Button();
             label18 = new Label();
             label19 = new Label();
             label20 = new Label();
-            btnAsociarRolUsuario = new Button();
+            btnAsociarRolAUsuario = new Button();
             btnQuitarRolUsuario = new Button();
             btnAsociarPermisoUsuario = new Button();
             btnQuitarPermisoUsuario = new Button();
@@ -70,7 +70,7 @@
             tvRoles = new TreeView();
             tvPermisos = new TreeView();
             tvPermisosPorRol = new TreeView();
-            tvRolesPermisosUsuario = new TreeView();
+            tvPermisosPorUsuario = new TreeView();
             SuspendLayout();
             // 
             // label1
@@ -281,14 +281,14 @@
             btnEliminarPermiso.Text = "Eliminar Permiso";
             btnEliminarPermiso.UseVisualStyleBackColor = true;
             // 
-            // btnAsociarPermisoRol
+            // btnAsociarPermisoARol
             // 
-            btnAsociarPermisoRol.Location = new Point(587, 184);
-            btnAsociarPermisoRol.Name = "btnAsociarPermisoRol";
-            btnAsociarPermisoRol.Size = new Size(67, 60);
-            btnAsociarPermisoRol.TabIndex = 36;
-            btnAsociarPermisoRol.Text = "Asociar Permiso a Rol";
-            btnAsociarPermisoRol.UseVisualStyleBackColor = true;
+            btnAsociarPermisoARol.Location = new Point(587, 184);
+            btnAsociarPermisoARol.Name = "btnAsociarPermisoARol";
+            btnAsociarPermisoARol.Size = new Size(67, 60);
+            btnAsociarPermisoARol.TabIndex = 36;
+            btnAsociarPermisoARol.Text = "Asociar Permiso a Rol";
+            btnAsociarPermisoARol.UseVisualStyleBackColor = true;
             // 
             // btnQuitarPermisoRol
             // 
@@ -326,14 +326,14 @@
             label20.TabIndex = 42;
             label20.Text = "Permisos a Usuario:";
             // 
-            // btnAsociarRolUsuario
+            // btnAsociarRolAUsuario
             // 
-            btnAsociarRolUsuario.Location = new Point(10, 184);
-            btnAsociarRolUsuario.Name = "btnAsociarRolUsuario";
-            btnAsociarRolUsuario.Size = new Size(67, 60);
-            btnAsociarRolUsuario.TabIndex = 44;
-            btnAsociarRolUsuario.Text = "Asociar Rol a Usuario";
-            btnAsociarRolUsuario.UseVisualStyleBackColor = true;
+            btnAsociarRolAUsuario.Location = new Point(10, 184);
+            btnAsociarRolAUsuario.Name = "btnAsociarRolAUsuario";
+            btnAsociarRolAUsuario.Size = new Size(67, 60);
+            btnAsociarRolAUsuario.TabIndex = 44;
+            btnAsociarRolAUsuario.Text = "Asociar Rol a Usuario";
+            btnAsociarRolAUsuario.UseVisualStyleBackColor = true;
             // 
             // btnQuitarRolUsuario
             // 
@@ -435,18 +435,18 @@
             tvPermisosPorRol.Size = new Size(163, 226);
             tvPermisosPorRol.TabIndex = 55;
             // 
-            // tvRolesPermisosUsuario
+            // tvPermisosPorUsuario
             // 
-            tvRolesPermisosUsuario.Location = new Point(683, 280);
-            tvRolesPermisosUsuario.Name = "tvRolesPermisosUsuario";
-            tvRolesPermisosUsuario.Size = new Size(210, 226);
-            tvRolesPermisosUsuario.TabIndex = 56;
+            tvPermisosPorUsuario.Location = new Point(683, 280);
+            tvPermisosPorUsuario.Name = "tvPermisosPorUsuario";
+            tvPermisosPorUsuario.Size = new Size(210, 226);
+            tvPermisosPorUsuario.TabIndex = 56;
             // 
             // AsignarRoles
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(tvRolesPermisosUsuario);
+            Controls.Add(tvPermisosPorUsuario);
             Controls.Add(tvPermisosPorRol);
             Controls.Add(tvPermisos);
             Controls.Add(tvRoles);
@@ -458,12 +458,12 @@
             Controls.Add(label21);
             Controls.Add(btnAsociarPermisoUsuario);
             Controls.Add(btnQuitarPermisoUsuario);
-            Controls.Add(btnAsociarRolUsuario);
+            Controls.Add(btnAsociarRolAUsuario);
             Controls.Add(btnQuitarRolUsuario);
             Controls.Add(label20);
             Controls.Add(label19);
             Controls.Add(label18);
-            Controls.Add(btnAsociarPermisoRol);
+            Controls.Add(btnAsociarPermisoARol);
             Controls.Add(btnQuitarPermisoRol);
             Controls.Add(btnAltaPermiso);
             Controls.Add(btnEliminarPermiso);
@@ -521,12 +521,12 @@
         private Label label17;
         private Button btnAltaPermiso;
         private Button btnEliminarPermiso;
-        private Button btnAsociarPermisoRol;
+        private Button btnAsociarPermisoARol;
         private Button btnQuitarPermisoRol;
         private Label label18;
         private Label label19;
         private Label label20;
-        private Button btnAsociarRolUsuario;
+        private Button btnAsociarRolAUsuario;
         private Button btnQuitarRolUsuario;
         private Button btnAsociarPermisoUsuario;
         private Button btnQuitarPermisoUsuario;
@@ -539,6 +539,6 @@
         private TreeView tvRoles;
         private TreeView tvPermisos;
         private TreeView tvPermisosPorRol;
-        private TreeView tvRolesPermisosUsuario;
+        private TreeView tvPermisosPorUsuario;
     }
 }

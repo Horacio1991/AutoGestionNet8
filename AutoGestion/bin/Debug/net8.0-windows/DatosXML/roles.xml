@@ -3,13 +3,85 @@
   <PermisoCompuesto>
     <ID>1</ID>
     <Nombre>Vendedor</Nombre>
+    <HijosCompuestos>
+      <PermisoCompuesto>
+        <ID>2</ID>
+        <Nombre>Vendedores</Nombre>
+        <HijosCompuestos>
+          <PermisoCompuesto>
+            <ID>2</ID>
+            <Nombre>Gestión Ventas</Nombre>
+            <HijosCompuestos />
+            <HijosSimples>
+              <PermisoSimple>
+                <ID>1</ID>
+                <Nombre>Solicitar Modelo</Nombre>
+              </PermisoSimple>
+              <PermisoSimple>
+                <ID>1</ID>
+                <Nombre>Registrar Cliente</Nombre>
+              </PermisoSimple>
+              <PermisoSimple>
+                <ID>1</ID>
+                <Nombre>Realizar Pago</Nombre>
+              </PermisoSimple>
+            </HijosSimples>
+          </PermisoCompuesto>
+          <PermisoCompuesto>
+            <ID>2</ID>
+            <Nombre>Gestión Comisiones</Nombre>
+            <HijosCompuestos />
+            <HijosSimples>
+              <PermisoSimple>
+                <ID>1</ID>
+                <Nombre>Consultar Comisiones</Nombre>
+              </PermisoSimple>
+            </HijosSimples>
+          </PermisoCompuesto>
+        </HijosCompuestos>
+        <HijosSimples />
+      </PermisoCompuesto>
+    </HijosCompuestos>
+    <HijosSimples />
   </PermisoCompuesto>
   <PermisoCompuesto>
     <ID>2</ID>
-    <Nombre>Encargado Compras</Nombre>
-  </PermisoCompuesto>
-  <PermisoCompuesto>
-    <ID>3</ID>
-    <Nombre>Administrativos</Nombre>
+    <Nombre>Administrativo</Nombre>
+    <HijosCompuestos>
+      <PermisoCompuesto>
+        <ID>3</ID>
+        <Nombre>Administrativos</Nombre>
+        <HijosCompuestos>
+          <PermisoCompuesto>
+            <ID>3</ID>
+            <Nombre>Gestión Ventas</Nombre>
+            <HijosCompuestos />
+            <HijosSimples>
+              <PermisoSimple>
+                <ID>1</ID>
+                <Nombre>Autorizar Venta</Nombre>
+              </PermisoSimple>
+              <PermisoSimple>
+                <ID>1</ID>
+                <Nombre>Emitir Factura</Nombre>
+              </PermisoSimple>
+            </HijosSimples>
+          </PermisoCompuesto>
+          <PermisoCompuesto>
+            <ID>3</ID>
+            <Nombre>Gestión Comisiones</Nombre>
+            <HijosCompuestos />
+            <HijosSimples>
+              <PermisoSimple>
+                <ID>1</ID>
+                <Nombre>Registrar Comisión</Nombre>
+              </PermisoSimple>
+            </HijosSimples>
+          </PermisoCompuesto>
+        </HijosCompuestos>
+        <HijosSimples />
+      </PermisoCompuesto>
+    </HijosCompuestos>
+    <HijosSimples />
   </PermisoCompuesto>
 </ArrayOfPermisoCompuesto>

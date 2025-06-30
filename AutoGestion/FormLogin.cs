@@ -27,16 +27,13 @@ namespace AutoGestion.Vista
         }
 
         // El boton valida las credenciales ingresadas por el usuario
+        // FormLogin.cs
         private void btnIngresar_Click(object sender, EventArgs e)
         {
             string nombre = txtUsuario.Text.Trim();
             string claveIngresada = txtClave.Text.Trim();
-
-            // Encriptar la clave ingresada antes de compararla
             string claveEncriptada = Encriptacion.EncriptarPassword(claveIngresada);
 
-            // Busca un usuario que coincida con el nombre y la clave encriptada
-            // Si no encuentra, devuelve null
             var usuario = _usuarios.FirstOrDefault(u =>
                 u.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase) &&
                 u.Clave == claveEncriptada);
@@ -47,13 +44,12 @@ namespace AutoGestion.Vista
                 return;
             }
 
-            // Guardar en sesión
+            // Guardar en sesión (opcional) y pasar al Form1
             Sesion.UsuarioActual = usuario;
-
-            // Abrir FormMain
-            Form1 formMain = new Form1();
+            var formMain = new Form1(usuario);
             formMain.Show();
             this.Hide();
         }
+
     }
 }

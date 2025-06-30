@@ -4,20 +4,25 @@
     <ID>1</ID>
     <Nombre>admin</Nombre>
     <Clave>MQAyADMA</Clave>
+    <Permisos />
   </UsuarioSerializable>
   <UsuarioSerializable>
     <ID>2</ID>
     <Nombre>Horacio</Nombre>
     <Clave>MQAyADMA</Clave>
+    <RolNombre>Vendedor</RolNombre>
+    <Permisos />
   </UsuarioSerializable>
   <UsuarioSerializable>
     <ID>3</ID>
     <Nombre>Belen</Nombre>
     <Clave>MQAyADMA</Clave>
+    <Permisos />
   </UsuarioSerializable>
   <UsuarioSerializable>
     <ID>4</ID>
     <Nombre>Charo</Nombre>
     <Clave>MQAyADMA</Clave>
+    <Permisos />
   </UsuarioSerializable>
 </ArrayOfUsuarioSerializable>
