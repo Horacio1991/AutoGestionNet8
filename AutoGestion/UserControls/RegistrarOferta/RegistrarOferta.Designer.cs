@@ -285,6 +285,7 @@
             // numAnio
             // 
             numAnio.Location = new Point(429, 123);
+            numAnio.Maximum = new decimal(new int[] { 3000, 0, 0, 0 });
             numAnio.Name = "numAnio";
             numAnio.Size = new Size(138, 23);
             numAnio.TabIndex = 27;
@@ -292,6 +293,7 @@
             // numKm
             // 
             numKm.Location = new Point(429, 153);
+            numKm.Maximum = new decimal(new int[] { 300000, 0, 0, 0 });
             numKm.Name = "numKm";
             numKm.Size = new Size(138, 23);
             numKm.TabIndex = 28;
