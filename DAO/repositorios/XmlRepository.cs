@@ -2,46 +2,85 @@
 
 namespace AutoGestion.DAO.Repositorios
 {
-    // Clase usada para persistir objetos en XML (crear, leer, actualizar y eliminar)
+    // Este repositorio generico lee y escribe en archivos XML.
+
     public class XmlRepository<T>
     {
-        // Ruta del archivo XML donde se guardarán los datos
         private readonly string _archivo;
-
-        // Constructor que recibe el nombre del archivo XML y crea el directorio si no existe
+        // Inicializa el repositorio creando la carpeta y archivo si no existen.
         public XmlRepository(string nombreArchivo)
         {
-            var folder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DatosXML");
-            Directory.CreateDirectory(folder);
-            _archivo = Path.Combine(folder, nombreArchivo);
+            // 1) Determinar y asegurar directorio
+            var carpeta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DatosXML");
+            Directory.CreateDirectory(carpeta);
 
+            _archivo = Path.Combine(carpeta, nombreArchivo);
+
+            // 2) Crear archivo vacío si no existe
             if (!File.Exists(_archivo))
-                GuardarLista(new List<T>());
+            {
+                try
+                {
+                    GuardarLista(new List<T>());
+                }
+                catch (IOException ex)
+                {
+                    throw new ApplicationException($"No se pudo crear el archivo {_archivo}.", ex);
+                }
+            }
         }
 
-        // Leer todos los elementos del archivo XML y los devuelve como una lista
+        // Obtiene todos los elementos almacenados en el XML.
         public List<T> ObtenerTodos()
         {
-            using var fs = new FileStream(_archivo, FileMode.Open);
-            var serializer = new XmlSerializer(typeof(List<T>)); //Crea un serializador para una lista de tipo T
-            return (List<T>)serializer.Deserialize(fs); //Deserializa el contenido y lo devuelve
+            try
+            {
+                using var fs = new FileStream(_archivo, FileMode.Open, FileAccess.Read, FileShare.Read);
+                var serializer = new XmlSerializer(typeof(List<T>));
+                return (List<T>)serializer.Deserialize(fs)!;
+            }
+            catch (InvalidOperationException ex)
+            {
+                // error de deserialización
+                throw new ApplicationException($"Error al leer {_archivo}: formato inválido.", ex);
+            }
+            catch (IOException ex)
+            {
+                // error de I/O
+                throw new ApplicationException($"Error de acceso a {_archivo}.", ex);
+            }
         }
 
-        // Agrega un elemento en el archivo XML (obtiene todos los elementos, agrega el nuevo y guarda la lista)
+        // Agrega un nuevo elemento al XML.
+        // <param name="item">Instancia de T a agregar.</param>
         public void Agregar(T item)
         {
+            // 1) Cargar lista actual
             var lista = ObtenerTodos();
+            // 2) Agregar nuevo ítem
             lista.Add(item);
+            // 3) Guardar cambios
             GuardarLista(lista);
         }
 
-        // Serializa y sobreescribe el archivo XML con la lista proporcionada
+        // Serializa y sobreescribe el archivo XML con la lista completa.
+        // <param name="lista">Lista de T a persistir.</param>
         public void GuardarLista(List<T> lista)
         {
-            using var fs = new FileStream(_archivo, FileMode.Create);
-            var serializer = new XmlSerializer(typeof(List<T>));
-            serializer.Serialize(fs, lista);
+            try
+            {
+                using var fs = new FileStream(_archivo, FileMode.Create, FileAccess.Write, FileShare.None);
+                var serializer = new XmlSerializer(typeof(List<T>));
+                serializer.Serialize(fs, lista);
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new ApplicationException($"Error al serializar datos en {_archivo}.", ex);
+            }
+            catch (IOException ex)
+            {
+                throw new ApplicationException($"Error de escritura en {_archivo}.", ex);
+            }
         }
-
     }
 }
