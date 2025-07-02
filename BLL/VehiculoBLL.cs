@@ -59,6 +59,7 @@ namespace AutoGestion.BLL
         // Cambia el estado de un vehículo identificado por Dominio.
         // vehiculo = Vehículo a actualizar.
         // nuevoEstado = Nuevo estado a asignar.
+        // usado 
         public void ActualizarEstadoVehiculo(Vehiculo vehiculo, string nuevoEstado)
         {
             try

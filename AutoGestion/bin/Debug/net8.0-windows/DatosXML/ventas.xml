@@ -288,4 +288,40 @@
     <Estado>Entregada</Estado>
     <Fecha>2025-07-02T12:13:30.7733916-03:00</Fecha>
   </Venta>
+  <Venta>
+    <ID>9</ID>
+    <Vendedor>
+      <ID>1</ID>
+      <Nombre>admin</Nombre>
+      <FechaAlta>2025-07-02T14:28:30.9927691-03:00</FechaAlta>
+    </Vendedor>
+    <Cliente>
+      <ID>0</ID>
+      <Dni>53815806</Dni>
+      <Nombre>Amalia</Nombre>
+      <Apellido>Bartoletti</Apellido>
+      <Contacto>ama@gmail.com</Contacto>
+      <FechaRegistro>2025-07-02T14:28:30.9927267-03:00</FechaRegistro>
+    </Cliente>
+    <Vehiculo>
+      <ID>6</ID>
+      <Marca>Fiat</Marca>
+      <Modelo>Argo</Modelo>
+      <Año>2021</Año>
+      <Color>Gris</Color>
+      <Km>12000</Km>
+      <Dominio>PQR333</Dominio>
+      <Estado>Disponible</Estado>
+    </Vehiculo>
+    <Pago>
+      <ID>9</ID>
+      <TipoPago>Efectivo</TipoPago>
+      <Monto>10000000</Monto>
+      <Cuotas>1</Cuotas>
+      <Detalles>Hecho en un pago</Detalles>
+      <FechaPago>2025-07-02T14:28:30.8950553-03:00</FechaPago>
+    </Pago>
+    <Estado>Entregada</Estado>
+    <Fecha>2025-07-02T14:28:30.9927687-03:00</Fecha>
+  </Venta>
 </ArrayOfVenta>

@@ -64,4 +64,12 @@
     <Detalles>asd</Detalles>
     <FechaPago>2025-07-02T12:13:30.534378-03:00</FechaPago>
   </Pago>
+  <Pago>
+    <ID>9</ID>
+    <TipoPago>Efectivo</TipoPago>
+    <Monto>10000000</Monto>
+    <Cuotas>1</Cuotas>
+    <Detalles>Hecho en un pago</Detalles>
+    <FechaPago>2025-07-02T14:28:30.8950553-03:00</FechaPago>
+  </Pago>
 </ArrayOfPago>

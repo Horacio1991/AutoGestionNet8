@@ -168,4 +168,28 @@
     <Precio>1111111111111111</Precio>
     <Fecha>2025-07-02T12:14:07.9094455-03:00</Fecha>
   </Factura>
+  <Factura>
+    <ID>8</ID>
+    <Cliente>
+      <ID>0</ID>
+      <Dni>53815806</Dni>
+      <Nombre>Amalia</Nombre>
+      <Apellido>Bartoletti</Apellido>
+      <Contacto>ama@gmail.com</Contacto>
+      <FechaRegistro>2025-07-02T14:28:30.9927267-03:00</FechaRegistro>
+    </Cliente>
+    <Vehiculo>
+      <ID>6</ID>
+      <Marca>Fiat</Marca>
+      <Modelo>Argo</Modelo>
+      <Año>2021</Año>
+      <Color>Gris</Color>
+      <Km>12000</Km>
+      <Dominio>PQR333</Dominio>
+      <Estado>Disponible</Estado>
+    </Vehiculo>
+    <FormaPago>Efectivo</FormaPago>
+    <Precio>10000000</Precio>
+    <Fecha>2025-07-02T14:29:12.2338618-03:00</Fecha>
+  </Factura>
 </ArrayOfFactura>
