@@ -8,4 +8,20 @@
     <EstadoDocumentacion>Todo Ok</EstadoDocumentacion>
     <Observaciones>El auto se encuentra en muy buen estado</Observaciones>
   </EvaluacionTecnica>
+  <EvaluacionTecnica>
+    <ID>2</ID>
+    <EstadoMotor>Excelente</EstadoMotor>
+    <EstadoCarroceria>Excelente</EstadoCarroceria>
+    <EstadoInterior>Excelente</EstadoInterior>
+    <EstadoDocumentacion>Ok</EstadoDocumentacion>
+    <Observaciones>Auto perfecto</Observaciones>
+  </EvaluacionTecnica>
+  <EvaluacionTecnica>
+    <ID>4</ID>
+    <EstadoMotor>Excelente</EstadoMotor>
+    <EstadoCarroceria>Excelente</EstadoCarroceria>
+    <EstadoInterior>Excelente</EstadoInterior>
+    <EstadoDocumentacion>Ok</EstadoDocumentacion>
+    <Observaciones>Excelente</Observaciones>
+  </EvaluacionTecnica>
 </ArrayOfEvaluacionTecnica>

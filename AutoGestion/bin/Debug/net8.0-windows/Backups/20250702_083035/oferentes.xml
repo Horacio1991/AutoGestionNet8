@@ -119,11 +119,4 @@
     <Apellido>Perez</Apellido>
     <Contacto>hugo@gmail.com</Contacto>
   </Oferente>
-  <Oferente>
-    <ID>18</ID>
-    <Dni>53815808</Dni>
-    <Nombre>Jonas</Nombre>
-    <Apellido>Criado</Apellido>
-    <Contacto>jonas@gmail.com</Contacto>
-  </Oferente>
 </ArrayOfOferente>

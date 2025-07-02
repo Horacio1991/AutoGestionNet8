@@ -6,56 +6,118 @@ namespace AutoGestion.BLL
 {
     public class TurnoBLL
     {
-        private readonly XmlRepository<Turno> _turnoRepo = new("turnos.xml");
-        private readonly XmlRepository<Vehiculo> _vehiculoRepo = new("vehiculos.xml");
+        private readonly XmlRepository<Turno> _turnoRepo;
+        private readonly XmlRepository<Vehiculo> _vehiculoRepo;
 
-        /// <summary>
-        /// Vehículos en stock con estado "Disponible".
-        /// </summary>
+        // 1) Inicializa los repositorios apuntando a "DatosXML/turnos.xml" y "DatosXML/vehiculos.xml".
+        public TurnoBLL()
+        {
+            _turnoRepo = new XmlRepository<Turno>("turnos.xml");
+            _vehiculoRepo = new XmlRepository<Vehiculo>("vehiculos.xml");
+        }
+
+        /// Obtiene la lista de vehículos con estado "Disponible" para agendar turnos.
         public List<Vehiculo> ObtenerVehiculosDisponibles()
-            => _vehiculoRepo.ObtenerTodos()
-                            .Where(v => v.Estado == "Disponible")
-                            .ToList();
+        {
+            try
+            {
+                // 1) Leer todos los vehículos
+                var todos = _vehiculoRepo.ObtenerTodos();
+                // 2) Filtrar por estado
+                return todos.Where(v => v.Estado == VehiculoEstados.Disponible)
+                           .ToList();
+            }
+            catch (ApplicationException)
+            {
+                return new List<Vehiculo>();
+            }
+        }
 
-        /// <summary>
-        /// Verifica que no exista ya un turno para ese vehículo en fecha+hora.
-        /// </summary>
+        // Verifica si un vehículo está libre en la fecha y hora indicadas.
+        // vehiculo = Vehículo a verificar.
+        // fecha = Fecha del turno a agendar.
+        // hora = Hora del turno a agendar.
         public bool VerificarDisponibilidad(Vehiculo vehiculo, DateTime fecha, TimeSpan hora)
-            => !_turnoRepo.ObtenerTodos().Any(t =>
-                   t.Vehiculo.ID == vehiculo.ID &&
-                   t.Fecha.Date == fecha.Date &&
-                   t.Hora == hora);
+        {
+            try
+            {
+                // 1) Leer todos los turnos
+                var turnos = _turnoRepo.ObtenerTodos();
+                // 2) Comprobar que no haya turnos con el mismo vehículo, fecha y hora
+                return !turnos.Any(t =>
+                    t.Vehiculo.ID == vehiculo.ID &&
+                    t.Fecha.Date == fecha.Date &&
+                    t.Hora == hora
+                );
+            }
+            catch (ApplicationException)
+            {
+                // Si falla la lectura, asumimos no disponible para prevenir errores
+                return false;
+            }
+        }
 
-        /// <summary>
-        /// Registra el turno y le asigna un nuevo ID.
-        /// </summary>
+        // Registra un nuevo turno y le asigna un ID único.
+        // turno = Turno a registrar con Vehiculo, Fecha, Hora y Asistencia.
         public Turno RegistrarTurno(Turno turno)
         {
-            turno.ID = GeneradorID.ObtenerID<Turno>();
-            _turnoRepo.Agregar(turno);
-            return turno;
+            try
+            {
+                // 1) Asignar nuevo ID único
+                turno.ID = GeneradorID.ObtenerID<Turno>();
+                // 2) Persistir en XML
+                _turnoRepo.Agregar(turno);
+                return turno;
+            }
+            catch (Exception ex) when (ex is IOException || ex is InvalidOperationException)
+            {
+                throw new ApplicationException($"Error al registrar turno: {ex.Message}", ex);
+            }
         }
 
-        /// <summary>Obtiene los turnos cuya fecha ya pasó y aún no tienen asistencia registrada.</summary>
+        // Obtiene los turnos cuya fecha ya pasó y no tienen asistencia registrada.
+
         public List<Turno> ObtenerTurnosCumplidos()
         {
-            return _turnoRepo.ObtenerTodos()
-                        .Where(t => t.Asistencia == "Pendiente")
-                        .ToList();
+            try
+            {
+                // 1) Leer todos los turnos
+                var turnos = _turnoRepo.ObtenerTodos();
+                // 2) Filtrar por asistencia pendiente
+                return turnos.Where(t => t.Asistencia == "Pendiente")
+                             .ToList();
+            }
+            catch (ApplicationException)
+            {
+                return new List<Turno>();
+            }
         }
 
-        /// <summary>Registra la asistencia (Asistió/No asistió/Pendiente) y guarda observaciones.</summary>
+        // Registra la asistencia de un turno existente (Asistió/No asistió/Pendiente)
+        // y guarda las observaciones.
+        // turnoId = ID del turno a actualizar.
+        // estado = Estado de asistencia ("Asistió", "No asistió", "Pendiente").
+        // observaciones = Observaciones adicionales sobre la asistencia.
+
         public void RegistrarAsistencia(int turnoId, string estado, string observaciones)
         {
-            var todos = _turnoRepo.ObtenerTodos();
-            var turno = todos.FirstOrDefault(t => t.ID == turnoId);
-            if (turno == null)
-                throw new ApplicationException("Turno no encontrado.");
-
-            turno.Asistencia = estado;
-            turno.Observaciones = observaciones;
-
-            _turnoRepo.GuardarLista(todos);
+            try
+            {
+                // 1) Leer lista actual de turnos
+                var lista = _turnoRepo.ObtenerTodos();
+                // 2) Buscar turno específico
+                var turno = lista.FirstOrDefault(t => t.ID == turnoId)
+                            ?? throw new ApplicationException("Turno no encontrado.");
+                // 3) Actualizar estado y observaciones
+                turno.Asistencia = estado;
+                turno.Observaciones = observaciones;
+                // 4) Guardar cambios
+                _turnoRepo.GuardarLista(lista);
+            }
+            catch (Exception ex) when (ex is IOException || ex is InvalidOperationException || ex is ApplicationException)
+            {
+                throw new ApplicationException($"Error al registrar asistencia: {ex.Message}", ex);
+            }
         }
     }
 }

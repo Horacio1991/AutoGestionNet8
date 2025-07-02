@@ -47,8 +47,8 @@
     </Vehiculo>
     <Fecha>2025-06-02T00:00:00-03:00</Fecha>
     <Hora>PT14H30M0.98S</Hora>
-    <Asistencia>Asistió</Asistencia>
-    <Observaciones>Le gustó el vehiculo</Observaciones>
+    <Asistencia>Pendiente</Asistencia>
+    <Observaciones />
   </Turno>
   <Turno>
     <ID>3</ID>
@@ -149,29 +149,5 @@
     <Hora>PT9H30M</Hora>
     <Asistencia>Asistió</Asistencia>
     <Observaciones>Le gusto el vehiculo</Observaciones>
-  </Turno>
-  <Turno>
-    <ID>7</ID>
-    <Cliente>
-      <ID>11</ID>
-      <Dni>36084790</Dni>
-      <Nombre>Horacio</Nombre>
-      <Apellido>Ortiz</Apellido>
-      <Contacto>horacio0291@gmail.com</Contacto>
-      <FechaRegistro>2025-05-29T09:28:19.7256203-03:00</FechaRegistro>
-    </Cliente>
-    <Vehiculo>
-      <ID>25</ID>
-      <Marca>Prueba</Marca>
-      <Modelo>Prueba</Modelo>
-      <Año>2025</Año>
-      <Color>Rojo</Color>
-      <Km>100</Km>
-      <Dominio>zzz999</Dominio>
-      <Estado>Disponible</Estado>
-    </Vehiculo>
-    <Fecha>2025-07-02T00:00:00-03:00</Fecha>
-    <Hora>PT12H</Hora>
-    <Asistencia>Pendiente</Asistencia>
   </Turno>
 </ArrayOfTurno>

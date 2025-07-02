@@ -38,7 +38,7 @@
     <Color>Blanco</Color>
     <Km>5000</Km>
     <Dominio>JKL111</Dominio>
-    <Estado>En Proceso</Estado>
+    <Estado>Disponible</Estado>
   </Vehiculo>
   <Vehiculo>
     <ID>5</ID>
@@ -48,7 +48,7 @@
     <Color>Azul</Color>
     <Km>3000</Km>
     <Dominio>MNO222</Dominio>
-    <Estado>En Proceso</Estado>
+    <Estado>Disponible</Estado>
   </Vehiculo>
   <Vehiculo>
     <ID>6</ID>
@@ -88,7 +88,7 @@
     <Color>Azul</Color>
     <Km>27000</Km>
     <Dominio>YZA666</Dominio>
-    <Estado>En Proceso</Estado>
+    <Estado>Disponible</Estado>
   </Vehiculo>
   <Vehiculo>
     <ID>10</ID>
@@ -228,26 +228,6 @@
     <Color>Violeta</Color>
     <Km>100</Km>
     <Dominio>ASD321</Dominio>
-    <Estado>Disponible</Estado>
-  </Vehiculo>
-  <Vehiculo>
-    <ID>24</ID>
-    <Marca>Ferrari</Marca>
-    <Modelo>Combo</Modelo>
-    <Año>2024</Año>
-    <Color>Negra</Color>
-    <Km>80000</Km>
-    <Dominio>vvv111</Dominio>
-    <Estado>En Proceso</Estado>
-  </Vehiculo>
-  <Vehiculo>
-    <ID>25</ID>
-    <Marca>Prueba</Marca>
-    <Modelo>Prueba</Modelo>
-    <Año>2025</Año>
-    <Color>Rojo</Color>
-    <Km>100</Km>
-    <Dominio>zzz999</Dominio>
     <Estado>Disponible</Estado>
   </Vehiculo>
 </ArrayOfVehiculo>

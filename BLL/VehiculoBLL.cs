@@ -1,83 +1,176 @@
-﻿using AutoGestion.Entidades;
-using AutoGestion.DAO.Repositorios;
+﻿using AutoGestion.DAO.Repositorios;
+using AutoGestion.Entidades;
 using AutoGestion.Servicios.Utilidades;
-
 
 namespace AutoGestion.BLL
 {
     public class VehiculoBLL
     {
-        // Repositorio genérico que persiste List<Vehiculo> en DatosXML/vehiculos.xml
-        private readonly XmlRepository<Vehiculo> _repo = new("vehiculos.xml");
+        private readonly XmlRepository<Vehiculo> _repo;
 
-        // Busca vehiculos disponibles por modelo y disponibilidad
+        // 1) Inicializa el repositorio apuntando a "DatosXML/vehiculos.xml".
+        public VehiculoBLL()
+        {
+            _repo = new XmlRepository<Vehiculo>("vehiculos.xml");
+        }
+
+        // Busca vehículos disponibles filtrando por modelo exacto.
+        // modelo = Modelo del vehículo a buscar (ej "Corolla").
+
         public List<Vehiculo> BuscarVehiculosPorModelo(string modelo)
         {
-            return _repo.ObtenerTodos()
-                        .Where(v => v.Modelo.ToLower() == modelo.ToLower() && v.Estado == "Disponible")
-                        .ToList();
-        }
-
-        // Devuelve vehiculos similares por modelo o marca (Segun la cadena de texto ingresada)
-        public List<Vehiculo> BuscarVehiculosSimilares(string modelo)
-        {
-            var lista = _repo.ObtenerTodos();
-
-            return lista.Where(v =>
-                v.Modelo.Contains(modelo, StringComparison.OrdinalIgnoreCase) ||
-                v.Marca.Contains(modelo, StringComparison.OrdinalIgnoreCase)
-            ).ToList();
-        }
-
-        // Cambia el estado de un vehiculo en stock (Ej: "Vendido", "Disponible", etc.)
-        public void ActualizarEstadoStock(Vehiculo vehiculo, string estado)
-        {
-            var lista = _repo.ObtenerTodos();
-            var v = lista.FirstOrDefault(x => x.Dominio == vehiculo.Dominio);
-            if (v != null)
+            try
             {
-                v.Estado = estado;
-                _repo.GuardarLista(lista);
+                // 1) Leer todos los vehículos
+                var todos = _repo.ObtenerTodos();
+                // 2) Filtrar por modelo exacto y estado disponible
+                return todos
+                    .Where(v => v.Modelo.Equals(modelo, StringComparison.OrdinalIgnoreCase)
+                             && v.Estado == VehiculoEstados.Disponible)
+                    .ToList();
+            }
+            catch (ApplicationException)
+            {
+                return new List<Vehiculo>();
             }
         }
 
-        public Vehiculo BuscarVehiculoPorDominio(string dominio)
+        // Busca vehículos cuyo modelo o marca contenga el texto dado.
+        // texto = Texto a buscar en Modelo o Marca (ej "toyota").
+        public List<Vehiculo> BuscarVehiculosSimilares(string texto)
         {
-            return _repo.ObtenerTodos()
-                        .FirstOrDefault(v => v.Dominio.Equals(dominio, StringComparison.OrdinalIgnoreCase));
+            try
+            {
+                // 1) Leer todos los vehículos
+                var todos = _repo.ObtenerTodos();
+                // 2) Filtrar por coincidencia parcial en modelo o marca
+                return todos
+                    .Where(v =>
+                        v.Modelo.Contains(texto, StringComparison.OrdinalIgnoreCase) ||
+                        v.Marca.Contains(texto, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+            }
+            catch (ApplicationException)
+            {
+                return new List<Vehiculo>();
+            }
         }
 
-        public List<Vehiculo> ObtenerTodos()
-        {
-            return _repo.ObtenerTodos();
-        }
-
-        public List<Vehiculo> ObtenerDisponibles()
-        {
-            return _repo.ObtenerTodos()
-                .Where(v => v.Estado == VehiculoEstados.Disponible)
-                .ToList();
-        }
-
+        // Cambia el estado de un vehículo identificado por Dominio.
+        // vehiculo = Vehículo a actualizar.
+        // nuevoEstado = Nuevo estado a asignar.
         public void ActualizarEstadoVehiculo(Vehiculo vehiculo, string nuevoEstado)
         {
-            var lista = _repo.ObtenerTodos();
-            var existente = lista.FirstOrDefault(v => v.ID == vehiculo.ID);
-
-            if (existente != null)
+            try
             {
+                // 1) Leer lista de vehículos
+                var lista = _repo.ObtenerTodos();
+                // 2) Encontrar vehículo por Dominio
+                var existente = lista
+                    .FirstOrDefault(v => v.ID == vehiculo.ID)
+                    ?? throw new ApplicationException("Vehículo no encontrado.");
+                // 3) Actualizar estado
                 existente.Estado = nuevoEstado;
+                // 4) Guardar cambios
                 _repo.GuardarLista(lista);
             }
+            catch (Exception ex) when (ex is IOException || ex is InvalidOperationException || ex is ApplicationException)
+            {
+                throw new ApplicationException($"Error al actualizar estado de vehículo: {ex.Message}", ex);
+            }
         }
+
+
+        // Busca un vehículo por dominio exacto.
+        public Vehiculo BuscarVehiculoPorDominio(string dominio)
+        {
+            try
+            {
+                // 1) Leer todos los vehículos
+                var todos = _repo.ObtenerTodos();
+                // 2) Buscar coincidencia exacta
+                return todos.FirstOrDefault(v =>
+                    v.Dominio.Equals(dominio, StringComparison.OrdinalIgnoreCase));
+            }
+            catch (ApplicationException)
+            {
+                return null;
+            }
+        }
+
+        /// Obtiene la lista completa de vehículos.
+        public List<Vehiculo> ObtenerTodos()
+        {
+            try
+            {
+                return _repo.ObtenerTodos();
+            }
+            catch (ApplicationException)
+            {
+                return new List<Vehiculo>();
+            }
+        }
+
+        /// Obtiene solo los vehículos con estado "Disponible".
+        public List<Vehiculo> ObtenerDisponibles()
+        {
+            try
+            {
+                return _repo.ObtenerTodos()
+                            .Where(v => v.Estado == VehiculoEstados.Disponible)
+                            .ToList();
+            }
+            catch (ApplicationException)
+            {
+                return new List<Vehiculo>();
+            }
+        }
+
+
+        // Agrega un nuevo vehículo al stock, asignándole ID y estado "Disponible".
+        // vehiculo = Vehículo a agregar al stock.
 
         public void AgregarVehiculoAlStock(Vehiculo vehiculo)
         {
-            var lista = _repo.ObtenerTodos();
-            vehiculo.ID = GeneradorID.ObtenerID<Vehiculo>();
-            vehiculo.Estado = "Disponible"; // lo dejamos listo para la venta
-            lista.Add(vehiculo);
-            _repo.GuardarLista(lista);
+            try
+            {
+                // 1) Asignar ID único
+                vehiculo.ID = GeneradorID.ObtenerID<Vehiculo>();
+                // 2) Marcar como disponible
+                vehiculo.Estado = VehiculoEstados.Disponible;
+                // 3) Leer lista actual
+                var lista = _repo.ObtenerTodos();
+                // 4) Agregar nuevo vehículo
+                lista.Add(vehiculo);
+                // 5) Guardar lista actualizada
+                _repo.GuardarLista(lista);
+            }
+            catch (Exception ex) when (ex is IOException || ex is InvalidOperationException)
+            {
+                throw new ApplicationException($"Error al agregar vehículo: {ex.Message}", ex);
+            }
+        }
+
+        // Actualiza el estado de stock de un vehículo (p.ej. "Disponible", "En Proceso").
+        public void ActualizarEstadoStock(Vehiculo vehiculo, string nuevoEstado)
+        {
+            try
+            {
+                // 1) Leer lista de vehículos
+                var lista = _repo.ObtenerTodos();
+                // 2) Buscar el vehículo por ID
+                var existente = lista
+                    .FirstOrDefault(v => v.ID == vehiculo.ID)
+                    ?? throw new ApplicationException("Vehículo no encontrado.");
+                // 3) Asignar nuevo estado de stock
+                existente.Estado = nuevoEstado;
+                // 4) Persistir cambios en XML
+                _repo.GuardarLista(lista);
+            }
+            catch (Exception ex) when (ex is IOException || ex is InvalidOperationException || ex is ApplicationException)
+            {
+                throw new ApplicationException($"Error al actualizar estado de stock del vehículo: {ex.Message}", ex);
+            }
         }
 
     }

@@ -32,36 +32,4 @@
     <Detalles>Transferencia en 1 pago</Detalles>
     <FechaPago>2025-06-30T14:37:41.2452611-03:00</FechaPago>
   </Pago>
-  <Pago>
-    <ID>5</ID>
-    <TipoPago>Efectivo</TipoPago>
-    <Monto>10000000</Monto>
-    <Cuotas>1</Cuotas>
-    <Detalles>Pago</Detalles>
-    <FechaPago>2025-07-02T09:54:30.8903348-03:00</FechaPago>
-  </Pago>
-  <Pago>
-    <ID>6</ID>
-    <TipoPago>Efectivo</TipoPago>
-    <Monto>60000000</Monto>
-    <Cuotas>3</Cuotas>
-    <Detalles>Pago en 3 cuotas de 20.000.000</Detalles>
-    <FechaPago>2025-07-02T11:04:10.879743-03:00</FechaPago>
-  </Pago>
-  <Pago>
-    <ID>7</ID>
-    <TipoPago>Efectivo</TipoPago>
-    <Monto>99999999</Monto>
-    <Cuotas>1</Cuotas>
-    <Detalles>pago</Detalles>
-    <FechaPago>2025-07-02T11:37:28.5122937-03:00</FechaPago>
-  </Pago>
-  <Pago>
-    <ID>8</ID>
-    <TipoPago>Efectivo</TipoPago>
-    <Monto>1111111111111111</Monto>
-    <Cuotas>1</Cuotas>
-    <Detalles>asd</Detalles>
-    <FechaPago>2025-07-02T12:13:30.534378-03:00</FechaPago>
-  </Pago>
 </ArrayOfPago>

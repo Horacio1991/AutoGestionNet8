@@ -2,41 +2,70 @@
 using AutoGestion.DAO.Repositorios;
 using AutoGestion.Servicios.Utilidades;
 
-
 namespace AutoGestion.BLL
 {
+    // Para gestionar las tasaciones de vehículos de ofertas.
+
     public class TasaBLL
     {
-        // Repositorio donde se guardarán las tasaciones en formato XML
-        private readonly XmlRepository<Tasacion> _repo = new("tasaciones.xml");
+        private readonly XmlRepository<Tasacion> _repo;
 
-        public void RegistrarTasacion(OfertaCompra oferta, decimal valorFinal)
+        // 1) Inicializa el repositorio apuntando a "DatosXML/tasaciones.xml".
+        public TasaBLL()
         {
-            Tasacion tasacion = new()
-            {
-                ID = GeneradorID.ObtenerID<Tasacion>(),
-                Oferta = oferta,
-                ValorFinal = valorFinal,
-                Fecha = DateTime.Now
-            };
-
-            _repo.Agregar(tasacion);
+            _repo = new XmlRepository<Tasacion>("tasaciones.xml");
         }
 
+        // Registra una tasación para una oferta con valor final especificado.
+        // oferta = OfertaCompra a la que se asocia la tasación.
+        // valorFinal = Valor final tasado del vehículo en la oferta.
+        public void RegistrarTasacion(OfertaCompra oferta, decimal valorFinal)
+        {
+            try
+            {
+                // 1) Crear objeto Tasacion
+                var tasacion = new Tasacion
+                {
+                    ID = GeneradorID.ObtenerID<Tasacion>(),
+                    Oferta = oferta,
+                    ValorFinal = valorFinal,
+                    Fecha = DateTime.Now
+                };
+
+                // 2) Persistir la nueva tasación en XML
+                _repo.Agregar(tasacion);
+            }
+            catch (Exception ex) when (ex is IOException || ex is InvalidOperationException)
+            {
+                throw new ApplicationException($"Error al registrar tasación: {ex.Message}", ex);
+            }
+        }
+
+        // Calcula un rango sugerido de tasación según modelo, estado del motor y kilometraje.
+        // modelo = Modelo del vehículo (ej. "Toyota Corolla").
+        // estadoMotor = Estado del motor ("Excelente", "Bueno", "Regular", "Malo").
+        // kilometraje = Kilometraje del vehículo en kilómetros.
         public RangoTasacion CalcularRangoTasacion(string modelo, string estadoMotor, int kilometraje)
         {
-            decimal basePrice = 2500000;
+            // 1) Precio base estándar
+            decimal basePrice = 2_500_000m;
 
-            if (estadoMotor == "Excelente") basePrice += 300000;
-            if (estadoMotor == "Regular") basePrice -= 200000;
-            if (kilometraje > 100000) basePrice -= 200000;
+            // 2) Ajustes según estado del motor
+            if (estadoMotor.Equals("Excelente", StringComparison.OrdinalIgnoreCase))
+                basePrice += 300_000m;
+            else if (estadoMotor.Equals("Regular", StringComparison.OrdinalIgnoreCase))
+                basePrice -= 200_000m;
 
+            // 3) Ajuste por alto kilometraje
+            if (kilometraje > 100_000)
+                basePrice -= 200_000m;
+
+            // 4) Calcular rango +/-10%
             return new RangoTasacion
             {
                 Min = basePrice * 0.9m,
                 Max = basePrice * 1.1m
             };
         }
-
     }
 }

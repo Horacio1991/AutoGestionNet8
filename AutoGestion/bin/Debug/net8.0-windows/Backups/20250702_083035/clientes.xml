@@ -136,12 +136,4 @@
     <Contacto>prueba@gmail.com</Contacto>
     <FechaRegistro>2025-06-30T14:37:09.21801-03:00</FechaRegistro>
   </Cliente>
-  <Cliente>
-    <ID>18</ID>
-    <Dni>53815806</Dni>
-    <Nombre>Amalia</Nombre>
-    <Apellido>Bartoletti</Apellido>
-    <Contacto>ama@gmail.com</Contacto>
-    <FechaRegistro>2025-07-02T09:54:12.2035834-03:00</FechaRegistro>
-  </Cliente>
 </ArrayOfCliente>

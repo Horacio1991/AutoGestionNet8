@@ -1,5 +1,5 @@
-﻿using AutoGestion.Servicios;
-using BLL;
+﻿using AutoGestion.BLL;
+using AutoGestion.Servicios;
 
 
 namespace Vista.UserControls.Backup
