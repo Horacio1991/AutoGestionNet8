@@ -1,7 +1,10 @@
-﻿public class PagoDto
+﻿namespace AutoGestion.DTOs
 {
-    public string TipoPago { get; set; }
-    public decimal Monto { get; set; }
-    public int Cuotas { get; set; }
-    public string Detalles { get; set; }
+    public class PagoDto
+    {
+        public string TipoPago { get; set; } // Tipo de pago: "Efectivo", "Tarjeta", "Transferencia", "Financiado", etc.
+        public decimal Monto { get; set; }
+        public int Cuotas { get; set; }
+        public string Detalles { get; set; }
+    }
 }

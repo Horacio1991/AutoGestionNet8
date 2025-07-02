@@ -1,4 +1,6 @@
-﻿public class VentaAltaDto
+﻿using AutoGestion.DTOs;
+
+public class VentaAltaDto
 {
     public string ClienteDni { get; set; }
     public string VehiculoDominio { get; set; }

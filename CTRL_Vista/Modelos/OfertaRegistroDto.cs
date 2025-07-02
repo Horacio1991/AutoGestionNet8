@@ -6,6 +6,5 @@ namespace AutoGestion.DTOs
         public int OfertaID { get; set; }
         public string EvaluacionTexto { get; set; }
 
-       
     }
 }

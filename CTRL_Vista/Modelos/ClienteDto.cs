@@ -1,6 +1,7 @@
-﻿namespace AutoGestion.CTRL_Vista.Modelos
+﻿using AutoGestion.Entidades;
+
+namespace AutoGestion.CTRL_Vista.Modelos
 {
-    // DTO para exponer sólo los datos necesarios al UI
     public class ClienteDto
     {
         public string Dni { get; set; }
@@ -8,13 +9,23 @@
         public string Apellido { get; set; }
         public string Contacto { get; set; }
 
-        // Mapeo desde la entidad de dominio
-        public static ClienteDto FromEntity(Entidades.Cliente c) => new ClienteDto
+        // Mapea una entidad Cliente a ClienteDTO.
+        // c = Entidad Cliente a mapear;
+        // ClienteDTO con sólo los campos necesarios para la UI;
+        public static ClienteDto FromEntity(Cliente c)
         {
-            Dni = c.Dni,
-            Nombre = c.Nombre,
-            Apellido = c.Apellido,
-            Contacto = c.Contacto
-        };
+            // 1) Validar que la entidad no sea null para evitar NullReferenceException en la vista
+            if (c == null)
+                return null;
+
+            // 2) Mapear únicamente los campos que la capa de presentación requiere
+            return new ClienteDto
+            {
+                Dni = c.Dni,
+                Nombre = c.Nombre,
+                Apellido = c.Apellido,
+                Contacto = c.Contacto
+            };
+        }
     }
 }

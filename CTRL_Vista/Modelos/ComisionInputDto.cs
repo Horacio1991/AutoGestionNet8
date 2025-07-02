@@ -1,11 +1,12 @@
 ﻿namespace AutoGestion.DTOs
 {
-    /// <summary> Datos para enviar al controller al registrar o rechazar una comisión. </summary>
+    /// DTO de entrada para registrar o rechazar una comisión.
     public class ComisionInputDto
     {
+        /// ID de la venta a la que se le va a asociar la comisión.
         public int VentaID { get; set; }
         public decimal Monto { get; set; }
-        public string Estado { get; set; }        // "Aprobada" o "Rechazada"
-        public string MotivoRechazo { get; set; } // Sólo para rechazos
+        public string Estado { get; set; } //Aprbada o Rechazada
+        public string MotivoRechazo { get; set; }
     }
 }

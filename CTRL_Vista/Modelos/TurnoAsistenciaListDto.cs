@@ -1,26 +1,39 @@
-﻿// AutoGestion.DTOs/TurnoAsistenciaListDto.cs
+﻿using AutoGestion.Entidades;
+
 namespace AutoGestion.DTOs
 {
     public class TurnoAsistenciaListDto
     {
+        // ID del turno
         public int ID { get; set; }
         public string Cliente { get; set; }
+
+        //Descripción del vehículo: Marca, Modelo y Dominio
         public string Vehiculo { get; set; }
+    
         public string Fecha { get; set; }
         public string Hora { get; set; }
-        public string Asistencia { get; set; }
 
-        public static TurnoAsistenciaListDto FromEntity(AutoGestion.Entidades.Turno t)
-            => new()
+        public string Asistencia { get; set; } // Pendiente / Asistió / No asistió
+
+
+        // Mapea una entidad Turno a TurnoAsistenciaListDto para la UI.
+        // t = Entidad Turno a mapear;
+        public static TurnoAsistenciaListDto FromEntity(Turno t)
+        {
+            if (t == null) return null;
+
+            return new TurnoAsistenciaListDto
             {
                 ID = t.ID,
-                Cliente = $"{t.Cliente.Nombre} {t.Cliente.Apellido}",
-                Vehiculo = $"{t.Vehiculo.Marca} {t.Vehiculo.Modelo} ({t.Vehiculo.Dominio})",
+                Cliente = $"{t.Cliente?.Nombre} {t.Cliente?.Apellido}".Trim(),
+                Vehiculo = $"{t.Vehiculo?.Marca} {t.Vehiculo?.Modelo} ({t.Vehiculo?.Dominio})",
                 Fecha = t.Fecha.ToShortDateString(),
                 Hora = t.Hora.ToString(@"hh\:mm"),
-                Asistencia = t.Asistencia ?? "Pendiente"
+                Asistencia = string.IsNullOrWhiteSpace(t.Asistencia)
+                                ? "Pendiente"
+                                : t.Asistencia
             };
+        }
     }
 }
-
-

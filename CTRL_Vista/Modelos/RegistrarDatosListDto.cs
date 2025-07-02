@@ -1,25 +1,37 @@
 ﻿using AutoGestion.Entidades;
 
-public class RegistrarDatosListDto
+namespace AutoGestion.DTOs
 {
-    public int OfertaID { get; set; }
-    public string VehiculoResumen { get; set; }
-    public string EvaluacionTexto { get; set; }
-
-    public static RegistrarDatosListDto FromEntity(
-        OfertaCompra o, EvaluacionTecnica ev)
+    // DTO de salida para mostrar en la UI los datos de una oferta
+    // junto con la evaluación asociada, antes de registrar el estado de stock.
+    public class RegistrarDatosListDto
     {
-        return new()
-        {
-            OfertaID = o.ID,
-            VehiculoResumen = $"{o.Vehiculo.Marca} {o.Vehiculo.Modelo} ({o.Vehiculo.Dominio})",
-            EvaluacionTexto = $"Motor: {ev.EstadoMotor}; Carrocería: {ev.EstadoCarroceria}; Interior: {ev.EstadoInterior}; Doc: {ev.EstadoDocumentacion}"
-        };
-    }
-}
+        public int OfertaID { get; set; }
 
-public class RegistrarDatosInputDto
-{
-    public int OfertaID { get; set; }
-    public string EstadoStock { get; set; }
+
+        /// Resumen del vehículo: Marca, Modelo y Dominio.
+        public string VehiculoResumen { get; set; }
+
+        //Texto que describe los estados técnicos evaluados: motor, carrocería, interior y documentación.
+        public string EvaluacionTexto { get; set; }
+
+
+        // Mapea una entidad OfertaCompra y su EvaluacionTecnica asociada
+        // o = Entidad OfertaCompra a mapear;
+        // ev = EvaluacionTecnica asociada a la oferta;
+        public static RegistrarDatosListDto FromEntity(OfertaCompra o, EvaluacionTecnica ev)
+        {
+            if (o == null || ev == null) return null;
+
+            return new RegistrarDatosListDto
+            {
+                OfertaID = o.ID,
+                VehiculoResumen = $"{o.Vehiculo.Marca} {o.Vehiculo.Modelo} ({o.Vehiculo.Dominio})",
+                EvaluacionTexto = $"Motor: {ev.EstadoMotor}; " +
+                                   $"Carrocería: {ev.EstadoCarroceria}; " +
+                                   $"Interior: {ev.EstadoInterior}; " +
+                                   $"Doc: {ev.EstadoDocumentacion}"
+            };
+        }
+    }
 }

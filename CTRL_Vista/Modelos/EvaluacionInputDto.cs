@@ -2,7 +2,8 @@
 {
     public class EvaluacionInputDto
     {
-        public int OfertaID { get; set; }  // Para saber a qué oferta asociar
+        // ID de la oferta a la que se asocia esta evaluación.
+        public int OfertaID { get; set; }
         public string EstadoMotor { get; set; }
         public string EstadoCarroceria { get; set; }
         public string EstadoInterior { get; set; }

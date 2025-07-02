@@ -1,6 +1,6 @@
 ﻿namespace AutoGestion.DTOs
 {
-    /// <summary> Los datos que se muestran en el grid de comisiones pendientes. </summary>
+    // Los datos que se muestran en el grid de comisiones pendientes
     public class VentaComisionDto
     {
         public int VentaID { get; set; }
