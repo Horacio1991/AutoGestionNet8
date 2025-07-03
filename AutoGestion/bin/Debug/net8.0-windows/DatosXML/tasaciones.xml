@@ -108,4 +108,139 @@
     <ValorFinal>40000000</ValorFinal>
     <Fecha>2025-07-02T11:54:37.5378535-03:00</Fecha>
   </Tasacion>
+  <Tasacion>
+    <ID>5</ID>
+    <Oferta>
+      <ID>5</ID>
+      <Oferente>
+        <ID>19</ID>
+        <Dni>90123456</Dni>
+        <Nombre>Delfina</Nombre>
+        <Apellido>Castro</Apellido>
+        <Contacto>delfi@gmail.com</Contacto>
+      </Oferente>
+      <Vehiculo>
+        <ID>26</ID>
+        <Marca>Prueba 2.0</Marca>
+        <Modelo>Prueba 2000</Modelo>
+        <Año>2025</Año>
+        <Color>violeta</Color>
+        <Km>100000</Km>
+        <Dominio>ZZ 999 ZZ</Dominio>
+        <Estado>En evaluación</Estado>
+      </Vehiculo>
+      <FechaInspeccion>2025-07-03T11:43:55.6652265-03:00</FechaInspeccion>
+      <Estado>En evaluación</Estado>
+    </Oferta>
+    <ValorFinal>30000000</ValorFinal>
+    <Fecha>2025-07-03T13:56:17.189743-03:00</Fecha>
+  </Tasacion>
+  <Tasacion>
+    <ID>6</ID>
+    <Oferta>
+      <ID>5</ID>
+      <Oferente>
+        <ID>19</ID>
+        <Dni>90123456</Dni>
+        <Nombre>Delfina</Nombre>
+        <Apellido>Castro</Apellido>
+        <Contacto>delfi@gmail.com</Contacto>
+      </Oferente>
+      <Vehiculo>
+        <ID>26</ID>
+        <Marca>Prueba 2.0</Marca>
+        <Modelo>Prueba 2000</Modelo>
+        <Año>2025</Año>
+        <Color>violeta</Color>
+        <Km>100000</Km>
+        <Dominio>ZZ 999 ZZ</Dominio>
+        <Estado>En evaluación</Estado>
+      </Vehiculo>
+      <FechaInspeccion>2025-07-03T11:43:55.6652265-03:00</FechaInspeccion>
+      <Estado>En evaluación</Estado>
+    </Oferta>
+    <ValorFinal>30000000</ValorFinal>
+    <Fecha>2025-07-03T13:56:25.9208231-03:00</Fecha>
+  </Tasacion>
+  <Tasacion>
+    <ID>7</ID>
+    <Oferta>
+      <ID>3</ID>
+      <Oferente>
+        <ID>18</ID>
+        <Dni>53815808</Dni>
+        <Nombre>Jonas</Nombre>
+        <Apellido>Criado</Apellido>
+        <Contacto>jonas@gmail.com</Contacto>
+      </Oferente>
+      <Vehiculo>
+        <ID>25</ID>
+        <Marca>BMW</Marca>
+        <Modelo>Turbo</Modelo>
+        <Año>2020</Año>
+        <Color>Gris</Color>
+        <Km>150000</Km>
+        <Dominio>aaa001</Dominio>
+        <Estado>En evaluación</Estado>
+      </Vehiculo>
+      <FechaInspeccion>2025-07-02T11:19:22.5610584-03:00</FechaInspeccion>
+      <Estado>En evaluación</Estado>
+    </Oferta>
+    <ValorFinal>123123123</ValorFinal>
+    <Fecha>2025-07-03T13:57:00.0190956-03:00</Fecha>
+  </Tasacion>
+  <Tasacion>
+    <ID>8</ID>
+    <Oferta>
+      <ID>6</ID>
+      <Oferente>
+        <ID>20</ID>
+        <Dni>22222222</Dni>
+        <Nombre>Pedro</Nombre>
+        <Apellido>Perez</Apellido>
+        <Contacto>peter@gmail.com</Contacto>
+      </Oferente>
+      <Vehiculo>
+        <ID>26</ID>
+        <Marca>Honda</Marca>
+        <Modelo>Cyrax</Modelo>
+        <Año>2025</Año>
+        <Color>Azul</Color>
+        <Km>10000</Km>
+        <Dominio>zzz999</Dominio>
+        <Estado>En evaluación</Estado>
+      </Vehiculo>
+      <FechaInspeccion>2025-07-03T13:57:16.4892856-03:00</FechaInspeccion>
+      <Estado>En evaluación</Estado>
+    </Oferta>
+    <ValorFinal>2250000</ValorFinal>
+    <Fecha>2025-07-03T13:58:35.0278205-03:00</Fecha>
+  </Tasacion>
+  <Tasacion>
+    <ID>9</ID>
+    <Oferta>
+      <ID>7</ID>
+      <Oferente>
+        <ID>21</ID>
+        <Dni>53815806</Dni>
+        <Nombre>Amalia</Nombre>
+        <Apellido>Bartolito</Apellido>
+        <Contacto>amalia@gmail.com</Contacto>
+      </Oferente>
+      <Vehiculo>
+        <ID>26</ID>
+        <Marca>Vehiculo</Marca>
+        <Modelo>Prueba</Modelo>
+        <Año>2000</Año>
+        <Color>Rosa</Color>
+        <Km>2000</Km>
+        <Dominio>YYY444</Dominio>
+        <Estado>En evaluación</Estado>
+      </Vehiculo>
+      <FechaInspeccion>2025-07-03T14:09:48.9999968-03:00</FechaInspeccion>
+      <Estado>En evaluación</Estado>
+    </Oferta>
+    <ValorFinal>3000000</ValorFinal>
+    <Fecha>2025-07-03T14:12:00.9249464-03:00</Fecha>
+  </Tasacion>
 </ArrayOfTasacion>

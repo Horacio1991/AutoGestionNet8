@@ -24,4 +24,36 @@
     <EstadoDocumentacion>Ok</EstadoDocumentacion>
     <Observaciones>Excelente</Observaciones>
   </EvaluacionTecnica>
+  <EvaluacionTecnica>
+    <ID>3</ID>
+    <EstadoMotor>Excelente</EstadoMotor>
+    <EstadoCarroceria>Excelente</EstadoCarroceria>
+    <EstadoInterior>Excelente</EstadoInterior>
+    <EstadoDocumentacion>ok</EstadoDocumentacion>
+    <Observaciones>ok</Observaciones>
+  </EvaluacionTecnica>
+  <EvaluacionTecnica>
+    <ID>5</ID>
+    <EstadoMotor>ok</EstadoMotor>
+    <EstadoCarroceria>ok</EstadoCarroceria>
+    <EstadoInterior>ok</EstadoInterior>
+    <EstadoDocumentacion>ok</EstadoDocumentacion>
+    <Observaciones>ok</Observaciones>
+  </EvaluacionTecnica>
+  <EvaluacionTecnica>
+    <ID>6</ID>
+    <EstadoMotor>ok</EstadoMotor>
+    <EstadoCarroceria>ok</EstadoCarroceria>
+    <EstadoInterior>ok</EstadoInterior>
+    <EstadoDocumentacion>ok</EstadoDocumentacion>
+    <Observaciones>ok</Observaciones>
+  </EvaluacionTecnica>
+  <EvaluacionTecnica>
+    <ID>7</ID>
+    <EstadoMotor>ok</EstadoMotor>
+    <EstadoCarroceria>ok</EstadoCarroceria>
+    <EstadoInterior>ok</EstadoInterior>
+    <EstadoDocumentacion>ok</EstadoDocumentacion>
+    <Observaciones>ok</Observaciones>
+  </EvaluacionTecnica>
 </ArrayOfEvaluacionTecnica>

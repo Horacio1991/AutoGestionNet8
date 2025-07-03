@@ -1,32 +1,67 @@
-﻿using AutoGestion.CTRL_Vista.Modelos;
+﻿using AutoGestion.BLL;
+using AutoGestion.CTRL_Vista.Modelos;
 using AutoGestion.Entidades;
-using AutoGestion.BLL;
 
 namespace AutoGestion.CTRL_Vista
 {
+    // Usado en el proceso de entrega de vehículos:
+    // listados de ventas facturadas y confirmación de entrega.
     public class EntregaController
     {
-        private readonly VentaBLL _bll = new();
+        private readonly VentaBLL _ventaBll = new();
 
-        // Devuelve DTOs para poblar el grid
+        /// Obtiene las ventas cuyo estado es "Facturada",
         public List<VentaDto> ObtenerVentasParaEntrega()
         {
-            return _bll.ObtenerVentasFacturadas()
-                       .Select(VentaDto.FromEntity)
-                       .ToList();
+            try
+            {
+                // 1) Traer todas las ventas con estado Facturada
+                var ventas = _ventaBll.ObtenerVentasFacturadas();
+
+                // 2) Mapear cada entidad Venta a VentaDto
+                return ventas
+                    .Select(VentaDto.FromEntity)
+                    .Where(dto => dto != null)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException($"Error al obtener ventas para entrega: {ex.Message}", ex);
+            }
         }
 
-        // Marca la venta como entregada
+        /// Marca una venta como entregada.
         public void ConfirmarEntrega(int ventaId)
         {
-            _bll.MarcarComoEntregada(ventaId);
+            try
+            {
+                // 1) Verificar existencia
+                var venta = _ventaBll.ObtenerTodas().FirstOrDefault(v => v.ID == ventaId)
+                            ?? throw new ApplicationException("Venta no encontrada.");
+
+                // 2) Delegar a la BLL
+                _ventaBll.MarcarComoEntregada(ventaId);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException($"Error al confirmar entrega: {ex.Message}", ex);
+            }
         }
 
-        // Recupera la entidad completa para generar el PDF
+        /// Recupera la entidad completa de venta para generar el comprobante PDF.
         public Venta ObtenerEntidad(int ventaId)
         {
-            return _bll.ObtenerTodas()
-                       .FirstOrDefault(v => v.ID == ventaId);
+            try
+            {
+                var venta = _ventaBll.ObtenerTodas().FirstOrDefault(v => v.ID == ventaId)
+                            ?? throw new ApplicationException("Venta no encontrada.");
+
+                return venta;
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException($"Error al recuperar entidad de venta: {ex.Message}", ex);
+            }
         }
     }
 }

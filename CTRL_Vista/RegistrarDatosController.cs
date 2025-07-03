@@ -1,50 +1,103 @@
 ﻿using AutoGestion.BLL;
 using AutoGestion.DTOs;
 
-public class RegistrarDatosController
+namespace AutoGestion.CTRL_Vista
 {
-    private readonly OfertaBLL _ofertaBll = new();
-    private readonly EvaluacionBLL _evaluacionBll = new();
-    private readonly VehiculoBLL _vehiculoBll = new();
-
-    public OfertaRegistroDto ObtenerOfertaPorDominio(string dominio)
+    // Controller para el registro del estado final de stock de una oferta,
+    // tras haber completado la evaluación técnica.
+    public class RegistrarDatosController
     {
-        var oferta = _ofertaBll.ObtenerOfertasSinRegistrar()
-                              .FirstOrDefault(o =>
-                                o.Vehiculo.Dominio.Equals(dominio, StringComparison.OrdinalIgnoreCase));
-        if (oferta == null) return null;
+        private readonly OfertaBLL _ofertaBll = new();
+        private readonly EvaluacionBLL _evaluacionBll = new();
+        private readonly VehiculoBLL _vehiculoBll = new();
 
-        var ev = _evaluacionBll.ObtenerEvaluacionAsociada(oferta);
-        if (ev == null) return null;
-
-        return new OfertaRegistroDto
+        // Obtiene los datos necesarios para mostrar la oferta y evaluación previa,
+        // antes de registrar el estado de stock.
+        public OfertaRegistroDto ObtenerOfertaPorDominio(string dominio)
         {
-            OfertaID = oferta.ID,
-            EvaluacionTexto =
-            $"Motor: {ev.EstadoMotor}\r\n" +
-            $"Carrocería: {ev.EstadoCarroceria}\r\n" +
-            $"Interior: {ev.EstadoInterior}\r\n" +
-            $"Documentación: {ev.EstadoDocumentacion}"
-        };
-    }
+            if (string.IsNullOrWhiteSpace(dominio))
+                throw new ArgumentException("Dominio requerido.", nameof(dominio));
 
-    public void RegistrarDatos(RegistrarDatosInputDto dto)
-    {
-        // 1) recuperar oferta
-        var oferta = _ofertaBll.ObtenerOfertasSinRegistrar()
-                              .FirstOrDefault(o => o.ID == dto.OfertaID);
-        if (oferta == null)
-            throw new ApplicationException("Oferta no encontrada.");
+            try
+            {
+                // 1) Buscar oferta sin procesar por dominio
+                var oferta = _ofertaBll.ObtenerOfertasSinRegistrar()
+                    .FirstOrDefault(o =>
+                        o.Vehiculo.Dominio
+                         .Equals(dominio, StringComparison.OrdinalIgnoreCase));
 
-        // 2) actualizar estado del vehículo
-        _vehiculoBll.ActualizarEstadoVehiculo(oferta.Vehiculo, dto.EstadoStock);
+                // Si no hay oferta, devolvemos null para que la UI lo maneje
+                if (oferta == null)
+                    return null;
 
-        // 3) si quedó "Disponible", ingresarlo a stock
-        if (dto.EstadoStock == "Disponible")
-            _vehiculoBll.AgregarVehiculoAlStock(oferta.Vehiculo);
+                // 2) Obtener evaluación asociada
+                var evaluacion = _evaluacionBll.ObtenerEvaluacionAsociada(oferta);
 
-        // 4) marcar la oferta como ya procesada
-        oferta.Estado = "Registrada";
-        _ofertaBll.ActualizarOferta(oferta);
+                // Si no hay evaluación, devolvemos null
+                if (evaluacion == null)
+                    return null;
+
+                // 3) Construir y devolver el DTO
+                return new OfertaRegistroDto
+                {
+                    OfertaID = oferta.ID,
+                    EvaluacionTexto =
+                        $"Motor: {evaluacion.EstadoMotor}\r\n" +
+                        $"Carrocería: {evaluacion.EstadoCarroceria}\r\n" +
+                        $"Interior: {evaluacion.EstadoInterior}\r\n" +
+                        $"Documentación: {evaluacion.EstadoDocumentacion}"
+                };
+            }
+            catch (Exception ex)
+            {
+                // Solo para errores inesperados
+                throw new ApplicationException($"Error al obtener datos de registro: {ex.Message}", ex);
+            }
+        }
+
+
+        // Registra el estado de stock final del vehículo y marca la oferta como procesada.
+        // dto = RegistrarDatosInputDto con OfertaID y EstadoStock.
+        public void RegistrarDatos(RegistrarDatosInputDto dto)
+        {
+            if (dto == null)
+                throw new ArgumentNullException(nameof(dto));
+            if (dto.OfertaID <= 0)
+                throw new ArgumentException("OfertaID inválido.", nameof(dto.OfertaID));
+            if (string.IsNullOrWhiteSpace(dto.EstadoStock))
+                throw new ArgumentException("Estado de stock requerido.", nameof(dto.EstadoStock));
+
+            try
+            {
+                // 1) Recuperar oferta sin procesar
+                var oferta = _ofertaBll.ObtenerOfertasSinRegistrar()
+                    .FirstOrDefault(o => o.ID == dto.OfertaID);
+                if (oferta == null)
+                    throw new ApplicationException("Oferta no encontrada.");
+
+                // 2) Gestionar stock del vehículo:
+                //    - Si ya existe en vehiculos.xml, actualizar su estado.
+                //    - Si no existe y estado es "Disponible", agregar al stock.
+                var dominio = oferta.Vehiculo.Dominio;
+                var existente = _vehiculoBll.BuscarVehiculoPorDominio(dominio);
+                if (existente != null)
+                {
+                    _vehiculoBll.ActualizarEstadoVehiculo(existente, dto.EstadoStock);
+                }
+                else if (dto.EstadoStock.Equals("Disponible", StringComparison.OrdinalIgnoreCase))
+                {
+                    _vehiculoBll.AgregarVehiculoAlStock(oferta.Vehiculo);
+                }
+
+                // 3) Marcar la oferta como procesada
+                oferta.Estado = "Registrada";
+                _ofertaBll.ActualizarOferta(oferta);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException(
+                    $"Error al registrar datos de oferta: {ex.Message}", ex);
+            }
+        }
     }
 }

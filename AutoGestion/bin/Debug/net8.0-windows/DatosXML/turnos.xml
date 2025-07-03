@@ -174,4 +174,54 @@
     <Hora>PT12H</Hora>
     <Asistencia>Pendiente</Asistencia>
   </Turno>
+  <Turno>
+    <ID>8</ID>
+    <Cliente>
+      <ID>13</ID>
+      <Dni>53815805</Dni>
+      <Nombre>Charo</Nombre>
+      <Apellido>Ortiz</Apellido>
+      <Contacto>charo.ortiz2014@gmail.com</Contacto>
+      <FechaRegistro>2025-05-30T09:03:50.4051418-03:00</FechaRegistro>
+    </Cliente>
+    <Vehiculo>
+      <ID>13</ID>
+      <Marca>Volkswagen</Marca>
+      <Modelo>Polo</Modelo>
+      <Año>2022</Año>
+      <Color>Azul</Color>
+      <Km>7000</Km>
+      <Dominio>KLM101</Dominio>
+      <Estado>Disponible</Estado>
+    </Vehiculo>
+    <Fecha>2025-07-03T00:00:00-03:00</Fecha>
+    <Hora>PT16H30M</Hora>
+    <Asistencia>No asistió</Asistencia>
+    <Observaciones />
+  </Turno>
+  <Turno>
+    <ID>9</ID>
+    <Cliente>
+      <ID>11</ID>
+      <Dni>36084790</Dni>
+      <Nombre>Horacio</Nombre>
+      <Apellido>Ortiz</Apellido>
+      <Contacto>horacio0291@gmail.com</Contacto>
+      <FechaRegistro>2025-05-29T09:28:19.7256203-03:00</FechaRegistro>
+    </Cliente>
+    <Vehiculo>
+      <ID>14</ID>
+      <Marca>Renault</Marca>
+      <Modelo>Logan</Modelo>
+      <Año>2020</Año>
+      <Color>Gris</Color>
+      <Km>22000</Km>
+      <Dominio>NOP202</Dominio>
+      <Estado>Disponible</Estado>
+    </Vehiculo>
+    <Fecha>2025-07-03T00:00:00-03:00</Fecha>
+    <Hora>PT0S</Hora>
+    <Asistencia>Asistió</Asistencia>
+    <Observaciones>asistio</Observaciones>
+  </Turno>
 </ArrayOfTurno>

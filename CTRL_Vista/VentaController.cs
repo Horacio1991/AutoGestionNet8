@@ -1,37 +1,84 @@
 ﻿using AutoGestion.BLL;
 using AutoGestion.CTRL_Vista.Modelos;
 
-
 namespace AutoGestion.CTRL_Vista
 {
+    // Gestiona el flujo de ventas:
+    // - Listar ventas pendientes
+    // - Autorizar o rechazar ventas
+    // - Listar ventas autorizadas para facturar
     public class VentaController
     {
-        private readonly VentaBLL _ventaBLL = new();
+        private readonly VentaBLL _ventaBll = new();
 
-        // 1) Obtener todos los pendientes (estado "Pendiente") ya mapeados a DTO
+        // Obtiene las ventas en estado "Pendiente".
         public List<VentaDto> ObtenerVentasPendientes()
         {
-            return _ventaBLL.ObtenerVentasConEstadoPendiente()
-                   .Select(VentaDto.FromEntity)
-                   .ToList();
+            try
+            {
+                var entidades = _ventaBll.ObtenerVentasConEstadoPendiente();
+                return entidades
+                    .Select(VentaDto.FromEntity)
+                    .Where(dto => dto != null)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException(
+                    $"Error al obtener ventas pendientes: {ex.Message}", ex);
+            }
         }
 
-        // 2) Autorizar una venta por ID
-        public bool AutorizarVenta(int id) => _ventaBLL.AutorizarVenta(id);
+        public bool AutorizarVenta(int ventaId)
+        {
+            if (ventaId <= 0)
+                throw new ArgumentException("ID de venta inválido.", nameof(ventaId));
 
-        // 3) Rechazar una venta por ID con motivo
-        public bool RechazarVenta(int id, string motivo) =>
-            _ventaBLL.RechazarVenta(id, motivo);
+            try
+            {
+                return _ventaBll.AutorizarVenta(ventaId);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException(
+                    $"Error al autorizar venta: {ex.Message}", ex);
+            }
+        }
 
-        // 4) Obtener las ventas autorizadas listas para facturar
+        public bool RechazarVenta(int ventaId, string motivo)
+        {
+            if (ventaId <= 0)
+                throw new ArgumentException("ID de venta inválido.", nameof(ventaId));
+            if (string.IsNullOrWhiteSpace(motivo))
+                throw new ArgumentException("Motivo de rechazo requerido.", nameof(motivo));
+
+            try
+            {
+                return _ventaBll.RechazarVenta(ventaId, motivo);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException(
+                    $"Error al rechazar venta: {ex.Message}", ex);
+            }
+        }
+
+        /// Obtiene las ventas autorizadas ("Autorizada") listas para emitir factura.
         public List<VentaDto> ObtenerVentasParaFacturar()
         {
-            var entidades = _ventaBLL.ObtenerVentasPendientes()   // Todas las no facturadas
-                                     .Where(v => v.Estado == "Autorizada")
-                                     .ToList();
-
-            return entidades.Select(VentaDto.FromEntity)
-                            .ToList();
+            try
+            {
+                var autorizadas = _ventaBll.ObtenerVentasAutorizadas();
+                return autorizadas
+                    .Select(VentaDto.FromEntity)
+                    .Where(dto => dto != null)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException(
+                    $"Error al obtener ventas para facturar: {ex.Message}", ex);
+            }
         }
     }
 }

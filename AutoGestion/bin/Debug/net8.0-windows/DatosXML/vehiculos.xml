@@ -68,7 +68,7 @@
     <Color>Negro</Color>
     <Km>35000</Km>
     <Dominio>STU444</Dominio>
-    <Estado>Disponible</Estado>
+    <Estado>En Proceso</Estado>
   </Vehiculo>
   <Vehiculo>
     <ID>8</ID>
@@ -78,7 +78,7 @@
     <Color>Rojo</Color>
     <Km>25000</Km>
     <Dominio>VWX555</Dominio>
-    <Estado>Disponible</Estado>
+    <Estado>En Proceso</Estado>
   </Vehiculo>
   <Vehiculo>
     <ID>9</ID>
@@ -108,7 +108,7 @@
     <Color>Blanco</Color>
     <Km>18000</Km>
     <Dominio>EFG888</Dominio>
-    <Estado>Disponible</Estado>
+    <Estado>En Proceso</Estado>
   </Vehiculo>
   <Vehiculo>
     <ID>12</ID>
@@ -249,5 +249,15 @@
     <Km>100</Km>
     <Dominio>zzz999</Dominio>
     <Estado>Disponible</Estado>
+  </Vehiculo>
+  <Vehiculo>
+    <ID>26</ID>
+    <Marca>Vehiculo</Marca>
+    <Modelo>Prueba</Modelo>
+    <Año>2000</Año>
+    <Color>Rosa</Color>
+    <Km>2000</Km>
+    <Dominio>YYY444</Dominio>
+    <Estado>En Proceso</Estado>
   </Vehiculo>
 </ArrayOfVehiculo>

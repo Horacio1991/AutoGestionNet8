@@ -126,4 +126,25 @@
     <Apellido>Criado</Apellido>
     <Contacto>jonas@gmail.com</Contacto>
   </Oferente>
+  <Oferente>
+    <ID>19</ID>
+    <Dni>90123456</Dni>
+    <Nombre>Delfina</Nombre>
+    <Apellido>Castro</Apellido>
+    <Contacto>delfi@gmail.com</Contacto>
+  </Oferente>
+  <Oferente>
+    <ID>20</ID>
+    <Dni>22222222</Dni>
+    <Nombre>Pedro</Nombre>
+    <Apellido>Perez</Apellido>
+    <Contacto>peter@gmail.com</Contacto>
+  </Oferente>
+  <Oferente>
+    <ID>21</ID>
+    <Dni>53815806</Dni>
+    <Nombre>Amalia</Nombre>
+    <Apellido>Bartolito</Apellido>
+    <Contacto>amalia@gmail.com</Contacto>
+  </Oferente>
 </ArrayOfOferente>

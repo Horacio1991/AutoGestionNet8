@@ -144,4 +144,12 @@
     <Contacto>ama@gmail.com</Contacto>
     <FechaRegistro>2025-07-02T09:54:12.2035834-03:00</FechaRegistro>
   </Cliente>
+  <Cliente>
+    <ID>19</ID>
+    <Dni>9080706050</Dni>
+    <Nombre>Pepito</Nombre>
+    <Apellido>Gonzalez</Apellido>
+    <Contacto>pep@gmail.com</Contacto>
+    <FechaRegistro>2025-07-03T10:56:05.9378377-03:00</FechaRegistro>
+  </Cliente>
 </ArrayOfCliente>

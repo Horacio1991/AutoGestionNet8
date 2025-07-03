@@ -72,4 +72,36 @@
     <Detalles>Hecho en un pago</Detalles>
     <FechaPago>2025-07-02T14:28:30.8950553-03:00</FechaPago>
   </Pago>
+  <Pago>
+    <ID>10</ID>
+    <TipoPago>Efectivo</TipoPago>
+    <Monto>123123123</Monto>
+    <Cuotas>1</Cuotas>
+    <Detalles>asd</Detalles>
+    <FechaPago>2025-07-03T11:22:43.9227825-03:00</FechaPago>
+  </Pago>
+  <Pago>
+    <ID>11</ID>
+    <TipoPago>Efectivo</TipoPago>
+    <Monto>89898989</Monto>
+    <Cuotas>1</Cuotas>
+    <Detalles>a</Detalles>
+    <FechaPago>2025-07-03T11:35:31.8181407-03:00</FechaPago>
+  </Pago>
+  <Pago>
+    <ID>12</ID>
+    <TipoPago>Efectivo</TipoPago>
+    <Monto>50000000</Monto>
+    <Cuotas>1</Cuotas>
+    <Detalles>pagó</Detalles>
+    <FechaPago>2025-07-03T11:58:18.3876463-03:00</FechaPago>
+  </Pago>
+  <Pago>
+    <ID>13</ID>
+    <TipoPago>Efectivo</TipoPago>
+    <Monto>74000000</Monto>
+    <Cuotas>1</Cuotas>
+    <Detalles>pago contado</Detalles>
+    <FechaPago>2025-07-03T14:34:43.2449321-03:00</FechaPago>
+  </Pago>
 </ArrayOfPago>
