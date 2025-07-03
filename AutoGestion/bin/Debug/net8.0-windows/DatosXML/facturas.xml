@@ -288,4 +288,52 @@
     <Precio>74000000</Precio>
     <Fecha>2025-07-03T14:35:28.7330154-03:00</Fecha>
   </Factura>
+  <Factura>
+    <ID>13</ID>
+    <Cliente>
+      <ID>0</ID>
+      <Dni>36084790</Dni>
+      <Nombre>Horacio</Nombre>
+      <Apellido>Ortiz</Apellido>
+      <Contacto>horacio0291@gmail.com</Contacto>
+      <FechaRegistro>2025-07-03T15:30:32.509639-03:00</FechaRegistro>
+    </Cliente>
+    <Vehiculo>
+      <ID>10</ID>
+      <Marca>Citroën</Marca>
+      <Modelo>C3</Modelo>
+      <Año>2022</Año>
+      <Color>Blanco</Color>
+      <Km>8000</Km>
+      <Dominio>BCD777</Dominio>
+      <Estado>Disponible</Estado>
+    </Vehiculo>
+    <FormaPago>Efectivo</FormaPago>
+    <Precio>15000000</Precio>
+    <Fecha>2025-07-03T15:30:44.926536-03:00</Fecha>
+  </Factura>
+  <Factura>
+    <ID>14</ID>
+    <Cliente>
+      <ID>0</ID>
+      <Dni>36168344</Dni>
+      <Nombre>Belen</Nombre>
+      <Apellido>Uronich</Apellido>
+      <Contacto>beluronich@gmail.com</Contacto>
+      <FechaRegistro>2025-07-03T11:58:18.516893-03:00</FechaRegistro>
+    </Cliente>
+    <Vehiculo>
+      <ID>8</ID>
+      <Marca>Toyota</Marca>
+      <Modelo>Yaris</Modelo>
+      <Año>2020</Año>
+      <Color>Rojo</Color>
+      <Km>25000</Km>
+      <Dominio>VWX555</Dominio>
+      <Estado>Disponible</Estado>
+    </Vehiculo>
+    <FormaPago>Efectivo</FormaPago>
+    <Precio>50000000</Precio>
+    <Fecha>2025-07-03T15:33:17.2086985-03:00</Fecha>
+  </Factura>
 </ArrayOfFactura>

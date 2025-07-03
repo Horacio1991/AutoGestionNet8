@@ -1,75 +1,79 @@
-﻿using AutoGestion.DAO.Modelos;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
+using AutoGestion.DAO.Modelos;
 
 namespace AutoGestion.Servicios.Utilidades
-
 {
     public static class GeneradorID
     {
-        // Diccionario para mapear tipos a nombres de archivos XML
-        // Asocia el nombre de la clase con el nombre del archivo XML correspondiente
+        // Mapa de tipo de entidad al nombre de archivo XML
         private static readonly Dictionary<string, string> NombresArchivos = new()
         {
-            { "Cliente", "clientes.xml" },
-            { "Vehiculo", "vehiculos.xml" },
-            { "Venta", "ventas.xml" },
-            { "Pago", "pagos.xml" },
-            { "Factura", "facturas.xml" },
-            { "EvaluacionTecnica", "evaluaciones.xml" },
-            { "OfertaCompra", "ofertas.xml" },
-            { "Tasacion", "tasaciones.xml" },
-            { "Turno", "turnos.xml" },
-            { "Comision", "comisiones.xml" },
-            { "ComprobanteEntrega", "comprobantes.xml" },
-            { "Oferente", "oferentes.xml" },
-            { "PermisoCompleto", "permisos.xml" },
-            { "Usuario", "usuarios.xml" },
-            { "PermisoCompuesto" , "roles.xml" }
-
+            { "Cliente",             "clientes.xml" },
+            { "Vehiculo",            "vehiculos.xml" },
+            { "Venta",               "ventas.xml" },
+            { "Pago",                "pagos.xml" },
+            { "Factura",             "facturas.xml" },
+            { "EvaluacionTecnica",   "evaluaciones.xml" },
+            { "OfertaCompra",        "ofertas.xml" },
+            { "Tasacion",            "tasaciones.xml" },
+            { "Turno",               "turnos.xml" },
+            { "Comision",            "comisiones.xml" },
+            { "ComprobanteEntrega",  "comprobantes.xml" },
+            { "Oferente",            "oferentes.xml" },
+            { "PermisoCompleto",     "permisos_compuestos.xml" },
+            { "Usuario",             "usuarios.xml" },
+            { "PermisoCompuesto",    "roles.xml" }
         };
 
+        // Obtiene el próximo ID para el tipo T, buscando en el XML respectivo.
         public static int ObtenerID<T>()
         {
-            //Nombre de la clase (por ejemplo, "Cliente", "Vehiculo", etc.)
-            string tipo = typeof(T).Name;
-
-            // Determina el nombre del archivo XML basado en el tipo
-            string archivo = NombresArchivos.ContainsKey(tipo)
+            var tipo = typeof(T).Name;
+            var archivo = NombresArchivos.ContainsKey(tipo)
                 ? NombresArchivos[tipo]
-                : tipo.ToLower() + "s.xml";
+                : $"{tipo.ToLower()}s.xml";
 
-            // Ruta completa al archivo XML
-            string ruta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DatosXML", archivo);
+            var ruta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DatosXML", archivo);
 
-            // Si el archivo no existe, retorna 1 (primer ID disponible)
-            if (!File.Exists(ruta))
-                return 1;
-
-            // Si es Usuario, usamos UsuarioSerializable
-            if (typeof(T).Name == "Usuario")
+            try
             {
-                var serializer = new XmlSerializer(typeof(List<UsuarioSerializable>));
-                using var stream = new FileStream(ruta, FileMode.Open);
-                var lista = (List<UsuarioSerializable>)serializer.Deserialize(stream);
-                return lista.Any() ? lista.Max(u => u.ID) + 1 : 1;
+                if (!File.Exists(ruta))
+                    return 1; // primer ID
+
+                // Caso especial: UsuarioSerializable
+                if (tipo == "Usuario")
+                {
+                    var serU = new XmlSerializer(typeof(List<UsuarioSerializable>));
+                    using var streamU = new FileStream(ruta, FileMode.Open, FileAccess.Read);
+                    var listU = (List<UsuarioSerializable>)serU.Deserialize(streamU);
+                    return listU.Any() ? listU.Max(u => u.ID) + 1 : 1;
+                }
+
+                // Serializar lista genérica T
+                var ser = new XmlSerializer(typeof(List<T>));
+                using var stream = new FileStream(ruta, FileMode.Open, FileAccess.Read);
+                var list = (List<T>)ser.Deserialize(stream);
+
+                // Obtener propiedad ID vía reflexión
+                var prop = typeof(T).GetProperty("ID")
+                    ?? throw new InvalidOperationException($"Tipo {tipo} no tiene propiedad ID.");
+
+                var ids = list
+                    .Select(item => (int?)prop.GetValue(item))
+                    .Where(id => id.HasValue)
+                    .Select(id => id.Value);
+
+                return ids.Any() ? ids.Max() + 1 : 1;
             }
-
-            // Para otros tipos, usamos el tipo genérico T
-            var serializerT = new XmlSerializer(typeof(List<T>));
-            using var streamT = new FileStream(ruta, FileMode.Open);
-            var listaT = (List<T>)serializerT.Deserialize(streamT);
-
-            var prop = typeof(T).GetProperty("ID");
-            if (prop == null) return 1;
-
-            var ids = listaT
-                .Select(item => (int?)prop.GetValue(item))
-                .Where(id => id.HasValue)
-                .Select(id => id.Value);
-
-            return ids.Any() ? ids.Max() + 1 : 1;
+            catch (InvalidOperationException ex)
+            {
+                // XML mal formado u otro problema de deserialización
+                throw new ApplicationException($"Error al leer IDs de {archivo}: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException($"Error al generar ID para {tipo}: {ex.Message}", ex);
+            }
         }
-
-
     }
 }

@@ -1,26 +1,49 @@
-﻿using System;
-using System.Text;
-using System.Security.Cryptography;
+﻿using System.Text;
 
 namespace AutoGestion.Servicios.Encriptacion
-
 {
+    // Métodos para encriptar y desencriptar contraseñas
+    // usando Base64 sobre bytes Unicode. (Use el más simple)
     public static class Encriptacion
     {
-        public static string EncriptarPassword(string pPassword)
+        public static string EncriptarPassword(string password)
         {
-            //Convierte la contraseña a un arreglo de bytes usando Unicode
-            byte[] encriptado = Encoding.Unicode.GetBytes(pPassword);
-            // Codifica el arreglo de bytes a una cadena Base64
-            return Convert.ToBase64String(encriptado);
+            if (password == null)
+                throw new ArgumentNullException(nameof(password));
+
+            try
+            {
+                // 1) Convertir a bytes Unicode
+                byte[] bytes = Encoding.Unicode.GetBytes(password);
+                // 2) Codificar a Base64
+                return Convert.ToBase64String(bytes);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException($"Error al encriptar contraseña: {ex.Message}", ex);
+            }
         }
 
-        public static string DesencriptarPassword(this string pPasswordEncriptado)
+        public static string DesencriptarPassword(string passwordEncriptado)
         {
-            // Decodifica la cadena Base64 a un arreglo de bytes
-            byte[] desencriptado = Convert.FromBase64String(pPasswordEncriptado);
-            // Reconstruye la cadena original a partir del arreglo de bytes usando Unicode
-            return Encoding.Unicode.GetString(desencriptado);
+            if (passwordEncriptado == null)
+                throw new ArgumentNullException(nameof(passwordEncriptado));
+
+            try
+            {
+                // 1) Decodificar Base64 a bytes
+                byte[] bytes = Convert.FromBase64String(passwordEncriptado);
+                // 2) Reconstruir string Unicode original
+                return Encoding.Unicode.GetString(bytes);
+            }
+            catch (FormatException ex)
+            {
+                throw new ApplicationException("La contraseña encriptada tiene formato inválido.", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException($"Error al desencriptar contraseña: {ex.Message}", ex);
+            }
         }
     }
 }

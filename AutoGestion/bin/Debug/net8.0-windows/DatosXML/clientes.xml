@@ -152,4 +152,12 @@
     <Contacto>pep@gmail.com</Contacto>
     <FechaRegistro>2025-07-03T10:56:05.9378377-03:00</FechaRegistro>
   </Cliente>
+  <Cliente>
+    <ID>20</ID>
+    <Dni>36084791</Dni>
+    <Nombre>Patricio</Nombre>
+    <Apellido>Ortiz</Apellido>
+    <Contacto>pato@gmail.com</Contacto>
+    <FechaRegistro>2025-07-03T15:38:54.8842377-03:00</FechaRegistro>
+  </Cliente>
 </ArrayOfCliente>

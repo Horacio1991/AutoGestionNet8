@@ -1,5 +1,4 @@
-﻿
-using AutoGestion.Servicios.Composite;
+﻿using AutoGestion.Servicios.Composite;
 
 namespace AutoGestion.Servicios
 

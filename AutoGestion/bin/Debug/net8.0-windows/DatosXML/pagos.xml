@@ -104,4 +104,20 @@
     <Detalles>pago contado</Detalles>
     <FechaPago>2025-07-03T14:34:43.2449321-03:00</FechaPago>
   </Pago>
+  <Pago>
+    <ID>14</ID>
+    <TipoPago>Efectivo</TipoPago>
+    <Monto>15000000</Monto>
+    <Cuotas>1</Cuotas>
+    <Detalles>Pago al contado</Detalles>
+    <FechaPago>2025-07-03T15:30:32.4238786-03:00</FechaPago>
+  </Pago>
+  <Pago>
+    <ID>15</ID>
+    <TipoPago>Efectivo</TipoPago>
+    <Monto>20000000</Monto>
+    <Cuotas>1</Cuotas>
+    <Detalles>pago</Detalles>
+    <FechaPago>2025-07-03T15:39:26.3649579-03:00</FechaPago>
+  </Pago>
 </ArrayOfPago>

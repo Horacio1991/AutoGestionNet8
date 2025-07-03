@@ -249,7 +249,7 @@
       <Detalles>pago</Detalles>
       <FechaPago>2025-07-02T11:37:28.5122937-03:00</FechaPago>
     </Pago>
-    <Estado>Facturada</Estado>
+    <Estado>Entregada</Estado>
     <Fecha>2025-07-02T11:37:28.6368923-03:00</Fecha>
   </Venta>
   <Venta>
@@ -429,7 +429,7 @@
       <Detalles>pagó</Detalles>
       <FechaPago>2025-07-03T11:58:18.3876463-03:00</FechaPago>
     </Pago>
-    <Estado>Pendiente</Estado>
+    <Estado>Entregada</Estado>
     <Fecha>2025-07-03T11:58:18.5169304-03:00</Fecha>
   </Venta>
   <Venta>
@@ -467,5 +467,77 @@
     </Pago>
     <Estado>Entregada</Estado>
     <Fecha>2025-07-03T14:34:43.3902603-03:00</Fecha>
+  </Venta>
+  <Venta>
+    <ID>14</ID>
+    <Vendedor>
+      <ID>1</ID>
+      <Nombre>admin</Nombre>
+      <FechaAlta>2025-07-03T15:30:32.5096728-03:00</FechaAlta>
+    </Vendedor>
+    <Cliente>
+      <ID>0</ID>
+      <Dni>36084790</Dni>
+      <Nombre>Horacio</Nombre>
+      <Apellido>Ortiz</Apellido>
+      <Contacto>horacio0291@gmail.com</Contacto>
+      <FechaRegistro>2025-07-03T15:30:32.509639-03:00</FechaRegistro>
+    </Cliente>
+    <Vehiculo>
+      <ID>10</ID>
+      <Marca>Citroën</Marca>
+      <Modelo>C3</Modelo>
+      <Año>2022</Año>
+      <Color>Blanco</Color>
+      <Km>8000</Km>
+      <Dominio>BCD777</Dominio>
+      <Estado>Disponible</Estado>
+    </Vehiculo>
+    <Pago>
+      <ID>14</ID>
+      <TipoPago>Efectivo</TipoPago>
+      <Monto>15000000</Monto>
+      <Cuotas>1</Cuotas>
+      <Detalles>Pago al contado</Detalles>
+      <FechaPago>2025-07-03T15:30:32.4238786-03:00</FechaPago>
+    </Pago>
+    <Estado>Facturada</Estado>
+    <Fecha>2025-07-03T15:30:32.5096726-03:00</Fecha>
+  </Venta>
+  <Venta>
+    <ID>15</ID>
+    <Vendedor>
+      <ID>1</ID>
+      <Nombre>admin</Nombre>
+      <FechaAlta>2025-07-03T15:39:26.4441945-03:00</FechaAlta>
+    </Vendedor>
+    <Cliente>
+      <ID>0</ID>
+      <Dni>36084791</Dni>
+      <Nombre>Patricio</Nombre>
+      <Apellido>Ortiz</Apellido>
+      <Contacto>pato@gmail.com</Contacto>
+      <FechaRegistro>2025-07-03T15:39:26.4441605-03:00</FechaRegistro>
+    </Cliente>
+    <Vehiculo>
+      <ID>12</ID>
+      <Marca>Chevrolet</Marca>
+      <Modelo>Onix</Modelo>
+      <Año>2021</Año>
+      <Color>Rojo</Color>
+      <Km>10000</Km>
+      <Dominio>HIJ999</Dominio>
+      <Estado>Disponible</Estado>
+    </Vehiculo>
+    <Pago>
+      <ID>15</ID>
+      <TipoPago>Efectivo</TipoPago>
+      <Monto>20000000</Monto>
+      <Cuotas>1</Cuotas>
+      <Detalles>pago</Detalles>
+      <FechaPago>2025-07-03T15:39:26.3649579-03:00</FechaPago>
+    </Pago>
+    <Estado>Autorizada</Estado>
+    <Fecha>2025-07-03T15:39:26.4441942-03:00</Fecha>
   </Venta>
 </ArrayOfVenta>
