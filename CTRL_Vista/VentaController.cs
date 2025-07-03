@@ -63,7 +63,7 @@ namespace AutoGestion.CTRL_Vista
             }
         }
 
-        /// Obtiene las ventas autorizadas ("Autorizada") listas para emitir factura.
+        // Obtiene las ventas autorizadas ("Autorizada") listas para emitir factura.
         public List<VentaDto> ObtenerVentasParaFacturar()
         {
             try
