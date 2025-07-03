@@ -29,9 +29,8 @@
   </UsuarioSerializable>
   <UsuarioSerializable>
     <ID>5</ID>
-    <Nombre>Prueba 20</Nombre>
-    <Clave>cAByAG8AYgBhAG4AZABvAA==</Clave>
-    <RolNombre>SuperAdmin</RolNombre>
+    <Nombre>Zoe</Nombre>
+    <Clave>RgByAGEAbgBjAGkAYQA=</Clave>
     <Permisos />
   </UsuarioSerializable>
 </ArrayOfUsuarioSerializable>
