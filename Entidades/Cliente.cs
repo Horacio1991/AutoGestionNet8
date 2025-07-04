@@ -1,6 +1,5 @@
 ﻿namespace AutoGestion.Entidades
 {
-    //Clase preparada para serializar a XML
     [Serializable]
     public class Cliente
     {

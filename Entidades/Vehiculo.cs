@@ -11,6 +11,6 @@
         public string Color { get; set; }
         public int Km { get; set; }
         public string Dominio { get; set; }
-        public string Estado { get; set; } // Ej: Disponible, Vendido
+        public string Estado { get; set; } // Ej: Disponible
     }
 }
