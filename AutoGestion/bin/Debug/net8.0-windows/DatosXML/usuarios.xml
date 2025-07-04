@@ -31,6 +31,7 @@
     <ID>5</ID>
     <Nombre>Zoe</Nombre>
     <Clave>RgByAGEAbgBjAGkAYQA=</Clave>
+    <RolNombre>Vendedor Sr.</RolNombre>
     <Permisos />
   </UsuarioSerializable>
 </ArrayOfUsuarioSerializable>

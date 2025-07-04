@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
 
 namespace AutoGestion.Servicios.Composite
 {
+    // Permiso "Hoja" = no tiene hijos, es un permiso simple. (Por ej, "Emitir Factura")
     [Serializable]
     public class PermisoSimple : IPermiso
     {
@@ -21,6 +20,6 @@ namespace AutoGestion.Servicios.Composite
         public void Quitar(IPermiso permiso) =>
             throw new InvalidOperationException("No se pueden quitar hijos de un PermisoSimple.");
 
-        public List<IPermiso> ObtenerHijos() => new List<IPermiso>();
+        public List<IPermiso> ObtenerHijos() => new List<IPermiso>(); //En este caso siempre retorna una lista vacía, ya que no tiene hijos.
     }
 }

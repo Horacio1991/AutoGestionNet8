@@ -244,4 +244,50 @@
     </HijosCompuestos>
     <HijosSimples />
   </PermisoCompuesto>
+  <PermisoCompuesto>
+    <ID>5</ID>
+    <Nombre>Vendedor Sr.</Nombre>
+    <HijosCompuestos>
+      <PermisoCompuesto>
+        <ID>5</ID>
+        <Nombre>Gestión Ventas</Nombre>
+        <HijosCompuestos>
+          <PermisoCompuesto>
+            <ID>5</ID>
+            <Nombre>Gestión Ventas</Nombre>
+            <HijosCompuestos />
+            <HijosSimples>
+              <PermisoSimple>
+                <ID>1</ID>
+                <Nombre>Autorizar Venta</Nombre>
+              </PermisoSimple>
+            </HijosSimples>
+          </PermisoCompuesto>
+        </HijosCompuestos>
+        <HijosSimples>
+          <PermisoSimple>
+            <ID>1</ID>
+            <Nombre>Solicitar Modelo</Nombre>
+          </PermisoSimple>
+          <PermisoSimple>
+            <ID>1</ID>
+            <Nombre>Registrar Cliente</Nombre>
+          </PermisoSimple>
+          <PermisoSimple>
+            <ID>1</ID>
+            <Nombre>Realizar Pago</Nombre>
+          </PermisoSimple>
+          <PermisoSimple>
+            <ID>1</ID>
+            <Nombre>Emitir Factura</Nombre>
+          </PermisoSimple>
+          <PermisoSimple>
+            <ID>1</ID>
+            <Nombre>Autorizar Venta</Nombre>
+          </PermisoSimple>
+        </HijosSimples>
+      </PermisoCompuesto>
+    </HijosCompuestos>
+    <HijosSimples />
+  </PermisoCompuesto>
 </ArrayOfPermisoCompuesto>
