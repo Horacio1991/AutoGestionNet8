@@ -46,9 +46,9 @@
             // dgvUsuarios
             // 
             dgvUsuarios.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvUsuarios.Location = new Point(263, 46);
+            dgvUsuarios.Location = new Point(456, 35);
             dgvUsuarios.Name = "dgvUsuarios";
-            dgvUsuarios.Size = new Size(375, 200);
+            dgvUsuarios.Size = new Size(673, 390);
             dgvUsuarios.TabIndex = 0;
             dgvUsuarios.SelectionChanged += dgvUsuarios_SelectionChanged_1;
             // 
@@ -56,7 +56,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Sans Serif Collection", 11.9999981F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(3, 3);
+            label1.Location = new Point(3, 0);
             label1.Name = "label1";
             label1.Size = new Size(91, 54);
             label1.TabIndex = 1;
@@ -65,7 +65,7 @@
             // lblID
             // 
             lblID.AutoSize = true;
-            lblID.Location = new Point(0, 46);
+            lblID.Location = new Point(65, 43);
             lblID.Name = "lblID";
             lblID.Size = new Size(21, 15);
             lblID.TabIndex = 2;
@@ -73,7 +73,7 @@
             // 
             // txtID
             // 
-            txtID.Location = new Point(57, 38);
+            txtID.Location = new Point(122, 35);
             txtID.Name = "txtID";
             txtID.ReadOnly = true;
             txtID.Size = new Size(67, 23);
@@ -82,7 +82,7 @@
             // lblNombre
             // 
             lblNombre.AutoSize = true;
-            lblNombre.Location = new Point(0, 77);
+            lblNombre.Location = new Point(65, 74);
             lblNombre.Name = "lblNombre";
             lblNombre.Size = new Size(51, 15);
             lblNombre.TabIndex = 4;
@@ -90,15 +90,15 @@
             // 
             // txtNombre
             // 
-            txtNombre.Location = new Point(57, 69);
+            txtNombre.Location = new Point(122, 66);
             txtNombre.Name = "txtNombre";
-            txtNombre.Size = new Size(126, 23);
+            txtNombre.Size = new Size(197, 23);
             txtNombre.TabIndex = 5;
             // 
             // lblClave
             // 
             lblClave.AutoSize = true;
-            lblClave.Location = new Point(0, 107);
+            lblClave.Location = new Point(65, 104);
             lblClave.Name = "lblClave";
             lblClave.Size = new Size(57, 15);
             lblClave.TabIndex = 6;
@@ -106,16 +106,16 @@
             // 
             // txtClave
             // 
-            txtClave.Location = new Point(57, 98);
+            txtClave.Location = new Point(122, 95);
             txtClave.Name = "txtClave";
-            txtClave.Size = new Size(126, 23);
+            txtClave.Size = new Size(197, 23);
             txtClave.TabIndex = 7;
             txtClave.UseSystemPasswordChar = true;
             // 
             // chkVerClave
             // 
             chkVerClave.AutoSize = true;
-            chkVerClave.Location = new Point(187, 105);
+            chkVerClave.Location = new Point(325, 95);
             chkVerClave.Name = "chkVerClave";
             chkVerClave.Size = new Size(42, 19);
             chkVerClave.TabIndex = 8;
@@ -125,9 +125,9 @@
             // 
             // btnAgregar
             // 
-            btnAgregar.Location = new Point(4, 154);
+            btnAgregar.Location = new Point(69, 151);
             btnAgregar.Name = "btnAgregar";
-            btnAgregar.Size = new Size(75, 23);
+            btnAgregar.Size = new Size(100, 37);
             btnAgregar.TabIndex = 9;
             btnAgregar.Text = "Agregar";
             btnAgregar.UseVisualStyleBackColor = true;
@@ -135,9 +135,9 @@
             // 
             // btnModificar
             // 
-            btnModificar.Location = new Point(85, 154);
+            btnModificar.Location = new Point(183, 151);
             btnModificar.Name = "btnModificar";
-            btnModificar.Size = new Size(75, 23);
+            btnModificar.Size = new Size(100, 37);
             btnModificar.TabIndex = 10;
             btnModificar.Text = "Modificar ";
             btnModificar.UseVisualStyleBackColor = true;
@@ -145,9 +145,9 @@
             // 
             // btnEliminar
             // 
-            btnEliminar.Location = new Point(166, 154);
+            btnEliminar.Location = new Point(294, 151);
             btnEliminar.Name = "btnEliminar";
-            btnEliminar.Size = new Size(75, 23);
+            btnEliminar.Size = new Size(100, 37);
             btnEliminar.TabIndex = 11;
             btnEliminar.Text = "Eliminar";
             btnEliminar.UseVisualStyleBackColor = true;
@@ -170,7 +170,7 @@
             Controls.Add(label1);
             Controls.Add(dgvUsuarios);
             Name = "ABMUsuarios";
-            Size = new Size(641, 365);
+            Size = new Size(1280, 720);
             ((System.ComponentModel.ISupportInitialize)dgvUsuarios).EndInit();
             ResumeLayout(false);
             PerformLayout();

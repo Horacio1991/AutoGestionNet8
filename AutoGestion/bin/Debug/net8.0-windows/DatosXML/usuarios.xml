@@ -34,4 +34,10 @@
     <RolNombre>Vendedor Sr.</RolNombre>
     <Permisos />
   </UsuarioSerializable>
+  <UsuarioSerializable>
+    <ID>6</ID>
+    <Nombre>Yami</Nombre>
+    <Clave>MQAyADMANAA1ADYA</Clave>
+    <Permisos />
+  </UsuarioSerializable>
 </ArrayOfUsuarioSerializable>
