@@ -47,20 +47,19 @@
             // dgvBackup
             // 
             dgvBackup.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvBackup.Location = new Point(95, 57);
+            dgvBackup.Location = new Point(435, 58);
             dgvBackup.Name = "dgvBackup";
-            dgvBackup.Size = new Size(427, 218);
+            dgvBackup.Size = new Size(427, 418);
             dgvBackup.TabIndex = 1;
             // 
             // btnBackup
             // 
-            btnBackup.Location = new Point(233, 281);
+            btnBackup.Location = new Point(571, 517);
             btnBackup.Name = "btnBackup";
             btnBackup.Size = new Size(161, 62);
             btnBackup.TabIndex = 2;
             btnBackup.Text = "Realizar Backup";
             btnBackup.UseVisualStyleBackColor = true;
-            btnBackup.Click += btnBackup_Click;
             // 
             // UC_Backup
             // 
@@ -70,7 +69,7 @@
             Controls.Add(dgvBackup);
             Controls.Add(label1);
             Name = "UC_Backup";
-            Size = new Size(800, 426);
+            Size = new Size(1280, 720);
             ((System.ComponentModel.ISupportInitialize)dgvBackup).EndInit();
             ResumeLayout(false);
             PerformLayout();

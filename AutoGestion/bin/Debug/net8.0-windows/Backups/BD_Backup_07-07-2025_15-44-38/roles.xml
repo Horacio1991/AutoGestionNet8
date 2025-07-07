@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfPermisoCompuesto xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <PermisoCompuesto>
+    <ID>1</ID>
+    <Nombre>Vendedor</Nombre>
+    <HijosCompuestos />
+    <HijosSimples />
+  </PermisoCompuesto>
+  <PermisoCompuesto>
+    <ID>2</ID>
+    <Nombre>Comprador</Nombre>
+    <HijosCompuestos />
+    <HijosSimples />
+  </PermisoCompuesto>
+  <PermisoCompuesto>
+    <ID>3</ID>
+    <Nombre>Administrativo</Nombre>
+    <HijosCompuestos />
+    <HijosSimples />
+  </PermisoCompuesto>
+  <PermisoCompuesto>
+    <ID>4</ID>
+    <Nombre>Vendedor Sr.</Nombre>
+    <HijosCompuestos />
+    <HijosSimples />
+  </PermisoCompuesto>
+</ArrayOfPermisoCompuesto>
