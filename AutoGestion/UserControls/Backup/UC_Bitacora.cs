@@ -1,4 +1,4 @@
-﻿using AutoGestion.Servicios;
+﻿using AutoGestion.CTRL_Vista;
 using System.Data;
 
 
@@ -6,6 +6,7 @@ namespace Vista.UserControls.Backup
 {
     public partial class UC_Bitacora : UserControl
     {
+        private readonly BitacoraController _ctrl = new();
         public UC_Bitacora()
         {
             InitializeComponent();
@@ -15,34 +16,43 @@ namespace Vista.UserControls.Backup
 
         private void CargarBitacora()
         {
-            // Obtiene todos los registros ordenados por fecha de registro
-            var lista = BitacoraService.ObtenerTodo();
-
-            if (rbSoloBackups.Checked)
-                lista = lista.Where(b => b.Detalle.ToLower() == "backup").ToList();
-            else if (rbSoloRestores.Checked)
-                lista = lista.Where(b => b.Detalle.ToLower() == "restore").ToList();
-
-            // Asigna la lista filtrada al DataGridView
-            dgvBitacora.DataSource = lista.Select(b => new
+            try
             {
-                Fecha = b.FechaRegistro.ToString("g"),
-                Detalle = b.Detalle,
-                ID_Usuario = b.UsuarioID,
-                Usuario = b.UsuarioNombre
-            }).ToList();
+                var lista = _ctrl.ObtenerRegistros();
+                if (rbSoloBackups.Checked)
+                    lista = lista.Where(b => b.Detalle.Equals("backup", StringComparison.OrdinalIgnoreCase)).ToList();
+                else if (rbSoloRestores.Checked)
+                    lista = lista.Where(b => b.Detalle.Equals("restore", StringComparison.OrdinalIgnoreCase)).ToList();
 
-            dgvBitacora.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvBitacora.ReadOnly = true;
-            dgvBitacora.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                dgvBitacora.Rows.Clear();
+                dgvBitacora.Columns.Clear();
+
+                dgvBitacora.Columns.Add("Fecha", "Fecha");
+                dgvBitacora.Columns.Add("Detalle", "Acción");
+                dgvBitacora.Columns.Add("Usuario", "Usuario");
+
+                foreach (var b in lista)
+                    dgvBitacora.Rows.Add(
+                        b.FechaRegistro.ToString("g"),
+                        b.Detalle,
+                        b.UsuarioNombre
+                    );
+
+                dgvBitacora.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                dgvBitacora.ReadOnly = true;
+                dgvBitacora.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar bitácora:\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         // Cada vez que se cambie el filtro, se recargará la bitácora
         private void rbTodos_CheckedChanged_1(object sender, EventArgs e) => CargarBitacora();
         private void rbSoloBackups_CheckedChanged_1(object sender, EventArgs e) => CargarBitacora();
         private void rbSoloRestores_CheckedChanged_1(object sender, EventArgs e) => CargarBitacora();
-        private void btnRecargarBitacora_Click(object sender, EventArgs e)=> CargarBitacora();
-
-     
+        private void btnRecargarBitacora_Click(object sender, EventArgs e) => CargarBitacora();
     }
+
 }
