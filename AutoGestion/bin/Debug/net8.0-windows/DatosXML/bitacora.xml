@@ -150,4 +150,10 @@
     <UsuarioID>1</UsuarioID>
     <UsuarioNombre>admin</UsuarioNombre>
   </Bitacora>
+  <Bitacora>
+    <FechaRegistro>2025-07-07T16:01:19.2001546-03:00</FechaRegistro>
+    <Detalle>restore</Detalle>
+    <UsuarioID>1</UsuarioID>
+    <UsuarioNombre>admin</UsuarioNombre>
+  </Bitacora>
 </ArrayOfBitacora>
