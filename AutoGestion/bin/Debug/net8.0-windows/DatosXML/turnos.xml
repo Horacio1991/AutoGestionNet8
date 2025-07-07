@@ -172,7 +172,8 @@
     </Vehiculo>
     <Fecha>2025-07-02T00:00:00-03:00</Fecha>
     <Hora>PT12H</Hora>
-    <Asistencia>Pendiente</Asistencia>
+    <Asistencia>Asistió</Asistencia>
+    <Observaciones>Le gusto El auto</Observaciones>
   </Turno>
   <Turno>
     <ID>8</ID>

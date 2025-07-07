@@ -1,74 +1,83 @@
 ﻿using AutoGestion.CTRL_Vista;
-using AutoGestion.CTRL_Vista.Modelos;
 
 namespace AutoGestion.Vista
 {
     public partial class RegistrarCliente : UserControl
     {
-        private readonly ClienteController _controller = new();
+        private readonly ClienteController _ctrl = new();
 
         public RegistrarCliente()
         {
             InitializeComponent();
         }
 
+        //valida campos y llama al Controller.
         private void btnRegistrar_Click(object sender, EventArgs e)
         {
+            string dni = txtDni.Text.Trim();
+            string nombre = txtNombre.Text.Trim();
+            string apellido = txtApellido.Text.Trim();
+            string contacto = txtContacto.Text.Trim();
+
+            if (string.IsNullOrEmpty(dni) ||
+                string.IsNullOrEmpty(nombre) ||
+                string.IsNullOrEmpty(apellido) ||
+                string.IsNullOrEmpty(contacto))
+            {
+                MessageBox.Show("Complete todos los campos.", "Validación",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             try
             {
-                string dni = txtDni.Text.Trim();
-                string nombre = txtNombre.Text.Trim();
-                string apellido = txtApellido.Text.Trim();
-                string contacto = txtContacto.Text.Trim();
-
-                if (string.IsNullOrEmpty(dni) ||
-                    string.IsNullOrEmpty(nombre) ||
-                    string.IsNullOrEmpty(apellido) ||
-                    string.IsNullOrEmpty(contacto))
-                {
-                    MessageBox.Show("Complete todos los campos antes de registrar.");
-                    return;
-                }
-
-                // Llamamos al controller y recibimos un DTO
-                ClienteDto nuevo = _controller.RegistrarCliente(dni, nombre, apellido, contacto);
-
-                MessageBox.Show("Cliente registrado con éxito.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var dto = _ctrl.RegistrarCliente(dni, nombre, apellido, contacto);
+                MessageBox.Show($"Cliente '{dto.Nombre} {dto.Apellido}' registrado con éxito.",
+                                "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LimpiarFormulario();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al registrar cliente: " + ex.Message,
+                MessageBox.Show($"Error al registrar cliente:\n{ex.Message}",
                                 "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
+        //busca el cliente y muestra datos si existe.
         private void btnBuscarDNI_Click(object sender, EventArgs e)
         {
             string dni = txtDni.Text.Trim();
             if (string.IsNullOrEmpty(dni))
             {
-                MessageBox.Show("Ingrese un DNI válido.");
+                MessageBox.Show("Ingrese un DNI válido.", "Validación",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Ahora trabajamos con el DTO
-            ClienteDto existente = _controller.BuscarCliente(dni);
-            if (existente != null)
+            try
             {
-                MessageBox.Show("El cliente ya está registrado.", "Cliente encontrado");
-
-                txtNombre.Text = existente.Nombre;
-                txtApellido.Text = existente.Apellido;
-                txtContacto.Text = existente.Contacto;
-
-                btnRegistrar.Enabled = false;
+                var existente = _ctrl.BuscarCliente(dni);
+                if (existente != null)
+                {
+                    MessageBox.Show("Cliente encontrado.", "Info",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    txtNombre.Text = existente.Nombre;
+                    txtApellido.Text = existente.Apellido;
+                    txtContacto.Text = existente.Contacto;
+                    btnRegistrar.Enabled = false;
+                }
+                else
+                {
+                    MessageBox.Show("Cliente no encontrado. Puede registrarlo.", "Info",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LimpiarFormulario(keepDni: true);
+                    btnRegistrar.Enabled = true;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Cliente no encontrado. Puede registrarlo.");
-                LimpiarFormulario(keepDni: true);
-                btnRegistrar.Enabled = true;
+                MessageBox.Show($"Error al buscar cliente:\n{ex.Message}",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

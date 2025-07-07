@@ -650,4 +650,40 @@
     <Fecha>2025-07-07T09:52:19.5835351-03:00</Fecha>
     <MotivoRechazo>precio mal cargado</MotivoRechazo>
   </Venta>
+  <Venta>
+    <ID>19</ID>
+    <Vendedor>
+      <ID>1</ID>
+      <Nombre>admin</Nombre>
+      <FechaAlta>2025-07-07T11:20:14.404159-03:00</FechaAlta>
+    </Vendedor>
+    <Cliente>
+      <ID>13</ID>
+      <Dni>53815805</Dni>
+      <Nombre>Charo</Nombre>
+      <Apellido>Ortiz</Apellido>
+      <Contacto>charo.ortiz2014@gmail.com</Contacto>
+      <FechaRegistro>2025-05-30T09:03:50.4051418-03:00</FechaRegistro>
+    </Cliente>
+    <Vehiculo>
+      <ID>15</ID>
+      <Marca>Peugeot</Marca>
+      <Modelo>2008</Modelo>
+      <Año>2021</Año>
+      <Color>Negro</Color>
+      <Km>15000</Km>
+      <Dominio>QRS303</Dominio>
+      <Estado>Disponible</Estado>
+    </Vehiculo>
+    <Pago>
+      <ID>19</ID>
+      <TipoPago>Efectivo</TipoPago>
+      <Monto>9888777</Monto>
+      <Cuotas>1</Cuotas>
+      <Detalles>Pago al contado Charo</Detalles>
+      <FechaPago>2025-07-07T11:20:14.3034696-03:00</FechaPago>
+    </Pago>
+    <Estado>Pendiente</Estado>
+    <Fecha>2025-07-07T11:20:14.4041199-03:00</Fecha>
+  </Venta>
 </ArrayOfVenta>

@@ -144,4 +144,12 @@
     <Detalles>asd</Detalles>
     <FechaPago>2025-07-07T09:52:19.4804214-03:00</FechaPago>
   </Pago>
+  <Pago>
+    <ID>19</ID>
+    <TipoPago>Efectivo</TipoPago>
+    <Monto>9888777</Monto>
+    <Cuotas>1</Cuotas>
+    <Detalles>Pago al contado Charo</Detalles>
+    <FechaPago>2025-07-07T11:20:14.3034696-03:00</FechaPago>
+  </Pago>
 </ArrayOfPago>

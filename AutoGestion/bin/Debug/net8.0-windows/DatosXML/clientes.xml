@@ -160,4 +160,12 @@
     <Contacto>pato@gmail.com</Contacto>
     <FechaRegistro>2025-07-03T15:38:54.8842377-03:00</FechaRegistro>
   </Cliente>
+  <Cliente>
+    <ID>21</ID>
+    <Dni>123456789</Dni>
+    <Nombre>ClientePrueba</Nombre>
+    <Apellido>Prueba</Apellido>
+    <Contacto>probandoUser@gmail.com</Contacto>
+    <FechaRegistro>2025-07-07T11:34:22.5974277-03:00</FechaRegistro>
+  </Cliente>
 </ArrayOfCliente>

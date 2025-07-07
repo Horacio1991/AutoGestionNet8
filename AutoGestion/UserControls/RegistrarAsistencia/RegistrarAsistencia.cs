@@ -12,57 +12,68 @@ namespace AutoGestion.Vista
         {
             InitializeComponent();
 
-            // Poblamos el combo de estados
+            // Combo de estados de asistencia
             cmbEstado.Items.AddRange(new[] { "Asistió", "No asistió", "Pendiente" });
 
-            // Cargamos el grid
             CargarTurnos();
         }
 
+        // Carga los turnos cumplidos pendientes de registrar asistencia.
         private void CargarTurnos()
         {
-            _turnos = _ctrl.ObtenerTurnosParaAsistencia();
-            dgvTurnos.DataSource = null;
-            dgvTurnos.DataSource = _turnos;
-            dgvTurnos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvTurnos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvTurnos.ReadOnly = true;
+            try
+            {
+                _turnos = _ctrl.ObtenerTurnosParaAsistencia();
+                dgvTurnos.DataSource = _turnos;
+                dgvTurnos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                dgvTurnos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                dgvTurnos.ReadOnly = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar turnos:\n{ex.Message}",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
+        //registra la asistencia seleccionada.
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            if (dgvTurnos.CurrentRow == null)
+            if (dgvTurnos.CurrentRow?.DataBoundItem is not TurnoAsistenciaListDto fila)
             {
-                MessageBox.Show("Seleccione un turno.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Seleccione un turno.", "Validación",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (cmbEstado.SelectedIndex < 0)
             {
-                MessageBox.Show("Seleccione un estado de asistencia.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Seleccione un estado de asistencia.", "Validación",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            var dtoGrid = dgvTurnos.CurrentRow.DataBoundItem as TurnoAsistenciaListDto;
-            var input = new RegistrarAsistenciaInputDto
+            var dto = new RegistrarAsistenciaInputDto
             {
-                TurnoID = dtoGrid.ID,
+                TurnoID = fila.ID,
                 Estado = cmbEstado.SelectedItem.ToString(),
                 Observaciones = txtObservaciones.Text.Trim()
             };
 
             try
             {
-                _ctrl.RegistrarAsistencia(input);
-                MessageBox.Show("Asistencia registrada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _ctrl.RegistrarAsistencia(dto);
+                MessageBox.Show("Asistencia registrada correctamente.", "Éxito",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Limpiar y recargar
+                // Limpiar selección y recargar
                 cmbEstado.SelectedIndex = -1;
                 txtObservaciones.Clear();
                 CargarTurnos();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al guardar: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al guardar asistencia:\n{ex.Message}",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

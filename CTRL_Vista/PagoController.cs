@@ -4,10 +4,6 @@ using AutoGestion.Entidades;
 
 namespace AutoGestion.CTRL_Vista
 {
-    // Lo uso para gestionar el flujo de pago y venta:
-    // - Mostrar vehículos disponibles
-    // - Buscar cliente
-    // - Registrar pago y venta pendiente
     public class PagoController
     {
         private readonly ClienteBLL _clienteBll = new();
@@ -15,7 +11,7 @@ namespace AutoGestion.CTRL_Vista
         private readonly PagoBLL _pagoBll = new();
         private readonly VentaBLL _ventaBll = new();
 
-        // Obtiene los DTO de los vehículos disponibles para venta.
+        // Recupera todos los vehículos con estado "Disponible" y los mapea a DTOs.
         public List<VehiculoDto> ObtenerVehiculosDisponibles()
         {
             try
@@ -23,7 +19,6 @@ namespace AutoGestion.CTRL_Vista
                 var entidades = _vehiculoBll.ObtenerDisponibles();
                 return entidades
                     .Select(VehiculoDto.FromEntity)
-                    .Where(dto => dto != null)
                     .ToList();
             }
             catch (Exception ex)
@@ -32,15 +27,18 @@ namespace AutoGestion.CTRL_Vista
             }
         }
 
-        // Busca un cliente por DNI. 
-        public Cliente BuscarCliente(string dni)
+        // Busca un Cliente por su DNI.  
+        public ClienteDto BuscarCliente(string dni)
         {
             try
             {
                 if (string.IsNullOrWhiteSpace(dni))
                     throw new ArgumentException("DNI de cliente requerido.", nameof(dni));
 
-                return _clienteBll.BuscarClientePorDNI(dni);
+                var entidad = _clienteBll.BuscarClientePorDNI(dni);
+                return entidad is null
+                    ? null
+                    : ClienteDto.FromEntity(entidad);
             }
             catch (Exception ex)
             {
@@ -48,8 +46,8 @@ namespace AutoGestion.CTRL_Vista
             }
         }
 
-        // Registra un pago y crea una venta en estado "Pendiente".
-        // También actualiza el estado del vehículo a "En Proceso", para evitar que se venda nuevamente.
+        // Registra el pago y crea la venta en estado "Pendiente". 
+        // Devuelve true si todo fue exitoso; en caso contrario, devuelve false y la descripción del error en out.
         public bool RegistrarPagoYVenta(
             string clienteDni,
             string vehiculoDominio,
@@ -58,19 +56,21 @@ namespace AutoGestion.CTRL_Vista
             int cuotas,
             string detalles,
             int vendedorId,
-            string vendedorNombre)
+            string vendedorNombre,
+            out string error)
         {
+            error = null;
             try
             {
-                // 1) Validar inputs
+                // 1) Validaciones básicas
                 if (string.IsNullOrWhiteSpace(clienteDni))
-                    throw new ArgumentException("DNI de cliente requerido.", nameof(clienteDni));
+                    throw new ApplicationException("DNI de cliente requerido.");
                 if (string.IsNullOrWhiteSpace(vehiculoDominio))
-                    throw new ArgumentException("Dominio de vehículo requerido.", nameof(vehiculoDominio));
+                    throw new ApplicationException("Dominio de vehículo requerido.");
                 if (monto <= 0)
-                    throw new ArgumentException("Monto debe ser mayor a cero.", nameof(monto));
+                    throw new ApplicationException("El monto debe ser mayor que cero.");
 
-                // 2) Crear y guardar Pago
+                // 2) Crear y persistir Pago
                 var pago = new Pago
                 {
                     TipoPago = tipoPago,
@@ -81,15 +81,16 @@ namespace AutoGestion.CTRL_Vista
                 };
                 _pagoBll.RegistrarPago(pago);
 
-                // 3) Recuperar entidad Cliente
-                var cliente = _clienteBll.BuscarClientePorDNI(clienteDni)
-                              ?? throw new ApplicationException("Cliente no encontrado.");
+                // 3) Recuperar Cliente y Vehículo
+                var cliente = _clienteBll
+                    .BuscarClientePorDNI(clienteDni)
+                    ?? throw new ApplicationException("Cliente no encontrado.");
 
-                // 4) Recuperar entidad Vehículo
-                var vehiculo = _vehiculoBll.BuscarVehiculoPorDominio(vehiculoDominio)
-                               ?? throw new ApplicationException("Vehículo no encontrado.");
+                var vehiculo = _vehiculoBll
+                    .BuscarVehiculoPorDominio(vehiculoDominio)
+                    ?? throw new ApplicationException("Vehículo no encontrado.");
 
-                // 5) Armar entidad Venta
+                // 4) Armar y persistir Venta pendiente
                 var venta = new Venta
                 {
                     Cliente = cliente,
@@ -101,14 +102,15 @@ namespace AutoGestion.CTRL_Vista
                 };
                 _ventaBll.FinalizarVenta(venta);
 
-                // 6) Reservar vehículo: cambiar a “En Proceso”
+                // 5) Cambiar estado del vehículo a “En Proceso”
                 _vehiculoBll.ActualizarEstadoVehiculo(vehiculo, "En Proceso");
 
                 return true;
             }
             catch (Exception ex)
             {
-                throw new ApplicationException($"Error al registrar pago y venta: {ex.Message}", ex);
+                error = ex.Message;
+                return false;
             }
         }
     }
