@@ -14,7 +14,7 @@ namespace AutoGestion.Vista
             CargarVentas(); 
         }
 
-        // Lee del BLL las ventas pendientes y las muestra en el DataGridView.
+        // carga las ventas pendientes  en el DataGridView.
         private void CargarVentas()
         {
             try

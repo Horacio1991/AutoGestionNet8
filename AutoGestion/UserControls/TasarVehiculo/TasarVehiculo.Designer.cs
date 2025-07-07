@@ -126,7 +126,6 @@
             cmbOfertas.Name = "cmbOfertas";
             cmbOfertas.Size = new Size(188, 23);
             cmbOfertas.TabIndex = 9;
-            cmbOfertas.SelectedIndexChanged += cmbOfertas_SelectedIndexChanged_1;
             // 
             // cmbEstadoStock
             // 

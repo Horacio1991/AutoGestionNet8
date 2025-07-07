@@ -225,4 +225,29 @@
     <Asistencia>Asistió</Asistencia>
     <Observaciones>asistio</Observaciones>
   </Turno>
+  <Turno>
+    <ID>10</ID>
+    <Cliente>
+      <ID>13</ID>
+      <Dni>53815805</Dni>
+      <Nombre>Charo</Nombre>
+      <Apellido>Ortiz</Apellido>
+      <Contacto>charo.ortiz2014@gmail.com</Contacto>
+      <FechaRegistro>2025-05-30T09:03:50.4051418-03:00</FechaRegistro>
+    </Cliente>
+    <Vehiculo>
+      <ID>28</ID>
+      <Marca>Patito</Marca>
+      <Modelo>Pato</Modelo>
+      <Año>2025</Año>
+      <Color>Rojo</Color>
+      <Km>0</Km>
+      <Dominio>AAA002</Dominio>
+      <Estado>Disponible</Estado>
+    </Vehiculo>
+    <Fecha>2025-07-07T00:00:00</Fecha>
+    <Hora>PT14H30M</Hora>
+    <Asistencia>Asistió</Asistencia>
+    <Observaciones>Se presentó antes de horario</Observaciones>
+  </Turno>
 </ArrayOfTurno>

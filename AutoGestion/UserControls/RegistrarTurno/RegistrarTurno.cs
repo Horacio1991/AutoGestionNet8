@@ -1,23 +1,21 @@
 ﻿using AutoGestion.CTRL_Vista;
 using AutoGestion.DTOs;
 
-
 namespace AutoGestion.Vista
 {
     public partial class RegistrarTurno : UserControl
     {
         private readonly RegistrarTurnoController _ctrl = new();
-        private List<VehiculoTurnoDto> _vehiculos;
+        private TurnoInputDto _inputDto;
 
         public RegistrarTurno()
         {
             InitializeComponent();
-            Load += RegistrarTurno_Load_1;
-
             dtpFecha.Format = DateTimePickerFormat.Short;
             dtpHora.Format = DateTimePickerFormat.Time;
-            dtpHora.ShowUpDown = true; // Para que no tenga selector de calendario
-            dtpHora.Value = DateTime.Today; //para la hora en 00:00:00 de hoy
+            dtpHora.ShowUpDown = true;
+
+            Load += RegistrarTurno_Load_1;
         }
 
         private void RegistrarTurno_Load_1(object sender, EventArgs e)
@@ -25,77 +23,112 @@ namespace AutoGestion.Vista
             CargarVehiculos();
         }
 
+        // Pide al controller la lista de vehículos y la muestra en el grid.
         private void CargarVehiculos()
         {
-            _vehiculos = _ctrl.ObtenerVehiculosParaTurno();
-            dgvVehiculos.DataSource = null;
-            dgvVehiculos.DataSource = _vehiculos
-                .Select(v => new
-                {
-                    v.ID,
-                    v.Dominio,
-                    v.Marca,
-                    v.Modelo
-                })
-                .ToList();
-            dgvVehiculos.ClearSelection();
+            try
+            {
+                var lista = _ctrl.ObtenerVehiculosParaTurno();
+                dgvVehiculos.DataSource = lista
+                    .Select(v => new { v.ID, v.Dominio, v.Marca, v.Modelo })
+                    .ToList();
+
+                dgvVehiculos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                dgvVehiculos.ReadOnly = true;
+                dgvVehiculos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                dgvVehiculos.ClearSelection();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Error al cargar vehículos:\n{ex.Message}",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
+            }
         }
 
+        // Al seleccionar una fila en el grid, vuelca el dominio al textbox.
         private void dgvVehiculos_CellClick_1(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
-            var row = dgvVehiculos.Rows[e.RowIndex];
-            txtDominio.Text = row.Cells["Dominio"].Value.ToString();
+            txtDominio.Text = dgvVehiculos.Rows[e.RowIndex].Cells["Dominio"].Value?.ToString();
         }
 
+        // Asegura que la hora sea en bloques de 30 minutos.
         private void dtpHora_ValueChanged_1(object sender, EventArgs e)
         {
-            DateTime hora = dtpHora.Value;
-            int minutos = hora.Minute >= 30 ? 30 : 0;
-
-            dtpHora.Value = new DateTime(hora.Year, hora.Month, hora.Day, hora.Hour, minutos, 0);
+            var hora = dtpHora.Value;
+            int minutos = hora.Minute >= 30 ? 30 : 0; //Si es mayor o igual a 30, redondea a 30 minutos, sino a 0.
+            dtpHora.Value = new DateTime(
+                hora.Year, hora.Month, hora.Day,
+                hora.Hour, minutos, 0
+            );
         }
-
-
 
         private void btnRegistrar_Click(object sender, EventArgs e)
         {
-            var dni = txtDniCliente.Text.Trim();
-            var dominio = txtDominio.Text.Trim();
-            var fecha = dtpFecha.Value.Date;
-            var hora = dtpHora.Value.TimeOfDay;
-
+            // 1) Validar DNI y Dominio
+            string dni = txtDniCliente.Text.Trim();
+            string dominio = txtDominio.Text.Trim();
             if (string.IsNullOrEmpty(dni) || string.IsNullOrEmpty(dominio))
             {
-                MessageBox.Show("Ingrese DNI de cliente y dominio de vehículo.",
-                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    "Ingresa DNI del cliente y dominio del vehículo.",
+                    "Validación",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
                 return;
             }
 
-            var dto = new TurnoInputDto
+            // 2) Construir DTO de entrada
+            _inputDto = new TurnoInputDto
             {
                 DniCliente = dni,
                 DominioVehiculo = dominio,
-                Fecha = fecha,
-                Hora = hora
+                Fecha = dtpFecha.Value.Date,
+                Hora = dtpHora.Value.TimeOfDay
             };
 
             try
             {
-                _ctrl.RegistrarTurno(dto);
-                MessageBox.Show("Turno registrado correctamente.",
-                                "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // 3) Invocar al controller
+                _ctrl.RegistrarTurno(_inputDto);
+
+                MessageBox.Show(
+                    "Turno registrado correctamente.",
+                    "Éxito",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+
+                // 4) Limpiar y refrescar
                 txtDniCliente.Clear();
                 txtDominio.Clear();
                 CargarVehiculos();
             }
+            catch (ApplicationException aex)
+            {
+                // Errores de validación en BLL/Controller
+                MessageBox.Show(
+                    aex.Message,
+                    "No se pudo registrar turno",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+            }
             catch (Exception ex)
             {
-                MessageBox.Show($"No se pudo registrar el turno: {ex.Message}",
-                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Otros errores
+                MessageBox.Show(
+                    $"Error inesperado:\n{ex.Message}",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
             }
         }
-
-
     }
 }
