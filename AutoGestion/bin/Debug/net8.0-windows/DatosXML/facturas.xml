@@ -360,4 +360,52 @@
     <Precio>10000000</Precio>
     <Fecha>2025-07-07T10:10:50.9274046-03:00</Fecha>
   </Factura>
+  <Factura>
+    <ID>16</ID>
+    <Cliente>
+      <ID>0</ID>
+      <Dni>36084791</Dni>
+      <Nombre>Patricio</Nombre>
+      <Apellido>Ortiz</Apellido>
+      <Contacto>pato@gmail.com</Contacto>
+      <FechaRegistro>2025-07-03T15:39:26.4441605-03:00</FechaRegistro>
+    </Cliente>
+    <Vehiculo>
+      <ID>12</ID>
+      <Marca>Chevrolet</Marca>
+      <Modelo>Onix</Modelo>
+      <Año>2021</Año>
+      <Color>Rojo</Color>
+      <Km>10000</Km>
+      <Dominio>HIJ999</Dominio>
+      <Estado>Disponible</Estado>
+    </Vehiculo>
+    <FormaPago>Efectivo</FormaPago>
+    <Precio>20000000</Precio>
+    <Fecha>2025-07-07T15:01:04.0004873-03:00</Fecha>
+  </Factura>
+  <Factura>
+    <ID>17</ID>
+    <Cliente>
+      <ID>13</ID>
+      <Dni>53815805</Dni>
+      <Nombre>Charo</Nombre>
+      <Apellido>Ortiz</Apellido>
+      <Contacto>charo.ortiz2014@gmail.com</Contacto>
+      <FechaRegistro>2025-05-30T09:03:50.4051418-03:00</FechaRegistro>
+    </Cliente>
+    <Vehiculo>
+      <ID>15</ID>
+      <Marca>Peugeot</Marca>
+      <Modelo>2008</Modelo>
+      <Año>2021</Año>
+      <Color>Negro</Color>
+      <Km>15000</Km>
+      <Dominio>QRS303</Dominio>
+      <Estado>Disponible</Estado>
+    </Vehiculo>
+    <FormaPago>Efectivo</FormaPago>
+    <Precio>9888777</Precio>
+    <Fecha>2025-07-07T15:01:11.2377561-03:00</Fecha>
+  </Factura>
 </ArrayOfFactura>

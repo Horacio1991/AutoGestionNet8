@@ -52,7 +52,7 @@
             dgvVentas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvVentas.Location = new Point(23, 63);
             dgvVentas.Name = "dgvVentas";
-            dgvVentas.Size = new Size(378, 155);
+            dgvVentas.Size = new Size(378, 284);
             dgvVentas.TabIndex = 1;
             // 
             // chartRanking
@@ -61,23 +61,23 @@
             chartRanking.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
             chartRanking.Legends.Add(legend1);
-            chartRanking.Location = new Point(421, 261);
+            chartRanking.Location = new Point(421, 424);
             chartRanking.Name = "chartRanking";
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Bar;
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             chartRanking.Series.Add(series1);
-            chartRanking.Size = new Size(394, 155);
+            chartRanking.Size = new Size(629, 247);
             chartRanking.TabIndex = 3;
             chartRanking.Text = "chart2";
             // 
             // dgvRanking
             // 
             dgvRanking.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvRanking.Location = new Point(23, 261);
+            dgvRanking.Location = new Point(23, 424);
             dgvRanking.Name = "dgvRanking";
-            dgvRanking.Size = new Size(378, 155);
+            dgvRanking.Size = new Size(378, 247);
             dgvRanking.TabIndex = 4;
             // 
             // cmbFiltroPeriodo
@@ -119,7 +119,7 @@
             series2.Legend = "Legend1";
             series2.Name = "Series1";
             chartVentas.Series.Add(series2);
-            chartVentas.Size = new Size(394, 229);
+            chartVentas.Size = new Size(629, 321);
             chartVentas.TabIndex = 8;
             chartVentas.Text = "chart1";
             // 
@@ -135,7 +135,7 @@
             Controls.Add(chartRanking);
             Controls.Add(dgvVentas);
             Name = "Dashboard";
-            Size = new Size(1085, 557);
+            Size = new Size(1280, 720);
             ((System.ComponentModel.ISupportInitialize)dgvVentas).EndInit();
             ((System.ComponentModel.ISupportInitialize)chartRanking).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvRanking).EndInit();
