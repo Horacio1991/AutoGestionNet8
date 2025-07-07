@@ -7,11 +7,15 @@ namespace AutoGestion.BLL
     public class VentaBLL
     {
         private readonly XmlRepository<Venta> _repo;
+        // Fix for CS1061: Ensure _vehiculoBLL is properly typed and initialized.  
+        // Replace the declaration of _vehiculoBLL with the correct type.  
+        private readonly VehiculoBLL _vehiculoBLL;
 
-        // 1) Inicializa el repositorio apuntando a "DatosXML/ventas.xml".
+        // Initialize _vehiculoBLL in the constructor.
         public VentaBLL()
         {
             _repo = new XmlRepository<Venta>("ventas.xml");
+            _vehiculoBLL = new VehiculoBLL(); 
         }
 
         /// Obtiene todas las ventas registradas.
@@ -121,7 +125,10 @@ namespace AutoGestion.BLL
                 venta.Estado = "Rechazada";
                 venta.MotivoRechazo = motivo;
 
-                // 3) Liberar vehículo
+                // 3) Actualizar estado del vehículo a "Disponible"
+                _vehiculoBLL.ActualizarEstadoVehiculo(venta.Vehiculo, VehiculoEstados.Disponible);
+
+                // 4) Liberar vehículo
                 _repo.GuardarLista(lista);
                 return true;
             }

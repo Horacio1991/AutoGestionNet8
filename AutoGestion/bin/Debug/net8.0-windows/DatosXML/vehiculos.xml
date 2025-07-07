@@ -128,7 +128,7 @@
     <Color>Azul</Color>
     <Km>7000</Km>
     <Dominio>KLM101</Dominio>
-    <Estado>Disponible</Estado>
+    <Estado>En Proceso</Estado>
   </Vehiculo>
   <Vehiculo>
     <ID>14</ID>
@@ -138,7 +138,7 @@
     <Color>Gris</Color>
     <Km>22000</Km>
     <Dominio>NOP202</Dominio>
-    <Estado>Disponible</Estado>
+    <Estado>En Proceso</Estado>
   </Vehiculo>
   <Vehiculo>
     <ID>15</ID>

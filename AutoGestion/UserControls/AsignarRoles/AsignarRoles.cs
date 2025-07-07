@@ -3,20 +3,22 @@ using AutoGestion.Servicios.Composite;
 using AutoGestion.Servicios.Encriptacion;
 using AutoGestion.Servicios.Utilidades;
 using AutoGestion.Servicios.XmlServices;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
+
 
 namespace AutoGestion.Vista
 {
+    // Permite gestionar:
+    //  - Plantillas de permisos (menús y submenús).
+    //  - Roles (conjuntos de plantillas).
+    //  - Asignación de roles a usuarios.
+    // </summary>
     public partial class AsignarRoles : UserControl
     {
-        private List<PermisoCompuesto> _plantillas;
-        private List<PermisoCompuesto> _roles;
-        private List<Usuario> _usuarios;
+        private List<PermisoCompuesto> _plantillas;   // Árbol de menús prediseñados
+        private List<PermisoCompuesto> _roles;        // Roles (agrupaciones de plantillas)
+        private List<Usuario> _usuarios;    // Usuarios del sistema
 
+        // Diccionario de menús a items (para creación de plantillas)
         private readonly Dictionary<string, List<string>> _menuItems = new()
         {
             ["Gestión Ventas"] = new() { "Solicitar Modelo", "Registrar Cliente", "Realizar Pago", "Autorizar Venta", "Emitir Factura", "Realizar Entrega" },
@@ -30,62 +32,76 @@ namespace AutoGestion.Vista
         public AsignarRoles()
         {
             InitializeComponent();
+            // Carga inicial de datos y configuración de eventos
             CargarDatosIniciales();
             WireUpEvents();
         }
 
+        // Lee plantillas, roles y usuarios desde XML y las muestra en los TreeViews.
         private void CargarDatosIniciales()
         {
-            var dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DatosXML");
-            Directory.CreateDirectory(dir);
+            try
+            {
+                Directory.CreateDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DatosXML"));
 
-            _plantillas = PermisoPlantillaXmlService.Leer();
-            _roles = RolXmlService.Leer();
-            _usuarios = UsuarioXmlService.Leer();
+                _plantillas = PermisoPlantillaXmlService.Leer();
+                _roles = RolXmlService.Leer();
+                _usuarios = UsuarioXmlService.Leer();
 
-            CargarTreeViewPermisos();
-            CargarTreeViewRoles();
-            CargarTreeViewUsuarios();
-            CargarComboPermisoMenu();
+                CargarTreeViewPermisos();
+                CargarTreeViewRoles();
+                CargarTreeViewUsuarios();
+                CargarComboPermisoMenu();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar datos de permisos/roles/usuarios: {ex.Message}",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
+        // Asocia manejadores a los eventos de botones y controles.
         private void WireUpEvents()
         {
             // Plantillas
             btnAltaPermiso.Click += BtnAltaPermiso_Click;
-            tvPermisos.AfterSelect += TvPermisos_AfterSelect;
             cmbPermisoMenu.SelectedIndexChanged += CmbPermisoMenu_SelectedIndexChanged;
 
-            // Roles CRUD + asociación
+            // Roles
             btnAltaRol.Click += BtnAltaRol_Click;
             btnModificarRol.Click += BtnModificarRol_Click;
             btnEliminarRol.Click += BtnEliminarRol_Click;
             tvRoles.AfterSelect += TvRoles_AfterSelect;
             btnAsociarPermisoARol.Click += BtnAsociarPermisoARol_Click;
 
-            // Usuarios + asociación de rol
-            tvUsuarios.AfterSelect += TvUsuarios_AfterSelect;
-            btnAsociarRolAUsuario.Click += btnAsociarRolAUsuario_Click_1;
-
             // Usuarios
             tvUsuarios.AfterSelect += TvUsuarios_AfterSelect;
-            btnAsociarRolAUsuario.Click += btnAsociarRolAUsuario_Click_1;
-            btnQuitarRolUsuario.Click += btnQuitarRolUsuario_Click;
+            btnAsociarRolAUsuario.Click += BtnAsociarRolAUsuario_Click;
+            btnQuitarRolUsuario.Click += BtnQuitarRolUsuario_Click;
 
-            // Nuevo: checkbox
+            // Mostrar/ocultar contraseña
             chkEncriptar.CheckedChanged += ChkEncriptar_CheckedChanged;
         }
 
-        #region Plantillas de Permisos compuestos
+        #region Plantillas de Permisos
 
+        // Llena el combo de "Menú" con las llaves del diccionario _menuItems.
+        private void CargarComboPermisoMenu()
+        {
+            cmbPermisoMenu.Items.Clear();
+            foreach (var menu in _menuItems.Keys)
+                cmbPermisoMenu.Items.Add(menu);
+        }
         private void CargarTreeViewPermisos()
         {
             tvPermisos.Nodes.Clear();
-            foreach (var plc in _plantillas)
-                tvPermisos.Nodes.Add(CrearNodoRecursivo(plc));
+            foreach (var plantilla in _plantillas)
+                tvPermisos.Nodes.Add(CrearNodoRecursivo(plantilla));
             tvPermisos.ExpandAll();
         }
 
+        // Construye un TreeNode recursivamente a partir de un PermisoCompuesto
+        // usado para mostrar la jerarquía de permisos en el TreeView.
         private TreeNode CrearNodoRecursivo(IPermiso permiso)
         {
             var node = new TreeNode(permiso.Nombre) { Tag = permiso };
@@ -95,106 +111,92 @@ namespace AutoGestion.Vista
             return node;
         }
 
-        private void TvPermisos_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-            if (e.Node?.Tag is IPermiso p)
-                txtNombrePermiso.Text = p.Nombre;
-        }
-
-        private void BtnAltaPermiso_Click(object sender, EventArgs e)
-        {
-            var texto = txtNombrePermiso.Text.Trim();
-            if (string.IsNullOrEmpty(texto))
-            {
-                MessageBox.Show("Ingresá un nombre.");
-                return;
-            }
-
-            var sel = tvPermisos.SelectedNode;
-            if (sel == null)
-            {
-                // Crear nueva plantilla
-                if (_plantillas.Any(x => x.Nombre.Equals(texto, StringComparison.OrdinalIgnoreCase)))
-                {
-                    MessageBox.Show("Esa plantilla ya existe.");
-                    return;
-                }
-                _plantillas.Add(new PermisoCompuesto
-                {
-                    ID = GeneradorID.ObtenerID<PermisoCompuesto>(),
-                    Nombre = texto
-                });
-            }
-            else if (sel.Tag is PermisoCompuesto pc)
-            {
-                // Debe haber menú seleccionado
-                if (cmbPermisoMenu.SelectedItem is not string menuName)
-                {
-                    MessageBox.Show("Seleccioná un Menú en el combo.");
-                    return;
-                }
-                // Obtener o crear submenú
-                var sub = pc.Hijos
-                            .OfType<PermisoCompuesto>()
-                            .FirstOrDefault(m => m.Nombre == menuName)
-                          ?? new PermisoCompuesto
-                          {
-                              ID = GeneradorID.ObtenerID<PermisoCompuesto>(),
-                              Nombre = menuName
-                          }.Also(m => pc.Agregar(m));
-
-                // Si hay ítem seleccionado, añadirlo
-                if (cmbPermisoItem.SelectedItem is string itemName)
-                {
-                    if (!sub.Hijos.OfType<PermisoSimple>().Any(i => i.Nombre == itemName))
-                        sub.Agregar(new PermisoSimple
-                        {
-                            ID = GeneradorID.ObtenerID<PermisoSimple>(),
-                            Nombre = itemName
-                        });
-                }
-            }
-            else
-            {
-                MessageBox.Show("Seleccioná una plantilla o submenú.");
-                return;
-            }
-
-            // Guardar cambios y refrescar el TreeView
-            PermisoPlantillaXmlService.Guardar(_plantillas);
-            CargarTreeViewPermisos();
-
-            // ¡No borramos el texto de txtNombrePermiso para que puedas seguir agregando!
-        }
-
-        #endregion
-
-        #region ComboBoxes Menú → Ítems
-
-        private void CargarComboPermisoMenu()
-        {
-            cmbPermisoMenu.Items.Clear();
-            foreach (var m in _menuItems.Keys)
-                cmbPermisoMenu.Items.Add(m);
-        }
-
+        // Carga los menús disponibles en el combo para crear nuevas plantillas de permisos.
         private void CmbPermisoMenu_SelectedIndexChanged(object sender, EventArgs e)
         {
             cmbPermisoItem.Items.Clear();
-            if (cmbPermisoMenu.SelectedItem is string m && _menuItems.TryGetValue(m, out var items))
-                foreach (var it in items)
-                    cmbPermisoItem.Items.Add(it);
+            if (cmbPermisoMenu.SelectedItem is string menu
+                && _menuItems.TryGetValue(menu, out var items))
+            {
+                cmbPermisoItem.Items.AddRange(items.ToArray());
+            }
+        }
+
+        // Da de alta una plantilla nueva o agrega sub-permisos a la seleccionada.
+        // Por ejemplo, se crea "Vendedores" con submenús "Gestión Ventas", "Gestion Comisinoes", etc.,
+        private void BtnAltaPermiso_Click(object sender, EventArgs e)
+        {
+            var nombre = txtNombrePermiso.Text.Trim();
+            if (string.IsNullOrEmpty(nombre))
+            {
+                MessageBox.Show("Ingresá un nombre para la plantilla o permiso.", "Validación",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                var seleccionado = tvPermisos.SelectedNode?.Tag as PermisoCompuesto;
+
+                if (seleccionado == null)
+                {
+                    // Crear nueva plantilla raíz
+                    if (_plantillas.Any(p => p.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase)))
+                        throw new ApplicationException("Esa plantilla ya existe.");
+
+                    var nueva = new PermisoCompuesto
+                    {
+                        ID = GeneradorID.ObtenerID<PermisoCompuesto>(),
+                        Nombre = nombre
+                    };
+                    _plantillas.Add(nueva);
+                }
+                else
+                {
+                    // En un nodo existente: agregar submenú o ítem
+                    if (cmbPermisoMenu.SelectedItem is not string menu)
+                        throw new ApplicationException("Seleccioná un menú en el combo para agrupar.");
+
+                    // Obtener o crear sub-rol para ese menú
+                    var subCompuesto = seleccionado.HijosCompuestos
+                        .FirstOrDefault(c => c.Nombre == menu)
+                        ?? new PermisoCompuesto
+                        {
+                            ID = GeneradorID.ObtenerID<PermisoCompuesto>(),
+                            Nombre = menu
+                        }.Also(p => seleccionado.Agregar(p));
+
+                    if (cmbPermisoItem.SelectedItem is string item)
+                    {
+                        // Agregar ítem simple al submenú
+                        subCompuesto.Agregar(new PermisoSimple
+                        {
+                            ID = GeneradorID.ObtenerID<PermisoSimple>(),
+                            Nombre = item
+                        });
+                    }
+                }
+
+                PermisoPlantillaXmlService.Guardar(_plantillas);
+                CargarTreeViewPermisos();
+                // no limpiamos txtNombrePermiso para facilitar múltiples altas
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al crear plantilla/permiso: {ex.Message}",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         #endregion
 
-        #region Roles (CRUD) y asociación de Plantillas
+        #region Gestión de Roles
 
         private void CargarTreeViewRoles()
         {
             tvRoles.Nodes.Clear();
-            foreach (var r in _roles)
-                tvRoles.Nodes.Add(new TreeNode(r.Nombre) { Tag = r });
+            foreach (var rol in _roles)
+                tvRoles.Nodes.Add(new TreeNode(rol.Nombre) { Tag = rol });
             tvRoles.ExpandAll();
         }
 
@@ -203,62 +205,99 @@ namespace AutoGestion.Vista
             var nombre = txtNombreRol.Text.Trim();
             if (string.IsNullOrEmpty(nombre))
             {
-                MessageBox.Show("Ingrese un nombre de Rol.");
+                MessageBox.Show("Ingrese un nombre de rol.", "Validación",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (_roles.Any(r => r.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase)))
             {
-                MessageBox.Show("Ya existe ese Rol.");
+                MessageBox.Show("Ya existe ese rol.", "Validación",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            _roles.Add(new PermisoCompuesto { ID = GeneradorID.ObtenerID<PermisoCompuesto>(), Nombre = nombre });
-            RolXmlService.Guardar(_roles);
-            txtNombreRol.Clear();
-            CargarTreeViewRoles();
+
+            try
+            {
+                var nuevo = new PermisoCompuesto
+                {
+                    ID = GeneradorID.ObtenerID<PermisoCompuesto>(),
+                    Nombre = nombre
+                };
+                _roles.Add(nuevo);
+                RolXmlService.Guardar(_roles);
+                txtNombreRol.Clear();
+                CargarTreeViewRoles();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al guardar rol: {ex.Message}",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void BtnModificarRol_Click(object sender, EventArgs e)
         {
             if (tvRoles.SelectedNode?.Tag is not PermisoCompuesto rol)
             {
-                MessageBox.Show("Seleccioná un Rol para modificar.");
+                MessageBox.Show("Seleccioná un rol para modificar.", "Validación",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
             var nuevoNombre = txtNombreRol.Text.Trim();
             if (string.IsNullOrEmpty(nuevoNombre))
             {
-                MessageBox.Show("El nombre no puede estar vacío.");
+                MessageBox.Show("El nombre no puede estar vacío.", "Validación",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            rol.Nombre = nuevoNombre;
-            RolXmlService.Guardar(_roles);
-            txtNombreRol.Clear();
-            CargarTreeViewRoles();
+
+            try
+            {
+                rol.Nombre = nuevoNombre;
+                RolXmlService.Guardar(_roles);
+                txtNombreRol.Clear();
+                CargarTreeViewRoles();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al modificar rol: {ex.Message}",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void BtnEliminarRol_Click(object sender, EventArgs e)
         {
             if (tvRoles.SelectedNode?.Tag is not PermisoCompuesto rol)
             {
-                MessageBox.Show("Seleccioná un Rol para eliminar.");
+                MessageBox.Show("Seleccioná un rol para eliminar.", "Validación",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (MessageBox.Show($"¿Eliminar el Rol '{rol.Nombre}'?", "Confirmar", MessageBoxButtons.YesNo) != DialogResult.Yes)
+
+            if (MessageBox.Show($"¿Eliminar el rol '{rol.Nombre}'?", "Confirmar",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
-            _roles.RemoveAll(r => r.ID == rol.ID);
-            RolXmlService.Guardar(_roles);
-            txtNombreRol.Clear();
-            CargarTreeViewRoles();
+
+            try
+            {
+                _roles.RemoveAll(r => r.ID == rol.ID);
+                RolXmlService.Guardar(_roles);
+                txtNombreRol.Clear();
+                CargarTreeViewRoles();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al eliminar rol: {ex.Message}",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void TvRoles_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (e.Node?.Tag is PermisoCompuesto rol)
             {
-                // Cargo el nombre del rol en el TextBox
                 txtNombreRol.Text = rol.Nombre;
-
-                // Y refresco el árbol de permisos para ese rol
                 CargarTreeViewPermisosPorRol(rol);
             }
         }
@@ -274,27 +313,32 @@ namespace AutoGestion.Vista
         {
             if (tvRoles.SelectedNode?.Tag is not PermisoCompuesto rol)
             {
-                MessageBox.Show("Seleccioná un rol.");
+                MessageBox.Show("Seleccioná un rol.", "Validación",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (tvPermisos.SelectedNode?.Tag is not PermisoCompuesto plantilla)
             {
-                MessageBox.Show("Seleccioná una plantilla.");
+                MessageBox.Show("Seleccioná una plantilla.", "Validación",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (rol.Hijos.OfType<PermisoCompuesto>().Any(p => p.ID == plantilla.ID))
+            try
             {
-                MessageBox.Show("Ese rol ya tiene asociada esa plantilla.");
-                return;
+                rol.Agregar(plantilla);
+                RolXmlService.Guardar(_roles);
+                CargarTreeViewPermisosPorRol(rol);
             }
-            rol.Agregar(plantilla);
-            RolXmlService.Guardar(_roles);
-            CargarTreeViewPermisosPorRol(rol);
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al asociar plantilla al rol: {ex.Message}",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         #endregion
 
-        #region Usuarios y asociación de Rol
+        #region Gestión de Usuarios
 
         private void CargarTreeViewUsuarios()
         {
@@ -306,55 +350,15 @@ namespace AutoGestion.Vista
 
         private void TvUsuarios_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (e.Node?.Tag is Usuario usr)
-            {
-                // Cargar nombre
-                txtNombreUsuario.Text = usr.Nombre;
-                // Cargar ID
-                txtIdUsuario.Text = usr.ID.ToString();
-                // Cargar contraseña encriptada
-                txtContrasenaUsuario.Text = usr.Clave;
-                // Mostrar encriptada por defecto
-                chkEncriptar.Checked = false;
+            if (e.Node?.Tag is not Usuario usr) return;
 
-                // Refrescar permisos
-                CargarTreeViewPermisosPorUsuario(usr);
-            }
-        }
+            txtIdUsuario.Text = usr.ID.ToString();
+            txtNombreUsuario.Text = usr.Nombre;
+            txtContrasenaUsuario.Text = chkEncriptar.Checked
+                ? Encriptacion.DesencriptarPassword(usr.Clave)
+                : usr.Clave;
 
-        // Maneja el CheckedChanged para mostrar/ocultar encriptación
-        private void ChkEncriptar_CheckedChanged(object sender, EventArgs e)
-        {
-            if (tvUsuarios.SelectedNode?.Tag is not Usuario usr)
-                return;
-
-            if (chkEncriptar.Checked)
-            {
-                // Muestro desencriptada
-                txtContrasenaUsuario.Text = Encriptacion.DesencriptarPassword(usr.Clave);
-            }
-            else
-            {
-                // Vuelvo a la encriptada
-                txtContrasenaUsuario.Text = usr.Clave;
-            }
-        }
-
-        private void btnAsociarRolAUsuario_Click_1(object sender, EventArgs e)
-        {
-            if (tvUsuarios.SelectedNode?.Tag is not Usuario usr)
-            {
-                MessageBox.Show("Seleccioná un usuario.");
-                return;
-            }
-            if (tvRoles.SelectedNode?.Tag is not PermisoCompuesto rol)
-            {
-                MessageBox.Show("Seleccioná un rol.");
-                return;
-            }
-            usr.Rol = rol;
-            UsuarioXmlService.Guardar(_usuarios);
-            // Refrescar la vista de permisos por usuario
+            // Mostrar sólo los permisos de ese usuario
             CargarTreeViewPermisosPorUsuario(usr);
         }
 
@@ -368,41 +372,77 @@ namespace AutoGestion.Vista
             }
         }
 
-        #endregion
-
-        private void btnQuitarRolUsuario_Click(object sender, EventArgs e)
+        private void BtnAsociarRolAUsuario_Click(object sender, EventArgs e)
         {
-            // 1) Debe haber un usuario seleccionado
             if (tvUsuarios.SelectedNode?.Tag is not Usuario usr)
             {
-                MessageBox.Show("Seleccioná un usuario.");
+                MessageBox.Show("Seleccioná un usuario.", "Validación",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (tvRoles.SelectedNode?.Tag is not PermisoCompuesto rol)
+            {
+                MessageBox.Show("Seleccioná un rol.", "Validación",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // 2) Verifico que tenga rol asignado
+            try
+            {
+                usr.Rol = rol;
+                UsuarioXmlService.Guardar(_usuarios);
+                CargarTreeViewPermisosPorUsuario(usr);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al asignar rol: {ex.Message}",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void BtnQuitarRolUsuario_Click(object sender, EventArgs e)
+        {
+            if (tvUsuarios.SelectedNode?.Tag is not Usuario usr)
+            {
+                MessageBox.Show("Seleccioná un usuario.", "Validación",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             if (usr.Rol == null)
             {
-                MessageBox.Show("Ese usuario no tiene ningún rol asignado.");
+                MessageBox.Show("Ese usuario no tiene rol asignado.", "Validación",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
-            // 3) Confirmación
-            var nombreRol = (usr.Rol as PermisoCompuesto)?.Nombre ?? "(desconocido)";
-            if (MessageBox.Show(
-                    $"¿Quitar el rol '{nombreRol}' al usuario '{usr.Nombre}'?",
-                    "Confirmar",
-                    MessageBoxButtons.YesNo) != DialogResult.Yes)
+            if (MessageBox.Show($"¿Quitar el rol '{usr.Rol.Nombre}' a '{usr.Nombre}'?", "Confirmar",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
 
-            // 4) Quito el rol y guardo en el XML
-            usr.Rol = null;
-            UsuarioXmlService.Guardar(_usuarios);
-
-            // 5) Refresco la vista de permisos del usuario (se quedará vacía)
-            CargarTreeViewPermisosPorUsuario(usr);
-
-            MessageBox.Show($"Se ha quitado el rol al usuario {usr.Nombre}.");
+            try
+            {
+                usr.Rol = null;
+                UsuarioXmlService.Guardar(_usuarios);
+                CargarTreeViewPermisosPorUsuario(usr);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al quitar rol: {ex.Message}",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
+        private void ChkEncriptar_CheckedChanged(object sender, EventArgs e)
+        {
+            // Alterna la visualización de la contraseña
+            if (tvUsuarios.SelectedNode?.Tag is Usuario usr)
+            {
+                txtContrasenaUsuario.Text = chkEncriptar.Checked
+                    ? Encriptacion.DesencriptarPassword(usr.Clave)
+                    : usr.Clave;
+            }
+        }
+
+        #endregion
     }
 
     // Helper para inicialización inline
