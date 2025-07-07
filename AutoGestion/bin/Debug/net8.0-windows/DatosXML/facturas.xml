@@ -336,4 +336,28 @@
     <Precio>50000000</Precio>
     <Fecha>2025-07-03T15:33:17.2086985-03:00</Fecha>
   </Factura>
+  <Factura>
+    <ID>15</ID>
+    <Cliente>
+      <ID>0</ID>
+      <Dni>36084790</Dni>
+      <Nombre>Horacio</Nombre>
+      <Apellido>Ortiz</Apellido>
+      <Contacto>horacio0291@gmail.com</Contacto>
+      <FechaRegistro>2025-07-07T09:43:36.9782613-03:00</FechaRegistro>
+    </Cliente>
+    <Vehiculo>
+      <ID>14</ID>
+      <Marca>Renault</Marca>
+      <Modelo>Logan</Modelo>
+      <Año>2020</Año>
+      <Color>Gris</Color>
+      <Km>22000</Km>
+      <Dominio>NOP202</Dominio>
+      <Estado>Disponible</Estado>
+    </Vehiculo>
+    <FormaPago>Efectivo</FormaPago>
+    <Precio>10000000</Precio>
+    <Fecha>2025-07-07T10:10:50.9274046-03:00</Fecha>
+  </Factura>
 </ArrayOfFactura>

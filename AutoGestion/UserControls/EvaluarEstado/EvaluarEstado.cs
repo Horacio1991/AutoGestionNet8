@@ -1,7 +1,6 @@
 ﻿using AutoGestion.CTRL_Vista;
 using AutoGestion.DTOs;
 
-
 namespace AutoGestion.Vista
 {
     public partial class EvaluarEstado : UserControl
@@ -9,43 +8,59 @@ namespace AutoGestion.Vista
         private readonly EvaluacionController _ctrl = new();
         private List<OfertaListDto> _ofertas;
 
-
         public EvaluarEstado()
         {
             InitializeComponent();
             dtpFiltroFecha.Value = DateTime.Today;
-            CargarOfertas();
+            CargarOfertas();        
         }
 
+        // Lee las ofertas pendientes de inspección y las muestra en el combo.
         private void CargarOfertas()
         {
-            _ofertas = _ctrl.ObtenerOfertasParaEvaluar();
-            cmbOfertas.DataSource = _ofertas
-                .Select(o => new { o.ID, Texto = $"{o.VehiculoResumen} – {o.FechaInspeccion:dd/MM/yyyy}" })
-                .ToList();
-            cmbOfertas.DisplayMember = "Texto";
-            cmbOfertas.ValueMember = "ID";
+            try
+            {
+                _ofertas = _ctrl.ObtenerOfertasParaEvaluar();
+                cmbOfertas.DataSource = _ofertas
+                    .Select(o => new
+                    {
+                        o.ID,
+                        Texto = $"{o.VehiculoResumen} – {o.FechaInspeccion:dd/MM/yyyy}"
+                    })
+                    .ToList();
+                cmbOfertas.DisplayMember = "Texto";
+                cmbOfertas.ValueMember = "ID";
+                cmbOfertas.SelectedIndex = -1;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar ofertas:\n{ex.Message}",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
+        // valida campos, crea DTO y llama al controller.
         private void btnGuardar_Click(object sender, EventArgs e)
         {
             if (cmbOfertas.SelectedValue is not int ofertaId)
             {
-                MessageBox.Show("Seleccione una oferta.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Seleccione una oferta.", "Validación",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Validación de campos técnicos
-            if (string.IsNullOrWhiteSpace(txtMotor.Text)
-             || string.IsNullOrWhiteSpace(txtCarroceria.Text)
-             || string.IsNullOrWhiteSpace(txtInterior.Text)
-             || string.IsNullOrWhiteSpace(txtDocumentacion.Text))
+            // Validar que todos los campos técnicos estén completos
+            if (string.IsNullOrWhiteSpace(txtMotor.Text) ||
+                string.IsNullOrWhiteSpace(txtCarroceria.Text) ||
+                string.IsNullOrWhiteSpace(txtInterior.Text) ||
+                string.IsNullOrWhiteSpace(txtDocumentacion.Text))
             {
-                MessageBox.Show("Complete todos los campos técnicos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Complete todos los campos técnicos.", "Validación",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Creo el DTO de entrada
+            // Construir DTO de entrada
             var dto = new EvaluacionInputDto
             {
                 OfertaID = ofertaId,
@@ -59,34 +74,51 @@ namespace AutoGestion.Vista
             try
             {
                 _ctrl.RegistrarEvaluacion(dto);
-                MessageBox.Show("Evaluación registrada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Evaluación registrada correctamente.", "Éxito",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                 LimpiarFormulario();
-                CargarOfertas();
+                CargarOfertas();    // recarga para quitar la oferta ya evaluada
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al guardar evaluación: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al guardar evaluación:\n{ex.Message}",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-
-        private void FiltrarPorFecha()
+        // Botón Filtrar Fecha: recarga el combo según la fecha seleccionada.
+        private void btnFiltrarFecha_Click(object sender, EventArgs e)
         {
-            var fecha = dtpFiltroFecha.Value.Date;
-            var filtradas = _ofertas
-                .Where(o => o.FechaInspeccion.Date == fecha)
-                .ToList();
-            if (!filtradas.Any())
+            try
             {
-                MessageBox.Show("No hay ofertas en esa fecha.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
+                DateTime fecha = dtpFiltroFecha.Value.Date;
+                var filtradas = _ofertas
+                    .Where(o => o.FechaInspeccion.Date == fecha)
+                    .ToList();
+
+                if (!filtradas.Any())
+                {
+                    MessageBox.Show("No hay ofertas en esa fecha.", "Información",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                cmbOfertas.DataSource = filtradas
+                    .Select(o => new
+                    {
+                        o.ID,
+                        Texto = $"{o.VehiculoResumen} – {o.FechaInspeccion:dd/MM/yyyy}"
+                    })
+                    .ToList();
+                cmbOfertas.SelectedIndex = -1;
             }
-            cmbOfertas.DataSource = filtradas
-                .Select(o => new { o.ID, Texto = $"{o.VehiculoResumen} – {o.FechaInspeccion:dd/MM/yyyy}" })
-                .ToList();
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al filtrar por fecha:\n{ex.Message}",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
-
-
 
         private void LimpiarFormulario()
         {
@@ -96,11 +128,6 @@ namespace AutoGestion.Vista
             txtDocumentacion.Clear();
             txtObservaciones.Clear();
             cmbOfertas.SelectedIndex = -1;
-        }
-
-        private void btnFiltrarFecha_Click(object sender, EventArgs e)
-        {
-            FiltrarPorFecha();
         }
     }
 }
