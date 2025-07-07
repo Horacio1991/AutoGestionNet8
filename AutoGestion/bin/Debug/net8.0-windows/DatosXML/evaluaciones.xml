@@ -50,10 +50,18 @@
   </EvaluacionTecnica>
   <EvaluacionTecnica>
     <ID>7</ID>
-    <EstadoMotor>mal</EstadoMotor>
-    <EstadoCarroceria>mal</EstadoCarroceria>
-    <EstadoInterior>mal</EstadoInterior>
-    <EstadoDocumentacion>mal</EstadoDocumentacion>
-    <Observaciones>mal</Observaciones>
+    <EstadoMotor>ok</EstadoMotor>
+    <EstadoCarroceria>ok</EstadoCarroceria>
+    <EstadoInterior>ok</EstadoInterior>
+    <EstadoDocumentacion>ok</EstadoDocumentacion>
+    <Observaciones>ok</Observaciones>
+  </EvaluacionTecnica>
+  <EvaluacionTecnica>
+    <ID>8</ID>
+    <EstadoMotor>ok</EstadoMotor>
+    <EstadoCarroceria>ok</EstadoCarroceria>
+    <EstadoInterior>ok</EstadoInterior>
+    <EstadoDocumentacion>ok</EstadoDocumentacion>
+    <Observaciones>ok</Observaciones>
   </EvaluacionTecnica>
 </ArrayOfEvaluacionTecnica>

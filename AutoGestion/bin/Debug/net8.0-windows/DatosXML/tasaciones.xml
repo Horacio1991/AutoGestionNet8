@@ -243,4 +243,58 @@
     <ValorFinal>3000000</ValorFinal>
     <Fecha>2025-07-03T14:12:00.9249464-03:00</Fecha>
   </Tasacion>
+  <Tasacion>
+    <ID>10</ID>
+    <Oferta>
+      <ID>7</ID>
+      <Oferente>
+        <ID>21</ID>
+        <Dni>53815806</Dni>
+        <Nombre>Amalia</Nombre>
+        <Apellido>Bartolito</Apellido>
+        <Contacto>amalia@gmail.com</Contacto>
+      </Oferente>
+      <Vehiculo>
+        <ID>26</ID>
+        <Marca>Vehiculo</Marca>
+        <Modelo>Prueba</Modelo>
+        <Año>2000</Año>
+        <Color>Rosa</Color>
+        <Km>2000</Km>
+        <Dominio>YYY444</Dominio>
+        <Estado>Disponible</Estado>
+      </Vehiculo>
+      <FechaInspeccion>2025-07-03T14:09:48.9999968-03:00</FechaInspeccion>
+      <Estado>Registrada</Estado>
+    </Oferta>
+    <ValorFinal>20000000</ValorFinal>
+    <Fecha>2025-07-07T12:05:25.1376122-03:00</Fecha>
+  </Tasacion>
+  <Tasacion>
+    <ID>11</ID>
+    <Oferta>
+      <ID>8</ID>
+      <Oferente>
+        <ID>11</ID>
+        <Dni>36084790</Dni>
+        <Nombre>Santiago</Nombre>
+        <Apellido>Ortiz</Apellido>
+        <Contacto>santiago.ortiz@gmail.com</Contacto>
+      </Oferente>
+      <Vehiculo>
+        <ID>27</ID>
+        <Marca>Patito</Marca>
+        <Modelo>Pato</Modelo>
+        <Año>2025</Año>
+        <Color>Rojo</Color>
+        <Km>0</Km>
+        <Dominio>AAA001</Dominio>
+        <Estado>En evaluación</Estado>
+      </Vehiculo>
+      <FechaInspeccion>2025-07-07T12:05:44.2603943-03:00</FechaInspeccion>
+      <Estado>En evaluación</Estado>
+    </Oferta>
+    <ValorFinal>2000000</ValorFinal>
+    <Fecha>2025-07-07T12:06:44.2803206-03:00</Fecha>
+  </Tasacion>
 </ArrayOfTasacion>

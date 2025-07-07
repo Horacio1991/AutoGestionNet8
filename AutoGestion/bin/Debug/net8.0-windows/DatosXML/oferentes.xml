@@ -147,4 +147,11 @@
     <Apellido>Bartolito</Apellido>
     <Contacto>amalia@gmail.com</Contacto>
   </Oferente>
+  <Oferente>
+    <ID>22</ID>
+    <Dni>123456789</Dni>
+    <Nombre>Pedro</Nombre>
+    <Apellido>Prueba</Apellido>
+    <Contacto>pedroprueba@gmail.com</Contacto>
+  </Oferente>
 </ArrayOfOferente>

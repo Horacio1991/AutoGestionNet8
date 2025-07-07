@@ -260,4 +260,24 @@
     <Dominio>YYY444</Dominio>
     <Estado>En Proceso</Estado>
   </Vehiculo>
+  <Vehiculo>
+    <ID>27</ID>
+    <Marca>BMW</Marca>
+    <Modelo>Turbo</Modelo>
+    <Año>2020</Año>
+    <Color>Gris</Color>
+    <Km>150000</Km>
+    <Dominio>aaa001</Dominio>
+    <Estado>Disponible</Estado>
+  </Vehiculo>
+  <Vehiculo>
+    <ID>28</ID>
+    <Marca>Patito</Marca>
+    <Modelo>Pato</Modelo>
+    <Año>2025</Año>
+    <Color>Rojo</Color>
+    <Km>0</Km>
+    <Dominio>AAA002</Dominio>
+    <Estado>Disponible</Estado>
+  </Vehiculo>
 </ArrayOfVehiculo>
