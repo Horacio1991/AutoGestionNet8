@@ -610,7 +610,7 @@
       <Detalles>pago en efectivo</Detalles>
       <FechaPago>2025-07-07T09:43:36.9650246-03:00</FechaPago>
     </Pago>
-    <Estado>Facturada</Estado>
+    <Estado>Entregada</Estado>
     <Fecha>2025-07-07T09:43:36.9782629-03:00</Fecha>
   </Venta>
   <Venta>

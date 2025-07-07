@@ -1,7 +1,6 @@
-﻿using AutoGestion.CTRL_Vista;
-using AutoGestion.CTRL_Vista.Modelos;
+﻿using AutoGestion.CTRL_Vista.Modelos;
+using AutoGestion.CTRL_Vista;
 using AutoGestion.Servicios.Pdf;
-
 
 namespace AutoGestion.Vista
 {
@@ -13,55 +12,70 @@ namespace AutoGestion.Vista
         public RealizarEntrega()
         {
             InitializeComponent();
-            CargarVentas();
+            CargarVentas(); 
         }
 
+        // Lee las ventas facturadas y muestra los DTOs en el DataGridView.
         private void CargarVentas()
         {
-            // Pedimos los DTOs al controller
-            _ventas = _ctrl.ObtenerVentasParaEntrega();
-            dgvVentas.DataSource = null;
-            dgvVentas.DataSource = _ventas;
-            dgvVentas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvVentas.ReadOnly = true;
-            dgvVentas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            try
+            {
+                _ventas = _ctrl.ObtenerVentasParaEntrega(); //Que son las ventas facturadas
+                dgvVentas.DataSource = null;
+                dgvVentas.DataSource = _ventas;
+                dgvVentas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                dgvVentas.ReadOnly = true;
+                dgvVentas.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar ventas para entrega:\n{ex.Message}",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
+        // marca la venta como entregada y genera el PDF de comprobante.
         private void btnConfirmarEntrega_Click_1(object sender, EventArgs e)
         {
-            if (dgvVentas.CurrentRow == null)
+            if (dgvVentas.CurrentRow?.DataBoundItem is not VentaDto dto)
             {
-                MessageBox.Show("Debe seleccionar una venta.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Seleccione una venta para entregar.",
+                                "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Obtenemos el DTO seleccionado
-            var dto = dgvVentas.CurrentRow.DataBoundItem as VentaDto;
-            if (dto == null) return;
-
-            // Diálogo para elegir ruta de PDF
-            using var dialogo = new SaveFileDialog
+            try
             {
-                Filter = "Archivo PDF (*.pdf)|*.pdf",
-                FileName = $"Comprobante_Entrega_{dto.ID}.pdf"
-            };
-            if (dialogo.ShowDialog() != DialogResult.OK) return;
+                // 1) Marcar como entregada en BLL
+                _ctrl.ConfirmarEntrega(dto.ID);
 
-            // Marcamos la entrega en BLL
-            _ctrl.ConfirmarEntrega(dto.ID);
+                // 2) Recuperar entidad completa para el PDF
+                var ventaEntity = _ctrl.ObtenerEntidad(dto.ID);
 
-            // Recuperamos la entidad completa sólo para el PDF
-            var ventaEntity = _ctrl.ObtenerEntidad(dto.ID);
-            GeneradorComprobantePDF.Generar(ventaEntity, dialogo.FileName);
+                // 3) Pedir ruta y generar PDF
+                using var dlg = new SaveFileDialog
+                {
+                    Filter = "PDF (*.pdf)|*.pdf",
+                    FileName = $"Comprobante_Entrega_{dto.ID}.pdf"
+                };
+                if (dlg.ShowDialog() != DialogResult.OK)
+                    return;
 
-            MessageBox.Show("Entrega registrada y comprobante guardado correctamente.",
-                            "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                GeneradorComprobantePDF.Generar(ventaEntity, dlg.FileName);
 
-            // Refrescamos la lista
-            CargarVentas();
+                MessageBox.Show("Entrega registrada y comprobante guardado.",
+                                "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al confirmar entrega:\n{ex.Message}",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // 4) Refrescar la lista para eliminar la venta ya entregada
+                CargarVentas();
+            }
         }
-
-
-
     }
 }
