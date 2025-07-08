@@ -108,45 +108,76 @@ namespace AutoGestion.Vista
             var nombre = txtNombrePermiso.Text.Trim();
             if (string.IsNullOrEmpty(nombre))
             {
-                MessageBox.Show("Ingrese un nombre para la plantilla o submenú.", "Validación",
-                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Ingrese un nombre para la plantilla o submenú.",
+                                "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             try
             {
-                // Si no hay nada seleccionado → crear PLANTILLA RAÍZ
-                if (tvPermisos.SelectedNode == null)
+                // ¿Queremos CREAR una nueva PLANTILLA RAÍZ?
+                bool esNuevaRaiz = true;
+                if (tvPermisos.SelectedNode?.Tag is PermisoCompuesto selPc)
                 {
+                    // Si coincide el nombre, NO es nueva raíz
+                    esNuevaRaiz = !selPc.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase);
+                }
+
+                if (esNuevaRaiz)
+                {
+                    // 1) Creamos la plantilla raíz
                     _ctrl.CrearPlantilla(nombre);
-                    CargarTodo();               // recarga y deselecciona
-                }
-                else
-                {
-                    // Si está seleccionado, agrego ÍTEM a esa plantilla
-                    var root = (PermisoCompuesto)tvPermisos.SelectedNode.Tag;
-                    var menu = cmbPermisoMenu.SelectedItem as string
-                               ?? throw new ApplicationException("Seleccione primero un menú principal.");
-                    var item = cmbPermisoItem.SelectedItem as string
-                               ?? throw new ApplicationException("Seleccione primero un ítem.");
 
-                    _ctrl.AgregarItemAPlantilla(root.ID, menu, item);
-
-                    // recargo SÓLO las plantillas para no perder la selección
-                    RefrescarPlantillas();
-                    // y vuelvo a seleccionar el mismo nodo raíz
+                    // 2) Recargamos todo y seleccionamos esa nueva raíz
+                    CargarTodo();
                     var nodo = tvPermisos.Nodes
-                                 .Cast<TreeNode>()
-                                 .First(n => ((PermisoCompuesto)n.Tag).ID == root.ID);
+                                         .Cast<TreeNode>()
+                                         .First(n => ((PermisoCompuesto)n.Tag).Nombre == nombre);
                     tvPermisos.SelectedNode = nodo;
+                    nodo.Expand();
+
+                    // 3) Limpiamos para que el usuario pueda ahora añadir menús/ítems
+                    cmbPermisoMenu.SelectedIndex = -1;
+                    cmbPermisoItem.Items.Clear();
+                    return;
                 }
+
+                // --- Si llegamos acá, estamos AÑADIENDO un ítem a la plantilla SELECCIONADA ---
+                // 1) Debe haber un PermisoCompuesto seleccionado
+                if (tvPermisos.SelectedNode?.Tag is not PermisoCompuesto raiz)
+                    throw new ApplicationException("Seleccione primero la plantilla donde agregar el ítem.");
+
+                // 2) Validar selección de menú e ítem
+                if (cmbPermisoMenu.SelectedIndex < 0)
+                    throw new ApplicationException("Seleccione primero un Menú principal.");
+                if (cmbPermisoItem.SelectedIndex < 0)
+                    throw new ApplicationException("Seleccione primero un Ítem de acción.");
+
+                var menu = cmbPermisoMenu.SelectedItem.ToString()!;
+                var item = cmbPermisoItem.SelectedItem.ToString()!;
+
+                // 3) Llamada al controller para armar la rama + ítem
+                _ctrl.AgregarItemAPlantilla(raiz.ID, menu, item);
+
+                // 4) Recargar solo el árbol de plantillas y volver a seleccionar la misma raíz
+                RefrescarPlantillas();
+                var nodoRaiz = tvPermisos.Nodes
+                                         .Cast<TreeNode>()
+                                         .First(n => ((PermisoCompuesto)n.Tag).ID == raiz.ID);
+                tvPermisos.SelectedNode = nodoRaiz;
+                nodoRaiz.Expand();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"No se pudo guardar plantilla:\n{ex.Message}", "Error",
-                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"No se pudo guardar plantilla:\n{ex.Message}",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+
+
+
+
 
 
         private void BtnEliminarPermiso_Click(object sender, EventArgs e)
@@ -160,7 +191,7 @@ namespace AutoGestion.Vista
 
             try
             {
-                _ctrl.EliminarPermiso(permiso.ID);
+                _ctrl.EliminarPlantilla(permiso.ID);
                 CargarTodo();
             }
             catch (Exception ex)
@@ -346,6 +377,18 @@ namespace AutoGestion.Vista
                 txtContrasenaUsuario.Text = chkEncriptar.Checked
                     ? Encriptacion.DesencriptarPassword(usr.Clave)
                     : usr.Clave;
+            }
+        }
+
+        private void tvPermisos_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            // Si selecciono un nodo y es un PermisoCompuesto, cargo su nombre en el TextBox
+            if (e.Node?.Tag is PermisoCompuesto pc)
+            {
+                txtNombrePermiso.Text = pc.Nombre;
+                // Limpio el combo para distinguir modo "crear raíz" vs "añadir a raíz"
+                cmbPermisoMenu.SelectedIndex = -1;
+                cmbPermisoItem.Items.Clear();
             }
         }
     }

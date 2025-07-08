@@ -397,6 +397,7 @@
             tvPermisos.Name = "tvPermisos";
             tvPermisos.Size = new Size(162, 417);
             tvPermisos.TabIndex = 54;
+            tvPermisos.AfterSelect += tvPermisos_AfterSelect;
             // 
             // tvPermisosPorRol
             // 
