@@ -9,7 +9,7 @@
   <UsuarioSerializable>
     <ID>2</ID>
     <Nombre>Horacio</Nombre>
-    <Clave>MQAyADMA</Clave>
+    <Clave>cABsAGEAeQBhAGQAaQB0AG8A</Clave>
     <RolNombre>Vendedor</RolNombre>
     <Permisos />
   </UsuarioSerializable>
@@ -17,27 +17,12 @@
     <ID>3</ID>
     <Nombre>Belen</Nombre>
     <Clave>MQAyADMA</Clave>
-    <RolNombre>Administrativo</RolNombre>
     <Permisos />
   </UsuarioSerializable>
   <UsuarioSerializable>
     <ID>4</ID>
     <Nombre>Charo</Nombre>
-    <Clave>MQAyADMA</Clave>
-    <RolNombre>Compras</RolNombre>
-    <Permisos />
-  </UsuarioSerializable>
-  <UsuarioSerializable>
-    <ID>5</ID>
-    <Nombre>Zoe</Nombre>
-    <Clave>RgByAGEAbgBjAGkAYQA=</Clave>
-    <RolNombre>Vendedor Sr.</RolNombre>
-    <Permisos />
-  </UsuarioSerializable>
-  <UsuarioSerializable>
-    <ID>6</ID>
-    <Nombre>Yami</Nombre>
-    <Clave>MQAyADMANAA1ADYA</Clave>
+    <Clave>MwAyADEA</Clave>
     <Permisos />
   </UsuarioSerializable>
 </ArrayOfUsuarioSerializable>

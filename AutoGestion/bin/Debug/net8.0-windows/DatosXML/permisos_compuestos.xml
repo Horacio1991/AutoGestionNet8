@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfPermisoCompuesto xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <PermisoCompuesto>
+    <ID>3</ID>
+    <Nombre>Administrativos JR</Nombre>
+    <HijosCompuestos>
+      <PermisoCompuesto>
+        <ID>3</ID>
+        <Nombre>Gestión Ventas</Nombre>
+        <HijosCompuestos />
+        <HijosSimples>
+          <PermisoSimple>
+            <ID>1</ID>
+            <Nombre>Autorizar Venta</Nombre>
+          </PermisoSimple>
+          <PermisoSimple>
+            <ID>1</ID>
+            <Nombre>Emitir Factura</Nombre>
+          </PermisoSimple>
+          <PermisoSimple>
+            <ID>1</ID>
+            <Nombre>Solicitar Modelo</Nombre>
+          </PermisoSimple>
+        </HijosSimples>
+      </PermisoCompuesto>
+      <PermisoCompuesto>
+        <ID>3</ID>
+        <Nombre>Gestión Comisiones</Nombre>
+        <HijosCompuestos />
+        <HijosSimples>
+          <PermisoSimple>
+            <ID>1</ID>
+            <Nombre>Registrar Comisión</Nombre>
+          </PermisoSimple>
+        </HijosSimples>
+      </PermisoCompuesto>
+      <PermisoCompuesto>
+        <ID>3</ID>
+        <Nombre>Seguridad</Nombre>
+        <HijosCompuestos />
+        <HijosSimples>
+          <PermisoSimple>
+            <ID>1</ID>
+            <Nombre>Dashboard</Nombre>
+          </PermisoSimple>
+          <PermisoSimple>
+            <ID>1</ID>
+            <Nombre>Cerrar Sesión</Nombre>
+          </PermisoSimple>
+          <PermisoSimple>
+            <ID>1</ID>
+            <Nombre>Backup</Nombre>
+          </PermisoSimple>
+        </HijosSimples>
+      </PermisoCompuesto>
+    </HijosCompuestos>
+    <HijosSimples />
+  </PermisoCompuesto>
+</ArrayOfPermisoCompuesto>

@@ -1,11 +1,13 @@
 ﻿namespace AutoGestion.Servicios.Composite
 {
-    // Usuario del sistema, con un rol (árbol de permisos) asignado.
+    //Representa un usuario con su permiso (rol compuesto).
     public class Usuario
     {
         public int ID { get; set; }
-        public required string Nombre { get; set; }
-        public required string Clave { get; set; }    // Encriptada
-        public IPermiso? Rol { get; set; }            // Rol compuesto con permisos
+        public string Nombre { get; set; }
+        public string Clave { get; set; } 
+
+        // debería ser un PermisoCompuesto con toda la jerarquía.
+        public IPermiso? Rol { get; set; }
     }
 }

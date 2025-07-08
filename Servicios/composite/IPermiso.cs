@@ -1,14 +1,17 @@
 ﻿namespace AutoGestion.Servicios.Composite
 {
-    // Interfaz común para todos los permisos.
     public interface IPermiso
     {
         int ID { get; set; }
         string Nombre { get; set; }
+
+        // Agrega un permiso hijo (simple o compuesto).
         void Agregar(IPermiso permiso);
+
+        // Quita un permiso hijo.
         void Quitar(IPermiso permiso);
 
-        // lista de hijos directos.
+        // Devuelve la lista de hijos (permiso simple o compuesto).
         List<IPermiso> ObtenerHijos();
     }
 }
