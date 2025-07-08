@@ -47,8 +47,55 @@ namespace AutoGestion.CTRL_Vista
         /// </summary>
         public void EliminarPlantilla(int plantillaId)
         {
+            // 1) Quitar de la lista de plantillas y persistir
             _plantillas.RemoveAll(p => p.ID == plantillaId);
-            PersistirPlantillas();
+            PersistirPlantillas();  // -> PermisoPlantillaXmlService.Guardar + recarga
+
+            // 2) Quitar de cada rol y persistir si hubo cambios
+            bool huboCambios = false;
+            foreach (var rol in _roles)
+            {
+                if (QuitarDeCompuesto(rol, plantillaId))
+                    huboCambios = true;
+            }
+
+            if (huboCambios)
+                RolXmlService.Guardar(_roles);
+        }
+
+        private bool QuitarDeCompuesto(PermisoCompuesto padre, int idAEliminar)
+        {
+            // 1) Eliminar hijos directos
+            int eliminados = padre.HijosCompuestos.RemoveAll(c => c.ID == idAEliminar);
+
+            // 2) Seguir buscando en los que quedaron
+            foreach (var hijo in padre.HijosCompuestos)
+            {
+                if (QuitarDeCompuesto(hijo, idAEliminar))
+                    eliminados++;
+            }
+
+            return eliminados > 0;
+        }
+
+        /// <summary>
+        /// Guarda y recarga la lista de plantillas en disco.
+        /// </summary>
+      
+
+        private bool RemoveFromCompuesto(PermisoCompuesto padre, int idAEliminar)
+        {
+            // Intento eliminar hijos directos
+            int removed = padre.HijosCompuestos.RemoveAll(c => c.ID == idAEliminar);
+
+            // Luego recorro los que quedaron para limpiar en profundidad
+            foreach (var hijo in padre.HijosCompuestos)
+            {
+                if (RemoveFromCompuesto(hijo, idAEliminar))
+                    removed++;
+            }
+
+            return removed > 0;
         }
 
         /// <summary>
@@ -99,6 +146,8 @@ namespace AutoGestion.CTRL_Vista
 
             PersistirPlantillas();
         }
+
+
 
         private void PersistirPlantillas()
         {
