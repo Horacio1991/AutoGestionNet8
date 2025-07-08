@@ -1,5 +1,7 @@
-﻿using AutoGestion.Servicios.Composite;
-using AutoGestion.Servicios.Utilidades;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using AutoGestion.Servicios.Composite;
 using AutoGestion.Servicios.XmlServices;
 
 namespace AutoGestion.CTRL_Vista
@@ -12,53 +14,47 @@ namespace AutoGestion.CTRL_Vista
 
         public AsignarRolesController()
         {
+            // Carga inicial desde los XML
             _plantillas = PermisoPlantillaXmlService.Leer();
             _roles = RolXmlService.Leer();
             _usuarios = UsuarioXmlService.Leer();
         }
 
-        // --- Helpers internos ---
-
-        // Recalcula el próximo ID disponible para PermisoCompuesto,
-        // recorriendo todo el árbol de plantillas.
-        private int _ObtenerIDGlobal()
-        {
-            var todas = PermisoPlantillaXmlService.Leer();
-            var ids = new List<int>();
-            void Recolectar(PermisoCompuesto pc)
-            {
-                ids.Add(pc.ID);
-                foreach (var hijo in pc.HijosCompuestos)
-                    Recolectar(hijo);
-            }
-            foreach (var root in todas) Recolectar(root);
-            return ids.Any() ? ids.Max() + 1 : 1;
-        }
-
-        // --- Plantillas (menús + submenús + items) ---
+        // --- PLANTILLAS ---
 
         public IEnumerable<PermisoCompuesto> GetPlantillas() => _plantillas;
 
+        /// <summary>
+        /// Crea una nueva plantilla raíz con un ID único dentro de _plantillas.
+        /// </summary>
         public void CrearPlantilla(string nombre)
         {
             if (_plantillas.Any(p => p.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase)))
                 throw new ApplicationException("La plantilla ya existe.");
 
-            var nueva = new PermisoCompuesto
+            int nuevoId = (_plantillas.Any() ? _plantillas.Max(p => p.ID) : 0) + 1;
+
+            _plantillas.Add(new PermisoCompuesto
             {
-                ID = _ObtenerIDGlobal(),
+                ID = nuevoId,
                 Nombre = nombre
-            };
-            _plantillas.Add(nueva);
+            });
             PersistirPlantillas();
         }
 
+        /// <summary>
+        /// Elimina la plantilla completa (nodo raíz).
+        /// </summary>
         public void EliminarPlantilla(int plantillaId)
         {
             _plantillas.RemoveAll(p => p.ID == plantillaId);
             PersistirPlantillas();
         }
 
+        /// <summary>
+        /// Agrega a la plantilla indicada un submenú (PermisoCompuesto) y, opcionalmente, un ítem (PermisoSimple).
+        /// Genera IDs únicos para submenú e ítem dentro de esta colección de plantillas.
+        /// </summary>
         public void AgregarItemAPlantilla(
             int plantillaId,
             string nombreSubMenu,
@@ -68,24 +64,38 @@ namespace AutoGestion.CTRL_Vista
                 .FirstOrDefault(p => p.ID == plantillaId)
                 ?? throw new ApplicationException("Plantilla no encontrada.");
 
-            // 1) Rama de menú (PermisoCompuesto)
-            var rama = root.HijosCompuestos
-                        .FirstOrDefault(m => m.Nombre.Equals(nombreSubMenu, StringComparison.OrdinalIgnoreCase))
-                     ?? new PermisoCompuesto
-                     {
-                         ID = _ObtenerIDGlobal(),
-                         Nombre = nombreSubMenu
-                     }.Also(m => root.Agregar(m));
+            // 1) Obtener todos los nodos compuestos existentes para generar un nuevo ID
+            var todosCompuestos = _plantillas.SelectMany(p => FlattenCompuestos(p)).ToList();
+            int nextCompId = (todosCompuestos.Any() ? todosCompuestos.Max(c => c.ID) : 0) + 1;
 
-            // 2) Permiso simple
-            if (rama.HijosSimples.Any(s => s.Nombre.Equals(nombreItem, StringComparison.OrdinalIgnoreCase)))
-                throw new ApplicationException($"El ítem '{nombreItem}' ya existe en '{nombreSubMenu}'.");
-
-            rama.Agregar(new PermisoSimple
+            // 2) Buscar o crear el submenú
+            var sub = root.HijosCompuestos.FirstOrDefault(m => m.Nombre == nombreSubMenu);
+            if (sub == null)
             {
-                ID = GeneradorID.ObtenerID<PermisoSimple>(), // sigue centralizado en GeneradorID
-                Nombre = nombreItem
-            });
+                sub = new PermisoCompuesto
+                {
+                    ID = nextCompId,
+                    Nombre = nombreSubMenu
+                };
+                root.Agregar(sub);
+            }
+
+            // 3) Si se indicó ítem, agregarlo
+            if (!string.IsNullOrWhiteSpace(nombreItem))
+            {
+                if (sub.HijosSimples.Any(s => s.Nombre == nombreItem))
+                    throw new ApplicationException($"El ítem '{nombreItem}' ya existe en '{nombreSubMenu}'.");
+
+                // IDs de simples únicos dentro de esta plantilla
+                var todosSimples = _plantillas.SelectMany(p => FlattenSimples(p)).ToList();
+                int nextSimpleId = (todosSimples.Any() ? todosSimples.Max(s => s.ID) : 0) + 1;
+
+                sub.Agregar(new PermisoSimple
+                {
+                    ID = nextSimpleId,
+                    Nombre = nombreItem
+                });
+            }
 
             PersistirPlantillas();
         }
@@ -93,11 +103,27 @@ namespace AutoGestion.CTRL_Vista
         private void PersistirPlantillas()
         {
             PermisoPlantillaXmlService.Guardar(_plantillas);
-            // Recargamos para mantener sync los IDs recién asignados
             _plantillas = PermisoPlantillaXmlService.Leer();
         }
 
-        // --- Roles ---
+        // Helpers para aplanar el árbol
+        private IEnumerable<PermisoCompuesto> FlattenCompuestos(PermisoCompuesto p)
+        {
+            yield return p;
+            foreach (var child in p.HijosCompuestos)
+                foreach (var desc in FlattenCompuestos(child))
+                    yield return desc;
+        }
+
+        private IEnumerable<PermisoSimple> FlattenSimples(PermisoCompuesto p)
+        {
+            foreach (var s in p.HijosSimples) yield return s;
+            foreach (var child in p.HijosCompuestos)
+                foreach (var desc in FlattenSimples(child))
+                    yield return desc;
+        }
+
+        // --- ROLES ---
 
         public IEnumerable<PermisoCompuesto> GetRoles() => _roles;
 
@@ -106,11 +132,18 @@ namespace AutoGestion.CTRL_Vista
             if (_roles.Any(r => r.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase)))
                 throw new ApplicationException("El rol ya existe.");
 
+            int nuevoId = (_roles.Any() ? _roles.Max(r => r.ID) : 0) + 1;
             _roles.Add(new PermisoCompuesto
             {
-                ID = _ObtenerIDGlobal(),
+                ID = nuevoId,
                 Nombre = nombre
             });
+            RolXmlService.Guardar(_roles);
+        }
+
+        public void EliminarRol(int rolId)
+        {
+            _roles.RemoveAll(r => r.ID == rolId);
             RolXmlService.Guardar(_roles);
         }
 
@@ -118,15 +151,11 @@ namespace AutoGestion.CTRL_Vista
         {
             var rol = _roles.FirstOrDefault(r => r.ID == rolId)
                       ?? throw new ApplicationException("Rol no encontrado.");
+
             if (_roles.Any(r => r.Nombre.Equals(nuevoNombre, StringComparison.OrdinalIgnoreCase)))
                 throw new ApplicationException("Ya existe un rol con ese nombre.");
-            rol.Nombre = nuevoNombre;
-            RolXmlService.Guardar(_roles);
-        }
 
-        public void EliminarRol(int rolId)
-        {
-            _roles.RemoveAll(r => r.ID == rolId);
+            rol.Nombre = nuevoNombre;
             RolXmlService.Guardar(_roles);
         }
 
@@ -144,7 +173,7 @@ namespace AutoGestion.CTRL_Vista
             RolXmlService.Guardar(_roles);
         }
 
-        // --- Usuarios ---
+        // --- USUARIOS ---
 
         public IEnumerable<Usuario> GetUsuarios() => _usuarios;
 
@@ -166,16 +195,6 @@ namespace AutoGestion.CTRL_Vista
 
             usr.Rol = null;
             UsuarioXmlService.Guardar(_usuarios);
-        }
-    }
-
-    // Helper inline
-    public static class Extensions
-    {
-        public static T Also<T>(this T self, Action<T> act)
-        {
-            act(self);
-            return self;
         }
     }
 }
