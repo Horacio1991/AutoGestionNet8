@@ -16,23 +16,37 @@
   <PermisoCompuesto>
     <ID>2</ID>
     <Nombre>Administrativo</Nombre>
+    <HijosCompuestos />
+    <HijosSimples />
+  </PermisoCompuesto>
+  <PermisoCompuesto>
+    <ID>3</ID>
+    <Nombre>Comprador</Nombre>
     <HijosCompuestos>
       <PermisoCompuesto>
-        <ID>3</ID>
-        <Nombre>Administrativos</Nombre>
+        <ID>2</ID>
+        <Nombre>Compradores</Nombre>
         <HijosCompuestos>
           <PermisoCompuesto>
-            <ID>5</ID>
-            <Nombre>Gestión Ventas</Nombre>
+            <ID>4</ID>
+            <Nombre>Gestión Compras</Nombre>
             <HijosCompuestos />
             <HijosSimples>
               <PermisoSimple>
-                <ID>4</ID>
-                <Nombre>Autorizar Venta</Nombre>
+                <ID>3</ID>
+                <Nombre>Registrar Oferta</Nombre>
               </PermisoSimple>
               <PermisoSimple>
-                <ID>5</ID>
-                <Nombre>Emitir Factura</Nombre>
+                <ID>10</ID>
+                <Nombre>Evaluar Vehículo</Nombre>
+              </PermisoSimple>
+              <PermisoSimple>
+                <ID>11</ID>
+                <Nombre>Tasar Vehículo</Nombre>
+              </PermisoSimple>
+              <PermisoSimple>
+                <ID>12</ID>
+                <Nombre>Registrar Compra</Nombre>
               </PermisoSimple>
             </HijosSimples>
           </PermisoCompuesto>

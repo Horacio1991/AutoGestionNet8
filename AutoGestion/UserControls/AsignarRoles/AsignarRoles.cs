@@ -113,59 +113,63 @@ namespace AutoGestion.Vista
                 return;
             }
 
+            // Guardamos la selección actual de menú e ítem
+            var menuSeleccionado = cmbPermisoMenu.SelectedItem as string;
+            var itemSeleccionado = cmbPermisoItem.SelectedItem as string;
+
             try
             {
-                // ¿Queremos CREAR una nueva PLANTILLA RAÍZ?
+                // ¿Estamos creando una plantilla raíz nueva?
                 bool esNuevaRaiz = true;
                 if (tvPermisos.SelectedNode?.Tag is PermisoCompuesto selPc)
                 {
-                    // Si coincide el nombre, NO es nueva raíz
                     esNuevaRaiz = !selPc.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase);
                 }
 
                 if (esNuevaRaiz)
                 {
-                    // 1) Creamos la plantilla raíz
+                    // 1) Crear plantilla raíz
                     _ctrl.CrearPlantilla(nombre);
 
-                    // 2) Recargamos todo y seleccionamos esa nueva raíz
+                    // 2) Recargar TODO y seleccionar esa nueva raíz
                     CargarTodo();
-                    var nodo = tvPermisos.Nodes
-                                         .Cast<TreeNode>()
-                                         .First(n => ((PermisoCompuesto)n.Tag).Nombre == nombre);
-                    tvPermisos.SelectedNode = nodo;
-                    nodo.Expand();
+                    var nodoNuevo = tvPermisos.Nodes
+                                              .Cast<TreeNode>()
+                                              .First(n => ((PermisoCompuesto)n.Tag).Nombre == nombre);
+                    tvPermisos.SelectedNode = nodoNuevo;
+                    nodoNuevo.Expand();
 
-                    // 3) Limpiamos para que el usuario pueda ahora añadir menús/ítems
+                    // 3) Reiniciar combos para que el usuario elija submenú
                     cmbPermisoMenu.SelectedIndex = -1;
                     cmbPermisoItem.Items.Clear();
                     return;
                 }
 
-                // --- Si llegamos acá, estamos AÑADIENDO un ítem a la plantilla SELECCIONADA ---
-                // 1) Debe haber un PermisoCompuesto seleccionado
+                // --- Estamos añadiendo un ítem dentro de una plantilla existente ---
                 if (tvPermisos.SelectedNode?.Tag is not PermisoCompuesto raiz)
                     throw new ApplicationException("Seleccione primero la plantilla donde agregar el ítem.");
 
-                // 2) Validar selección de menú e ítem
-                if (cmbPermisoMenu.SelectedIndex < 0)
+                if (string.IsNullOrEmpty(menuSeleccionado))
                     throw new ApplicationException("Seleccione primero un Menú principal.");
-                if (cmbPermisoItem.SelectedIndex < 0)
+                if (string.IsNullOrEmpty(itemSeleccionado))
                     throw new ApplicationException("Seleccione primero un Ítem de acción.");
 
-                var menu = cmbPermisoMenu.SelectedItem.ToString()!;
-                var item = cmbPermisoItem.SelectedItem.ToString()!;
+                // 1) Llamada al controller para agregar submenú + ítem
+                _ctrl.AgregarItemAPlantilla(raiz.ID, menuSeleccionado, itemSeleccionado);
 
-                // 3) Llamada al controller para armar la rama + ítem
-                _ctrl.AgregarItemAPlantilla(raiz.ID, menu, item);
-
-                // 4) Recargar solo el árbol de plantillas y volver a seleccionar la misma raíz
+                // 2) Recargar sólo el árbol de plantillas y reseleccionar la misma raíz
                 RefrescarPlantillas();
                 var nodoRaiz = tvPermisos.Nodes
                                          .Cast<TreeNode>()
                                          .First(n => ((PermisoCompuesto)n.Tag).ID == raiz.ID);
                 tvPermisos.SelectedNode = nodoRaiz;
                 nodoRaiz.Expand();
+
+                // 3) RESTAURAR la selección de combos para que no pierdas el menú/ítem
+                if (menuSeleccionado != null && cmbPermisoMenu.Items.Contains(menuSeleccionado))
+                    cmbPermisoMenu.SelectedItem = menuSeleccionado;
+                if (itemSeleccionado != null && cmbPermisoItem.Items.Contains(itemSeleccionado))
+                    cmbPermisoItem.SelectedItem = itemSeleccionado;
             }
             catch (Exception ex)
             {
@@ -173,11 +177,6 @@ namespace AutoGestion.Vista
                                 "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-
-
-
-
 
 
         private void BtnEliminarPermiso_Click(object sender, EventArgs e)
