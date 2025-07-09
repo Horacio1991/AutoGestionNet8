@@ -17,6 +17,14 @@
             <ID>2</ID>
             <Nombre>Registrar Cliente</Nombre>
           </PermisoSimple>
+          <PermisoSimple>
+            <ID>1</ID>
+            <Nombre>Realizar Entrega</Nombre>
+          </PermisoSimple>
+          <PermisoSimple>
+            <ID>1</ID>
+            <Nombre>Realizar Pago</Nombre>
+          </PermisoSimple>
         </HijosSimples>
       </PermisoCompuesto>
       <PermisoCompuesto>
@@ -27,6 +35,10 @@
           <PermisoSimple>
             <ID>3</ID>
             <Nombre>Registrar Turno</Nombre>
+          </PermisoSimple>
+          <PermisoSimple>
+            <ID>1</ID>
+            <Nombre>Registrar Asistencia</Nombre>
           </PermisoSimple>
         </HijosSimples>
       </PermisoCompuesto>

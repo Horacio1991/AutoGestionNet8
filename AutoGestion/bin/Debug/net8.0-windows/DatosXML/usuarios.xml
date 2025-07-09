@@ -17,7 +17,6 @@
     <ID>3</ID>
     <Nombre>Belen</Nombre>
     <Clave>MQAyADMA</Clave>
-    <RolNombre>Administrativo</RolNombre>
     <Permisos />
   </UsuarioSerializable>
   <UsuarioSerializable>

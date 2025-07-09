@@ -116,6 +116,8 @@ namespace AutoGestion.Vista
             btnEliminarRol.Click += BtnEliminarRol_Click;
             btnAsociarPermisoARol.Click += BtnAsociarPermisoARol_Click;
             tvRoles.AfterSelect += TvRoles_AfterSelect;
+            btnQuitarPermisoRol.Click += BtnQuitarPermisoRol_Click;
+
 
             // Usuarios
             tvUsuarios.AfterSelect += TvUsuarios_AfterSelect;
@@ -306,6 +308,12 @@ namespace AutoGestion.Vista
             {
                 _ctrl.EliminarRol(rol.ID);
                 CargarTodo();
+
+                // ----- LIMPIAMOS LA VISTA DE DETALLE -----
+                txtNombreRol.Clear();
+                tvPermisosPorRol.Nodes.Clear();
+                // Además, si el usuario que estaba seleccionado tenía este rol, limpiar también:
+                tvPermisosPorUsuario.Nodes.Clear();
             }
             catch (Exception ex)
             {
@@ -317,7 +325,7 @@ namespace AutoGestion.Vista
         private void BtnAsociarPermisoARol_Click(object sender, EventArgs e)
         {
             if (tvRoles.SelectedNode?.Tag is not PermisoCompuesto rol
-             || tvPermisos.SelectedNode?.Tag is not PermisoCompuesto plant)
+             || tvPermisos.SelectedNode?.Tag is not PermisoCompuesto plantilla)
             {
                 MessageBox.Show("Seleccione un rol y una plantilla.", "Validación",
                                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -326,8 +334,20 @@ namespace AutoGestion.Vista
 
             try
             {
-                _ctrl.AsociarPlantillaARol(rol.ID, plant.ID);
+                _ctrl.AsociarPlantillaARol(rol.ID, plantilla.ID);
+
+                // 1) Recargo todo
                 CargarTodo();
+
+                // 2) Reconstruyo la selección del rol para disparar TvRoles_AfterSelect
+                var nodoRol = tvRoles.Nodes
+                                     .Cast<TreeNode>()
+                                     .FirstOrDefault(n => ((PermisoCompuesto)n.Tag).ID == rol.ID);
+                if (nodoRol != null)
+                {
+                    tvRoles.SelectedNode = nodoRol;
+                    nodoRol.Expand();
+                }
             }
             catch (Exception ex)
             {
@@ -335,6 +355,56 @@ namespace AutoGestion.Vista
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+
+
+        private void BtnQuitarPermisoRol_Click(object sender, EventArgs e)
+        {
+            // 1) Rol seleccionado?
+            if (tvRoles.SelectedNode?.Tag is not PermisoCompuesto rol)
+            {
+                MessageBox.Show("Seleccione primero un rol.", "Validación",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 2) Plantilla asignada (en el árbol de permisos del rol) seleccionada?
+            if (tvPermisosPorRol.SelectedNode?.Tag is not PermisoCompuesto plantilla)
+            {
+                MessageBox.Show("Seleccione la plantilla dentro del rol.", "Validación",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 3) Confirmación
+            var confirm = MessageBox.Show(
+                $"¿Quitar la plantilla '{plantilla.Nombre}' del rol '{rol.Nombre}'?",
+                "Confirmar",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (confirm != DialogResult.Yes) return;
+
+            try
+            {
+                // 4) Llamada al controller
+                _ctrl.QuitarPlantillaDeRol(rol.ID, plantilla.ID);
+
+                // 5) Recargar UI (solo la sección de Roles/Permisos)
+                CargarTodo();
+                // volver a seleccionar el rol para mostrar su nuevo árbol vacío o actualizado
+                var nodoRol = tvRoles.Nodes
+                                     .Cast<TreeNode>()
+                                     .First(n => ((PermisoCompuesto)n.Tag).ID == rol.ID);
+                tvRoles.SelectedNode = nodoRol;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"No se pudo quitar plantilla del rol:\n{ex.Message}",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
 
         private void TvRoles_AfterSelect(object sender, TreeViewEventArgs e)
         {
