@@ -10,6 +10,7 @@
     <ID>2</ID>
     <Nombre>Horacio</Nombre>
     <Clave>MQAyADMA</Clave>
+    <RolNombre>Vendedor</RolNombre>
     <Permisos />
   </UsuarioSerializable>
   <UsuarioSerializable>
