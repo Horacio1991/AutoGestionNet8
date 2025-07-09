@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfPermisoCompuesto xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <PermisoCompuesto>
+    <ID>1</ID>
+    <Nombre>Vendedor</Nombre>
+    <HijosCompuestos>
+      <PermisoCompuesto>
+        <ID>1</ID>
+        <Nombre>Vendedores</Nombre>
+        <HijosCompuestos>
+          <PermisoCompuesto>
+            <ID>2</ID>
+            <Nombre>Gestión Ventas</Nombre>
+            <HijosCompuestos />
+            <HijosSimples>
+              <PermisoSimple>
+                <ID>1</ID>
+                <Nombre>Solicitar Modelo</Nombre>
+              </PermisoSimple>
+              <PermisoSimple>
+                <ID>2</ID>
+                <Nombre>Registrar Cliente</Nombre>
+              </PermisoSimple>
+              <PermisoSimple>
+                <ID>3</ID>
+                <Nombre>Realizar Pago</Nombre>
+              </PermisoSimple>
+              <PermisoSimple>
+                <ID>4</ID>
+                <Nombre>Realizar Entrega</Nombre>
+              </PermisoSimple>
+            </HijosSimples>
+          </PermisoCompuesto>
+          <PermisoCompuesto>
+            <ID>3</ID>
+            <Nombre>Gestión Comisiones</Nombre>
+            <HijosCompuestos />
+            <HijosSimples>
+              <PermisoSimple>
+                <ID>5</ID>
+                <Nombre>Consultar Comisiones</Nombre>
+              </PermisoSimple>
+            </HijosSimples>
+          </PermisoCompuesto>
+          <PermisoCompuesto>
+            <ID>4</ID>
+            <Nombre>Gestión Turnos</Nombre>
+            <HijosCompuestos />
+            <HijosSimples>
+              <PermisoSimple>
+                <ID>6</ID>
+                <Nombre>Registrar Turno</Nombre>
+              </PermisoSimple>
+              <PermisoSimple>
+                <ID>7</ID>
+                <Nombre>Registrar Asistencia</Nombre>
+              </PermisoSimple>
+            </HijosSimples>
+          </PermisoCompuesto>
+        </HijosCompuestos>
+        <HijosSimples />
+      </PermisoCompuesto>
+    </HijosCompuestos>
+    <HijosSimples />
+  </PermisoCompuesto>
+  <PermisoCompuesto>
+    <ID>2</ID>
+    <Nombre>Comprador</Nombre>
+    <HijosCompuestos>
+      <PermisoCompuesto>
+        <ID>3</ID>
+        <Nombre>Compradores</Nombre>
+        <HijosCompuestos>
+          <PermisoCompuesto>
+            <ID>9</ID>
+            <Nombre>Gestión Compras</Nombre>
+            <HijosCompuestos />
+            <HijosSimples>
+              <PermisoSimple>
+                <ID>16</ID>
+                <Nombre>Registrar Oferta</Nombre>
+              </PermisoSimple>
+              <PermisoSimple>
+                <ID>17</ID>
+                <Nombre>Evaluar Vehículo</Nombre>
+              </PermisoSimple>
+              <PermisoSimple>
+                <ID>18</ID>
+                <Nombre>Tasar Vehículo</Nombre>
+              </PermisoSimple>
+            </HijosSimples>
+          </PermisoCompuesto>
+        </HijosCompuestos>
+        <HijosSimples />
+      </PermisoCompuesto>
+    </HijosCompuestos>
+    <HijosSimples />
+  </PermisoCompuesto>
+  <PermisoCompuesto>
+    <ID>3</ID>
+    <Nombre>Administrativo</Nombre>
+    <HijosCompuestos>
+      <PermisoCompuesto>
+        <ID>2</ID>
+        <Nombre>Administrativos</Nombre>
+        <HijosCompuestos>
+          <PermisoCompuesto>
+            <ID>5</ID>
+            <Nombre>Gestión Ventas</Nombre>
+            <HijosCompuestos />
+            <HijosSimples>
+              <PermisoSimple>
+                <ID>8</ID>
+                <Nombre>Autorizar Venta</Nombre>
+              </PermisoSimple>
+              <PermisoSimple>
+                <ID>9</ID>
+                <Nombre>Emitir Factura</Nombre>
+              </PermisoSimple>
+            </HijosSimples>
+          </PermisoCompuesto>
+          <PermisoCompuesto>
+            <ID>6</ID>
+            <Nombre>Gestión Compras</Nombre>
+            <HijosCompuestos />
+            <HijosSimples>
+              <PermisoSimple>
+                <ID>10</ID>
+                <Nombre>Registrar Compra</Nombre>
+              </PermisoSimple>
+            </HijosSimples>
+          </PermisoCompuesto>
+          <PermisoCompuesto>
+            <ID>7</ID>
+            <Nombre>Gestión Comisiones</Nombre>
+            <HijosCompuestos />
+            <HijosSimples>
+              <PermisoSimple>
+                <ID>11</ID>
+                <Nombre>Registrar Comisión</Nombre>
+              </PermisoSimple>
+            </HijosSimples>
+          </PermisoCompuesto>
+          <PermisoCompuesto>
+            <ID>8</ID>
+            <Nombre>Seguridad</Nombre>
+            <HijosCompuestos />
+            <HijosSimples>
+              <PermisoSimple>
+                <ID>12</ID>
+                <Nombre>Dashboard</Nombre>
+              </PermisoSimple>
+              <PermisoSimple>
+                <ID>13</ID>
+                <Nombre>Backup</Nombre>
+              </PermisoSimple>
+              <PermisoSimple>
+                <ID>14</ID>
+                <Nombre>Restore</Nombre>
+              </PermisoSimple>
+              <PermisoSimple>
+                <ID>15</ID>
+                <Nombre>Bitacora</Nombre>
+              </PermisoSimple>
+            </HijosSimples>
+          </PermisoCompuesto>
+        </HijosCompuestos>
+        <HijosSimples />
+      </PermisoCompuesto>
+    </HijosCompuestos>
+    <HijosSimples />
+  </PermisoCompuesto>
+</ArrayOfPermisoCompuesto>

@@ -7,46 +7,30 @@
       <PermisoCompuesto>
         <ID>1</ID>
         <Nombre>Vendedores</Nombre>
-        <HijosCompuestos />
-        <HijosSimples />
-      </PermisoCompuesto>
-    </HijosCompuestos>
-    <HijosSimples />
-  </PermisoCompuesto>
-  <PermisoCompuesto>
-    <ID>2</ID>
-    <Nombre>Administrativo</Nombre>
-    <HijosCompuestos />
-    <HijosSimples />
-  </PermisoCompuesto>
-  <PermisoCompuesto>
-    <ID>3</ID>
-    <Nombre>Comprador</Nombre>
-    <HijosCompuestos>
-      <PermisoCompuesto>
-        <ID>2</ID>
-        <Nombre>Compradores</Nombre>
         <HijosCompuestos>
           <PermisoCompuesto>
-            <ID>4</ID>
-            <Nombre>Gestión Compras</Nombre>
+            <ID>2</ID>
+            <Nombre>Gestión Ventas</Nombre>
+            <HijosCompuestos />
+            <HijosSimples>
+              <PermisoSimple>
+                <ID>1</ID>
+                <Nombre>Solicitar Modelo</Nombre>
+              </PermisoSimple>
+              <PermisoSimple>
+                <ID>2</ID>
+                <Nombre>Registrar Cliente</Nombre>
+              </PermisoSimple>
+            </HijosSimples>
+          </PermisoCompuesto>
+          <PermisoCompuesto>
+            <ID>3</ID>
+            <Nombre>Gestión Turnos</Nombre>
             <HijosCompuestos />
             <HijosSimples>
               <PermisoSimple>
                 <ID>3</ID>
-                <Nombre>Registrar Oferta</Nombre>
-              </PermisoSimple>
-              <PermisoSimple>
-                <ID>10</ID>
-                <Nombre>Evaluar Vehículo</Nombre>
-              </PermisoSimple>
-              <PermisoSimple>
-                <ID>11</ID>
-                <Nombre>Tasar Vehículo</Nombre>
-              </PermisoSimple>
-              <PermisoSimple>
-                <ID>12</ID>
-                <Nombre>Registrar Compra</Nombre>
+                <Nombre>Registrar Turno</Nombre>
               </PermisoSimple>
             </HijosSimples>
           </PermisoCompuesto>
@@ -54,6 +38,18 @@
         <HijosSimples />
       </PermisoCompuesto>
     </HijosCompuestos>
+    <HijosSimples />
+  </PermisoCompuesto>
+  <PermisoCompuesto>
+    <ID>2</ID>
+    <Nombre>Comprador</Nombre>
+    <HijosCompuestos />
+    <HijosSimples />
+  </PermisoCompuesto>
+  <PermisoCompuesto>
+    <ID>3</ID>
+    <Nombre>Administrativo</Nombre>
+    <HijosCompuestos />
     <HijosSimples />
   </PermisoCompuesto>
 </ArrayOfPermisoCompuesto>

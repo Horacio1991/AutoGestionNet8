@@ -1,16 +1,22 @@
-﻿using AutoGestion.CTRL_Vista;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
+using AutoGestion.CTRL_Vista;
 using AutoGestion.Servicios.Composite;
 using AutoGestion.Servicios.Encriptacion;
-
 
 namespace AutoGestion.Vista
 {
     public partial class AsignarRoles : UserControl
     {
+        // --------------------------------------------------
+        // Campos y constantes
+        // --------------------------------------------------
         private readonly AsignarRolesController _ctrl = new();
 
         // Menús predeterminados → ítems
-        private readonly Dictionary<string, string[]> _menuItems = new()
+        private static readonly Dictionary<string, string[]> _menuItems = new()
         {
             ["Gestión Ventas"] = new[] { "Solicitar Modelo", "Registrar Cliente", "Realizar Pago", "Autorizar Venta", "Emitir Factura", "Realizar Entrega" },
             ["Gestión Compras"] = new[] { "Registrar Oferta", "Evaluar Vehículo", "Tasar Vehículo", "Registrar Compra" },
@@ -20,56 +26,89 @@ namespace AutoGestion.Vista
             ["Usuarios"] = new[] { "ABM Usuarios" }
         };
 
+        // --------------------------------------------------
+        // Constructor & setup inicial
+        // --------------------------------------------------
         public AsignarRoles()
         {
             InitializeComponent();
+            // Empiezo con combo deshabilitados
+            cmbPermisoMenu.Enabled = false;
+            cmbPermisoItem.Enabled = false;
+
             CargarTodo();
             AsignarEventos();
         }
 
+        // --------------------------------------------------
+        // Métodos de carga / refresco
+        // --------------------------------------------------
         private void CargarTodo()
         {
-            // Usuarios
+            CargarUsuarios();
+            CargarRoles();
+            CargarPlantillas();
+            PrepararCombos();
+        }
+
+        private void CargarUsuarios()
+        {
             tvUsuarios.Nodes.Clear();
             foreach (var u in _ctrl.GetUsuarios())
                 tvUsuarios.Nodes.Add(new TreeNode(u.Nombre) { Tag = u });
             tvUsuarios.ExpandAll();
+        }
 
-            // Roles
+        private void CargarRoles()
+        {
             tvRoles.Nodes.Clear();
             foreach (var r in _ctrl.GetRoles())
                 tvRoles.Nodes.Add(new TreeNode(r.Nombre) { Tag = r });
             tvRoles.ExpandAll();
+        }
 
-            // Plantillas
+        private void CargarPlantillas()
+        {
             tvPermisos.Nodes.Clear();
             foreach (var p in _ctrl.GetPlantillas())
                 tvPermisos.Nodes.Add(CrearNodoRecursivo(p));
             tvPermisos.ExpandAll();
 
-            // ComboMenus
+            // Habilitar menú solo si hay plantillas
+            bool hay = tvPermisos.Nodes.Count > 0;
+            cmbPermisoMenu.Enabled = hay;
+            cmbPermisoItem.Enabled = hay;
+        }
+
+        private void PrepararCombos()
+        {
             cmbPermisoMenu.Items.Clear();
             cmbPermisoMenu.Items.AddRange(_menuItems.Keys.ToArray());
             cmbPermisoItem.Items.Clear();
-
-            RefrescarPlantillas();
-            tvPermisos.SelectedNode = null;
         }
 
-        private void RefrescarPlantillas()
+        // --------------------------------------------------
+        // UI Helpers
+        // --------------------------------------------------
+        private TreeNode CrearNodoRecursivo(IPermiso permiso)
         {
-            tvPermisos.Nodes.Clear();
-            foreach (var p in _ctrl.GetPlantillas())
-                tvPermisos.Nodes.Add(CrearNodoRecursivo(p));
-            tvPermisos.ExpandAll();
+            var node = new TreeNode(permiso.Nombre) { Tag = permiso };
+            if (permiso is PermisoCompuesto pc)
+                foreach (var hijo in pc.Hijos)
+                    node.Nodes.Add(CrearNodoRecursivo(hijo));
+            return node;
         }
 
+        // --------------------------------------------------
+        // Asociar eventos
+        // --------------------------------------------------
         private void AsignarEventos()
         {
-            // Plantillas
+            // Permisos
             btnAltaPermiso.Click += BtnAltaPermiso_Click;
             btnEliminarPermiso.Click += BtnEliminarPermiso_Click;
             cmbPermisoMenu.SelectedIndexChanged += CmbPermisoMenu_SelectedIndexChanged;
+            tvPermisos.AfterSelect += TvPermisos_AfterSelect;
 
             // Roles
             btnAltaRol.Click += BtnAltaRol_Click;
@@ -85,22 +124,29 @@ namespace AutoGestion.Vista
             chkEncriptar.CheckedChanged += ChkEncriptar_CheckedChanged;
         }
 
-        private TreeNode CrearNodoRecursivo(IPermiso permiso)
-        {
-            var node = new TreeNode(permiso.Nombre) { Tag = permiso };
-            if (permiso is PermisoCompuesto pc)
-                foreach (var hijo in pc.Hijos)
-                    node.Nodes.Add(CrearNodoRecursivo(hijo));
-            return node;
-        }
-
-        // --- Plantillas ---
+        // --------------------------------------------------
+        // Manejo de PLANTILLAS
+        // --------------------------------------------------
         private void CmbPermisoMenu_SelectedIndexChanged(object sender, EventArgs e)
         {
             cmbPermisoItem.Items.Clear();
             if (cmbPermisoMenu.SelectedItem is string menu
              && _menuItems.TryGetValue(menu, out var items))
+            {
                 cmbPermisoItem.Items.AddRange(items);
+                cmbPermisoItem.Enabled = true;      // habilito ítems tras elegir menú
+            }
+            else
+            {
+                cmbPermisoItem.Enabled = false;
+            }
+        }
+
+        private void TvPermisos_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            // Al seleccionar un permiso compuesto, habilito el combo de menús
+            if (e.Node?.Tag is PermisoCompuesto)
+                cmbPermisoMenu.Enabled = true;
         }
 
         private void BtnAltaPermiso_Click(object sender, EventArgs e)
@@ -108,30 +154,27 @@ namespace AutoGestion.Vista
             var nombre = txtNombrePermiso.Text.Trim();
             if (string.IsNullOrEmpty(nombre))
             {
-                MessageBox.Show("Ingrese un nombre para la plantilla o submenú.",
-                                "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Ingrese un nombre para la plantilla o submenú.", "Validación",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Guardamos la selección actual de menú e ítem
-            var menuSeleccionado = cmbPermisoMenu.SelectedItem as string;
-            var itemSeleccionado = cmbPermisoItem.SelectedItem as string;
+            // Guardar selecciones para restaurar
+            var menuSel = cmbPermisoMenu.SelectedItem as string;
+            var itemSel = cmbPermisoItem.SelectedItem as string;
 
             try
             {
-                // ¿Estamos creando una plantilla raíz nueva?
                 bool esNuevaRaiz = true;
                 if (tvPermisos.SelectedNode?.Tag is PermisoCompuesto selPc)
-                {
                     esNuevaRaiz = !selPc.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase);
-                }
 
                 if (esNuevaRaiz)
                 {
-                    // 1) Crear plantilla raíz
+                    // Crear plantilla raíz
                     _ctrl.CrearPlantilla(nombre);
 
-                    // 2) Recargar TODO y seleccionar esa nueva raíz
+                    // Recargar todo y seleccionar la nueva raíz
                     CargarTodo();
                     var nodoNuevo = tvPermisos.Nodes
                                               .Cast<TreeNode>()
@@ -139,45 +182,41 @@ namespace AutoGestion.Vista
                     tvPermisos.SelectedNode = nodoNuevo;
                     nodoNuevo.Expand();
 
-                    // 3) Reiniciar combos para que el usuario elija submenú
+                    // reset combos para siguiente paso
                     cmbPermisoMenu.SelectedIndex = -1;
                     cmbPermisoItem.Items.Clear();
+                    cmbPermisoItem.Enabled = true;
                     return;
                 }
 
-                // --- Estamos añadiendo un ítem dentro de una plantilla existente ---
+                // Añadir ítem a plantilla existente
                 if (tvPermisos.SelectedNode?.Tag is not PermisoCompuesto raiz)
                     throw new ApplicationException("Seleccione primero la plantilla donde agregar el ítem.");
-
-                if (string.IsNullOrEmpty(menuSeleccionado))
+                if (string.IsNullOrEmpty(menuSel))
                     throw new ApplicationException("Seleccione primero un Menú principal.");
-                if (string.IsNullOrEmpty(itemSeleccionado))
+                if (string.IsNullOrEmpty(itemSel))
                     throw new ApplicationException("Seleccione primero un Ítem de acción.");
 
-                // 1) Llamada al controller para agregar submenú + ítem
-                _ctrl.AgregarItemAPlantilla(raiz.ID, menuSeleccionado, itemSeleccionado);
+                _ctrl.AgregarItemAPlantilla(raiz.ID, menuSel, itemSel);
 
-                // 2) Recargar sólo el árbol de plantillas y reseleccionar la misma raíz
-                RefrescarPlantillas();
+                // Recargar solo plantillas y re-seleccionar
+                CargarPlantillas();
                 var nodoRaiz = tvPermisos.Nodes
                                          .Cast<TreeNode>()
                                          .First(n => ((PermisoCompuesto)n.Tag).ID == raiz.ID);
                 tvPermisos.SelectedNode = nodoRaiz;
                 nodoRaiz.Expand();
 
-                // 3) RESTAURAR la selección de combos para que no pierdas el menú/ítem
-                if (menuSeleccionado != null && cmbPermisoMenu.Items.Contains(menuSeleccionado))
-                    cmbPermisoMenu.SelectedItem = menuSeleccionado;
-                if (itemSeleccionado != null && cmbPermisoItem.Items.Contains(itemSeleccionado))
-                    cmbPermisoItem.SelectedItem = itemSeleccionado;
+                // Restaurar selecciones de combo
+                cmbPermisoMenu.SelectedItem = menuSel;
+                cmbPermisoItem.SelectedItem = itemSel;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"No se pudo guardar plantilla:\n{ex.Message}",
-                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"No se pudo guardar plantilla:\n{ex.Message}", "Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
 
         private void BtnEliminarPermiso_Click(object sender, EventArgs e)
         {
@@ -200,7 +239,9 @@ namespace AutoGestion.Vista
             }
         }
 
-        // --- Roles ---
+        // --------------------------------------------------
+        // Manejo de ROLES
+        // --------------------------------------------------
         private void BtnAltaRol_Click(object sender, EventArgs e)
         {
             var nombre = txtNombreRol.Text.Trim();
@@ -232,8 +273,8 @@ namespace AutoGestion.Vista
                 return;
             }
 
-            var nuevoNombre = txtNombreRol.Text.Trim();
-            if (string.IsNullOrEmpty(nuevoNombre))
+            var nuevo = txtNombreRol.Text.Trim();
+            if (string.IsNullOrEmpty(nuevo))
             {
                 MessageBox.Show("El nombre no puede estar vacío.", "Validación",
                                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -242,7 +283,7 @@ namespace AutoGestion.Vista
 
             try
             {
-                _ctrl.ModificarRol(rol.ID, nuevoNombre);
+                _ctrl.ModificarRol(rol.ID, nuevo);
                 CargarTodo();
             }
             catch (Exception ex)
@@ -306,7 +347,9 @@ namespace AutoGestion.Vista
             }
         }
 
-        // --- Usuarios ---
+        // --------------------------------------------------
+        // Manejo de USUARIOS
+        // --------------------------------------------------
         private void TvUsuarios_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (e.Node.Tag is Usuario usr)
@@ -376,18 +419,6 @@ namespace AutoGestion.Vista
                 txtContrasenaUsuario.Text = chkEncriptar.Checked
                     ? Encriptacion.DesencriptarPassword(usr.Clave)
                     : usr.Clave;
-            }
-        }
-
-        private void tvPermisos_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-            // Si selecciono un nodo y es un PermisoCompuesto, cargo su nombre en el TextBox
-            if (e.Node?.Tag is PermisoCompuesto pc)
-            {
-                txtNombrePermiso.Text = pc.Nombre;
-                // Limpio el combo para distinguir modo "crear raíz" vs "añadir a raíz"
-                cmbPermisoMenu.SelectedIndex = -1;
-                cmbPermisoItem.Items.Clear();
             }
         }
     }
