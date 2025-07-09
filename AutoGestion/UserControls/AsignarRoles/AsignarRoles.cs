@@ -45,6 +45,7 @@ namespace AutoGestion.Vista
         // --------------------------------------------------
         private void CargarTodo()
         {
+            _ctrl.RecargarTodo();
             CargarUsuarios();
             CargarRoles();
             CargarPlantillas();
@@ -370,6 +371,7 @@ namespace AutoGestion.Vista
                 // 1) Refrescar árbol de roles y plantillas
                 CargarRoles();
                 CargarPlantillas();
+                CargarTodo();
 
                 // 2) Reconstruir selección del rol para disparar AfterSelect
                 var nodoRol = tvRoles.Nodes

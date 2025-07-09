@@ -24,7 +24,6 @@
     <ID>4</ID>
     <Nombre>Charo</Nombre>
     <Clave>MQAyADMA</Clave>
-    <RolNombre>Comprador</RolNombre>
     <Permisos />
   </UsuarioSerializable>
 </ArrayOfUsuarioSerializable>

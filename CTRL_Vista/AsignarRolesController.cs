@@ -16,6 +16,13 @@ namespace AutoGestion.CTRL_Vista
             _usuarios = UsuarioXmlService.Leer();
         }
 
+        public void RecargarTodo()
+        {
+            _plantillas = PermisoPlantillaXmlService.Leer();
+            _roles = RolXmlService.Leer();
+            _usuarios = UsuarioXmlService.Leer();
+        }
+
         #region Plantillas
 
         /// <summary>
