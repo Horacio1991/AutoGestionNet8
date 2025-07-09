@@ -246,4 +246,10 @@
     <UsuarioID>1</UsuarioID>
     <UsuarioNombre>admin</UsuarioNombre>
   </Bitacora>
+  <Bitacora>
+    <FechaRegistro>2025-07-09T14:24:26.4977143-03:00</FechaRegistro>
+    <Detalle>restore</Detalle>
+    <UsuarioID>1</UsuarioID>
+    <UsuarioNombre>admin</UsuarioNombre>
+  </Bitacora>
 </ArrayOfBitacora>

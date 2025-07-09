@@ -48,16 +48,34 @@ namespace AutoGestion.CTRL_Vista
         /// </summary>
         public void EliminarPlantilla(int plantillaId)
         {
+            // 1) Elimino la plantilla de la lista y persisto
             _plantillas.RemoveAll(p => p.ID == plantillaId);
             PersistirPlantillas();
 
-            bool rolModificado = false;
+            // 2) Quitar la plantilla de todos los roles (y marcar si hubo cambios)
+            bool rolesModificados = false;
             foreach (var rol in _roles)
+            {
                 if (EliminarEnProfundidad(rol, plantillaId))
-                    rolModificado = true;
-
-            if (rolModificado)
+                    rolesModificados = true;
+            }
+            if (rolesModificados)
                 RolXmlService.Guardar(_roles);
+
+            // 3) Finalmente, desasignar ese rol de los usuarios que lo tuvieran
+            bool usuariosModificados = false;
+            foreach (var u in _usuarios)
+            {
+                // si su rol contiene la plantilla, quito TODO el rol
+                if (u.Rol is PermisoCompuesto r &&
+                    r.HijosCompuestos.All(pc => pc.ID != plantillaId) == false)
+                {
+                    u.Rol = null;
+                    usuariosModificados = true;
+                }
+            }
+            if (usuariosModificados)
+                UsuarioXmlService.Guardar(_usuarios);
         }
 
         /// <summary>

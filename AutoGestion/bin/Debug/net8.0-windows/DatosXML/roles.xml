@@ -1,15 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfPermisoCompuesto xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <PermisoCompuesto>
-    <ID>2</ID>
-    <Nombre>Comprador</Nombre>
+    <ID>1</ID>
+    <Nombre>Vendedor</Nombre>
     <HijosCompuestos />
     <HijosSimples />
   </PermisoCompuesto>
   <PermisoCompuesto>
-    <ID>3</ID>
-    <Nombre>Administrativo</Nombre>
-    <HijosCompuestos />
+    <ID>2</ID>
+    <Nombre>Comprador</Nombre>
+    <HijosCompuestos>
+      <PermisoCompuesto>
+        <ID>9</ID>
+        <Nombre>Compras</Nombre>
+        <HijosCompuestos>
+          <PermisoCompuesto>
+            <ID>10</ID>
+            <Nombre>Gestión Compras</Nombre>
+            <HijosCompuestos />
+            <HijosSimples>
+              <PermisoSimple>
+                <ID>12</ID>
+                <Nombre>Registrar Oferta</Nombre>
+              </PermisoSimple>
+              <PermisoSimple>
+                <ID>13</ID>
+                <Nombre>Evaluar Vehículo</Nombre>
+              </PermisoSimple>
+              <PermisoSimple>
+                <ID>14</ID>
+                <Nombre>Tasar Vehículo</Nombre>
+              </PermisoSimple>
+            </HijosSimples>
+          </PermisoCompuesto>
+        </HijosCompuestos>
+        <HijosSimples />
+      </PermisoCompuesto>
+    </HijosCompuestos>
     <HijosSimples />
   </PermisoCompuesto>
 </ArrayOfPermisoCompuesto>
