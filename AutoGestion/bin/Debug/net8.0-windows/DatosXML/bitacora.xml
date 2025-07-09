@@ -252,4 +252,40 @@
     <UsuarioID>1</UsuarioID>
     <UsuarioNombre>admin</UsuarioNombre>
   </Bitacora>
+  <Bitacora>
+    <FechaRegistro>2025-07-09T14:29:14.2841454-03:00</FechaRegistro>
+    <Detalle>backup</Detalle>
+    <UsuarioID>1</UsuarioID>
+    <UsuarioNombre>admin</UsuarioNombre>
+  </Bitacora>
+  <Bitacora>
+    <FechaRegistro>2025-07-09T14:32:16.1880655-03:00</FechaRegistro>
+    <Detalle>restore</Detalle>
+    <UsuarioID>1</UsuarioID>
+    <UsuarioNombre>admin</UsuarioNombre>
+  </Bitacora>
+  <Bitacora>
+    <FechaRegistro>2025-07-09T14:38:24.682039-03:00</FechaRegistro>
+    <Detalle>restore</Detalle>
+    <UsuarioID>1</UsuarioID>
+    <UsuarioNombre>admin</UsuarioNombre>
+  </Bitacora>
+  <Bitacora>
+    <FechaRegistro>2025-07-09T14:46:36.0670738-03:00</FechaRegistro>
+    <Detalle>restore</Detalle>
+    <UsuarioID>1</UsuarioID>
+    <UsuarioNombre>admin</UsuarioNombre>
+  </Bitacora>
+  <Bitacora>
+    <FechaRegistro>2025-07-09T14:55:02.387914-03:00</FechaRegistro>
+    <Detalle>restore</Detalle>
+    <UsuarioID>1</UsuarioID>
+    <UsuarioNombre>admin</UsuarioNombre>
+  </Bitacora>
+  <Bitacora>
+    <FechaRegistro>2025-07-09T15:17:30.040952-03:00</FechaRegistro>
+    <Detalle>restore</Detalle>
+    <UsuarioID>1</UsuarioID>
+    <UsuarioNombre>admin</UsuarioNombre>
+  </Bitacora>
 </ArrayOfBitacora>

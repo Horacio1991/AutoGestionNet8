@@ -249,6 +249,8 @@ namespace AutoGestion.Vista
                 MessageBox.Show($"No se pudo eliminar permiso:\n{ex.Message}", "Error",
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+
         }
 
 
@@ -385,37 +387,43 @@ namespace AutoGestion.Vista
 
         private void BtnQuitarPermisoRol_Click(object sender, EventArgs e)
         {
+            // 1) Validar que haya un rol seleccionado
             if (tvRoles.SelectedNode?.Tag is not PermisoCompuesto rol)
             {
                 MessageBox.Show("Seleccione primero un rol.", "Validación",
                                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            // 2) Validar que haya una plantilla seleccionada dentro del rol
             if (tvPermisosPorRol.SelectedNode?.Tag is not PermisoCompuesto plantilla)
             {
                 MessageBox.Show("Seleccione la plantilla dentro del rol.", "Validación",
                                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            // 3) Confirmar la acción con el usuario
             if (MessageBox.Show(
-                $"¿Quitar la plantilla '{plantilla.Nombre}' del rol '{rol.Nombre}'?",
-                "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                    $"¿Quitar la plantilla '{plantilla.Nombre}' del rol '{rol.Nombre}'?",
+                    "Confirmar",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question) != DialogResult.Yes)
+            {
                 return;
+            }
 
             try
             {
+                // 4) Invocar al controller para quitar la plantilla del rol
                 _ctrl.QuitarPlantillaDeRol(rol.ID, plantilla.ID);
 
-                // 1) Refrescar roles y plantillas
-                CargarRoles();
-                CargarPlantillas();
+                // 5) Recargar todos los datos en los tres árboles
+                CargarTodo();
 
-                // 2) Reconstruir selección del rol para disparar AfterSelect
-                var nodoRol = tvRoles.Nodes
-                                     .Cast<TreeNode>()
-                                     .First(n => ((PermisoCompuesto)n.Tag).ID == rol.ID);
-                tvRoles.SelectedNode = nodoRol;
-                TvRoles_AfterSelect(tvRoles, new TreeViewEventArgs(nodoRol));
+                // 6) Limpiar manualmente los árboles de permisos por rol y por usuario
+                tvPermisosPorRol.Nodes.Clear();
+                tvPermisosPorUsuario.Nodes.Clear();
             }
             catch (Exception ex)
             {
