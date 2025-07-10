@@ -280,4 +280,14 @@
     <Dominio>AAA002</Dominio>
     <Estado>Disponible</Estado>
   </Vehiculo>
+  <Vehiculo>
+    <ID>29</ID>
+    <Marca>Chevrolet</Marca>
+    <Modelo>Corsita</Modelo>
+    <Año>2025</Año>
+    <Color>Verde</Color>
+    <Km>10000</Km>
+    <Dominio>MMM333</Dominio>
+    <Estado>En Proceso</Estado>
+  </Vehiculo>
 </ArrayOfVehiculo>

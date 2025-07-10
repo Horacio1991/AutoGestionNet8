@@ -198,4 +198,26 @@
     <FechaInspeccion>2025-07-07T00:00:00-03:00</FechaInspeccion>
     <Estado>En evaluación</Estado>
   </OfertaCompra>
+  <OfertaCompra>
+    <ID>10</ID>
+    <Oferente>
+      <ID>11</ID>
+      <Dni>36084790</Dni>
+      <Nombre>Santiago</Nombre>
+      <Apellido>Ortiz</Apellido>
+      <Contacto>santiago.ortiz@gmail.com</Contacto>
+    </Oferente>
+    <Vehiculo>
+      <ID>29</ID>
+      <Marca>Chevrolet</Marca>
+      <Modelo>Corsita</Modelo>
+      <Año>2025</Año>
+      <Color>Verde</Color>
+      <Km>10000</Km>
+      <Dominio>MMM333</Dominio>
+      <Estado>Disponible</Estado>
+    </Vehiculo>
+    <FechaInspeccion>2025-07-10T00:00:00-03:00</FechaInspeccion>
+    <Estado>Registrada</Estado>
+  </OfertaCompra>
 </ArrayOfOfertaCompra>

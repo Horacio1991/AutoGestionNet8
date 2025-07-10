@@ -152,4 +152,12 @@
     <Detalles>Pago al contado Charo</Detalles>
     <FechaPago>2025-07-07T11:20:14.3034696-03:00</FechaPago>
   </Pago>
+  <Pago>
+    <ID>20</ID>
+    <TipoPago>Efectivo</TipoPago>
+    <Monto>5000000</Monto>
+    <Cuotas>1</Cuotas>
+    <Detalles>Auto comprado al contado</Detalles>
+    <FechaPago>2025-07-10T09:57:06.9106106-03:00</FechaPago>
+  </Pago>
 </ArrayOfPago>

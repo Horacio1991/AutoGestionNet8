@@ -64,4 +64,12 @@
     <EstadoDocumentacion>ok</EstadoDocumentacion>
     <Observaciones>ok</Observaciones>
   </EvaluacionTecnica>
+  <EvaluacionTecnica>
+    <ID>10</ID>
+    <EstadoMotor>ok</EstadoMotor>
+    <EstadoCarroceria>ok</EstadoCarroceria>
+    <EstadoInterior>ok</EstadoInterior>
+    <EstadoDocumentacion>ok</EstadoDocumentacion>
+    <Observaciones>ok</Observaciones>
+  </EvaluacionTecnica>
 </ArrayOfEvaluacionTecnica>

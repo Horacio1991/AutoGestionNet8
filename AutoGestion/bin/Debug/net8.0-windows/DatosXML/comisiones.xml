@@ -390,4 +390,47 @@
     <Estado>Aprobada</Estado>
     <Fecha>2025-07-07T11:57:04.3201906-03:00</Fecha>
   </Comision>
+  <Comision>
+    <ID>10</ID>
+    <Venta>
+      <ID>20</ID>
+      <Vendedor>
+        <ID>2</ID>
+        <Nombre>Horacio</Nombre>
+        <FechaAlta>2025-07-10T09:57:07.0395438-03:00</FechaAlta>
+      </Vendedor>
+      <Cliente>
+        <ID>22</ID>
+        <Dni>15500500</Dni>
+        <Nombre>Cliente</Nombre>
+        <Apellido>Nuevo</Apellido>
+        <Contacto>clientenuevo@gmail.com</Contacto>
+        <FechaRegistro>2025-07-10T09:56:21.7608849-03:00</FechaRegistro>
+      </Cliente>
+      <Vehiculo>
+        <ID>29</ID>
+        <Marca>Chevrolet</Marca>
+        <Modelo>Corsita</Modelo>
+        <Año>2025</Año>
+        <Color>Verde</Color>
+        <Km>10000</Km>
+        <Dominio>MMM333</Dominio>
+        <Estado>Disponible</Estado>
+      </Vehiculo>
+      <Pago>
+        <ID>20</ID>
+        <TipoPago>Efectivo</TipoPago>
+        <Monto>5000000</Monto>
+        <Cuotas>1</Cuotas>
+        <Detalles>Auto comprado al contado</Detalles>
+        <FechaPago>2025-07-10T09:57:06.9106106-03:00</FechaPago>
+      </Pago>
+      <Estado>Entregada</Estado>
+      <Fecha>2025-07-10T09:57:07.0394858-03:00</Fecha>
+    </Venta>
+    <Porcentaje>0.04</Porcentaje>
+    <Monto>200000</Monto>
+    <Estado>Aprobada</Estado>
+    <Fecha>2025-07-10T09:59:16.0450879-03:00</Fecha>
+  </Comision>
 </ArrayOfComision>

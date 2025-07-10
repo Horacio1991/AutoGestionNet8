@@ -99,5 +99,7 @@ namespace AutoGestion.CTRL_Vista
                     $"Error al registrar datos de oferta: {ex.Message}", ex);
             }
         }
+
+ 
     }
 }

@@ -408,4 +408,28 @@
     <Precio>9888777</Precio>
     <Fecha>2025-07-07T15:01:11.2377561-03:00</Fecha>
   </Factura>
+  <Factura>
+    <ID>18</ID>
+    <Cliente>
+      <ID>22</ID>
+      <Dni>15500500</Dni>
+      <Nombre>Cliente</Nombre>
+      <Apellido>Nuevo</Apellido>
+      <Contacto>clientenuevo@gmail.com</Contacto>
+      <FechaRegistro>2025-07-10T09:56:21.7608849-03:00</FechaRegistro>
+    </Cliente>
+    <Vehiculo>
+      <ID>29</ID>
+      <Marca>Chevrolet</Marca>
+      <Modelo>Corsita</Modelo>
+      <Año>2025</Año>
+      <Color>Verde</Color>
+      <Km>10000</Km>
+      <Dominio>MMM333</Dominio>
+      <Estado>Disponible</Estado>
+    </Vehiculo>
+    <FormaPago>Efectivo</FormaPago>
+    <Precio>5000000</Precio>
+    <Fecha>2025-07-10T09:57:46.3281749-03:00</Fecha>
+  </Factura>
 </ArrayOfFactura>
