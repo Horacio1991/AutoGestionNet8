@@ -3,6 +3,7 @@ using AutoGestion.Servicios.XmlServices;
 
 namespace AutoGestion.CTRL_Vista
 {
+
     public class AsignarRolesController
     {
         private List<PermisoCompuesto> _plantillas;
@@ -11,11 +12,10 @@ namespace AutoGestion.CTRL_Vista
 
         public AsignarRolesController()
         {
-            _plantillas = PermisoPlantillaXmlService.Leer();
-            _roles = RolXmlService.Leer();
-            _usuarios = UsuarioXmlService.Leer();
+            RecargarTodo();
         }
 
+        // Fuerza la recarga desde los XML de plantillas, roles y usuarios.
         public void RecargarTodo()
         {
             _plantillas = PermisoPlantillaXmlService.Leer();
@@ -25,13 +25,11 @@ namespace AutoGestion.CTRL_Vista
 
         #region Plantillas
 
-        /// <summary>
-        /// Devuelve todas las plantillas raíz.
-        /// </summary>
+        /// <summary>Devuelve todas las plantillas raíz.</summary>
         public IEnumerable<PermisoCompuesto> GetPlantillas() => _plantillas;
 
         /// <summary>
-        /// Crea una nueva plantilla raíz con un ID único en todo el árbol.
+        /// Crea una nueva plantilla raíz con un ID único en todo el conjunto.
         /// </summary>
         public void CrearPlantilla(string nombre)
         {
@@ -42,97 +40,72 @@ namespace AutoGestion.CTRL_Vista
                 ? FlattenCompuestos().Max(c => c.ID) + 1
                 : 1;
 
-            _plantillas.Add(new PermisoCompuesto
-            {
-                ID = nextId,
-                Nombre = nombre
-            });
+            _plantillas.Add(new PermisoCompuesto { ID = nextId, Nombre = nombre });
             PersistirPlantillas();
         }
 
         /// <summary>
-        /// Elimina la plantilla raíz y la desasocia de todos los roles.
+        /// Elimina la plantilla raíz, desasocia de roles y limpia usuarios afectados.
         /// </summary>
         public void EliminarPlantilla(int plantillaId)
         {
-            // 1) Elimino la plantilla de la lista y persisto
+            // 1) Quitar de plantillas
             _plantillas.RemoveAll(p => p.ID == plantillaId);
             PersistirPlantillas();
 
-            // 2) Quitar la plantilla de todos los roles (y marcar si hubo cambios)
-            bool rolesModificados = false;
+            // 2) Desasociar de roles
+            bool rolesMod = false;
             foreach (var rol in _roles)
-            {
                 if (EliminarEnProfundidad(rol, plantillaId))
-                    rolesModificados = true;
-            }
-            if (rolesModificados)
-                RolXmlService.Guardar(_roles);
+                    rolesMod = true;
+            if (rolesMod) RolXmlService.Guardar(_roles);
 
-            // 3) Finalmente, desasignar ese rol de los usuarios que lo tuvieran
-            bool usuariosModificados = false;
+            // 3) Desasignar rol en usuarios afectados
+            bool usrMod = false;
             foreach (var u in _usuarios)
             {
-                // si su rol contiene la plantilla, quito TODO el rol
-                if (u.Rol is PermisoCompuesto r &&
-                    r.HijosCompuestos.All(pc => pc.ID != plantillaId) == false)
+                if (u.Rol is PermisoCompuesto r && r.HijosCompuestos.Any(pc => pc.ID == plantillaId))
                 {
                     u.Rol = null;
-                    usuariosModificados = true;
+                    usrMod = true;
                 }
             }
-            if (usuariosModificados)
-                UsuarioXmlService.Guardar(_usuarios);
+            if (usrMod) UsuarioXmlService.Guardar(_usuarios);
         }
 
         /// <summary>
-        /// Agrega un submenú (PermisoCompuesto) y/o un ítem (PermisoSimple) a la plantilla indicada.
-        /// IDs calculados globalmente para evitar duplicados.
+        /// Agrega un submenú (y opcionalmente un ítem) a la plantilla dada.
+        /// IDs globales para evitar colisiones.
         /// </summary>
-        public void AgregarItemAPlantilla(
-            int plantillaId,
-            string nombreSubMenu,
-            string nombreItem)
+        public void AgregarItemAPlantilla(int plantillaId, string nombreSubMenu, string nombreItem)
         {
             var root = _plantillas.FirstOrDefault(p => p.ID == plantillaId)
                        ?? throw new ApplicationException("Plantilla no encontrada.");
 
-            // --- Submenú compuesto ---
+            // 1) Submenú
             var sub = root.HijosCompuestos.FirstOrDefault(m => m.Nombre == nombreSubMenu);
             if (sub == null)
             {
-                int nextCompId = FlattenCompuestos().Any()
-                    ? FlattenCompuestos().Max(c => c.ID) + 1
-                    : 1;
-                sub = new PermisoCompuesto
-                {
-                    ID = nextCompId,
-                    Nombre = nombreSubMenu
-                };
+                int nextComp = FlattenCompuestos().Max(c => c.ID) + 1;
+                sub = new PermisoCompuesto { ID = nextComp, Nombre = nombreSubMenu };
                 root.Agregar(sub);
             }
 
-            // --- Ítem simple opcional ---
+            // 2) Ítem simple (si existe nombre)
             if (!string.IsNullOrWhiteSpace(nombreItem))
             {
                 if (sub.HijosSimples.Any(s => s.Nombre == nombreItem))
                     throw new ApplicationException($"El ítem '{nombreItem}' ya existe en '{nombreSubMenu}'.");
 
-                int nextSimpleId = FlattenSimples().Any()
-                    ? FlattenSimples().Max(s => s.ID) + 1
-                    : 1;
-                sub.Agregar(new PermisoSimple
-                {
-                    ID = nextSimpleId,
-                    Nombre = nombreItem
-                });
+                int nextSimple = FlattenSimples().Max(s => s.ID) + 1;
+                sub.Agregar(new PermisoSimple { ID = nextSimple, Nombre = nombreItem });
             }
 
             PersistirPlantillas();
         }
 
         /// <summary>
-        /// Guarda las plantillas en disco y recarga la lista interna.
+        /// Guarda y recarga plantillas desde XML.
         /// </summary>
         private void PersistirPlantillas()
         {
@@ -141,7 +114,7 @@ namespace AutoGestion.CTRL_Vista
         }
 
         /// <summary>
-        /// Elimina recursivamente cualquier PermisoCompuesto con el ID dado.
+        /// Elimina recursivamente nodos compuestos con el ID dado.
         /// </summary>
         private bool EliminarEnProfundidad(PermisoCompuesto padre, int idAEliminar)
         {
@@ -152,9 +125,7 @@ namespace AutoGestion.CTRL_Vista
             return removed > 0;
         }
 
-        /// <summary>
-        /// Aplana el árbol completo de PermisoCompuesto → para recorrer todos los nodos compuestos.
-        /// </summary>
+        /// <summary>Aplana todo el árbol de compuestos.</summary>
         private IEnumerable<PermisoCompuesto> FlattenCompuestos()
         {
             foreach (var root in _plantillas)
@@ -170,9 +141,7 @@ namespace AutoGestion.CTRL_Vista
                     yield return desc;
         }
 
-        /// <summary>
-        /// Aplana el árbol completo para recorrer todos los permisos simples.
-        /// </summary>
+        /// <summary>Aplana todo el árbol de simples.</summary>
         private IEnumerable<PermisoSimple> FlattenSimples()
         {
             foreach (var root in _plantillas)
@@ -200,8 +169,8 @@ namespace AutoGestion.CTRL_Vista
             if (_roles.Any(r => r.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase)))
                 throw new ApplicationException("El rol ya existe.");
 
-            int nextId = _roles.Any() ? _roles.Max(r => r.ID) + 1 : 1;
-            _roles.Add(new PermisoCompuesto { ID = nextId, Nombre = nombre });
+            int next = _roles.Any() ? _roles.Max(r => r.ID) + 1 : 1;
+            _roles.Add(new PermisoCompuesto { ID = next, Nombre = nombre });
             RolXmlService.Guardar(_roles);
         }
 
@@ -209,7 +178,6 @@ namespace AutoGestion.CTRL_Vista
         {
             var rol = _roles.FirstOrDefault(r => r.ID == rolId)
                       ?? throw new ApplicationException("Rol no encontrado.");
-
             if (_roles.Any(r => r.Nombre.Equals(nuevoNombre, StringComparison.OrdinalIgnoreCase)))
                 throw new ApplicationException("Ya existe un rol con ese nombre.");
 
@@ -217,34 +185,28 @@ namespace AutoGestion.CTRL_Vista
             RolXmlService.Guardar(_roles);
         }
 
-        // En AsignarRolesController, modifica EliminarRol así:
-
+        /// <summary>
+        /// Elimina un rol y lo desasigna de los usuarios que lo tuvieran.
+        /// </summary>
         public void EliminarRol(int rolId)
         {
-            // 1) Elimino el rol de la lista y persisto
             _roles.RemoveAll(r => r.ID == rolId);
             RolXmlService.Guardar(_roles);
 
-            // 2) Desasignar ese rol de todos los usuarios
-            bool modificados = false;
+            bool mod = false;
             foreach (var u in _usuarios)
-            {
-                if (u.Rol != null && u.Rol.ID == rolId)
+                if (u.Rol?.ID == rolId)
                 {
                     u.Rol = null;
-                    modificados = true;
+                    mod = true;
                 }
-            }
-
-            // 3) Si cambió algo, persistir usuarios
-            if (modificados)
-                UsuarioXmlService.Guardar(_usuarios);
+            if (mod) UsuarioXmlService.Guardar(_usuarios);
         }
 
         public void AsociarPlantillaARol(int rolId, int plantillaId)
         {
             var rol = _roles.FirstOrDefault(r => r.ID == rolId)
-                      ?? throw new ApplicationException("Rol no encontrado.");
+                        ?? throw new ApplicationException("Rol no encontrado.");
             var plant = _plantillas.FirstOrDefault(p => p.ID == plantillaId)
                         ?? throw new ApplicationException("Plantilla no encontrada.");
 
@@ -255,9 +217,6 @@ namespace AutoGestion.CTRL_Vista
             RolXmlService.Guardar(_roles);
         }
 
-        /// <summary>
-        /// Desasocia una plantilla de un rol dado.
-        /// </summary>
         public void QuitarPlantillaDeRol(int rolId, int plantillaId)
         {
             var rol = _roles.FirstOrDefault(r => r.ID == rolId)
