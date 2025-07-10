@@ -82,23 +82,37 @@ namespace AutoGestion.CTRL_Vista
             var root = _plantillas.FirstOrDefault(p => p.ID == plantillaId)
                        ?? throw new ApplicationException("Plantilla no encontrada.");
 
-            // 1) Submenú
+            // 1) Submenú (PermisoCompuesto)
             var sub = root.HijosCompuestos.FirstOrDefault(m => m.Nombre == nombreSubMenu);
             if (sub == null)
             {
-                int nextComp = FlattenCompuestos().Max(c => c.ID) + 1;
-                sub = new PermisoCompuesto { ID = nextComp, Nombre = nombreSubMenu };
+                int nextCompId = FlattenCompuestos().Any()
+                    ? FlattenCompuestos().Max(c => c.ID) + 1
+                    : 1;
+                sub = new PermisoCompuesto
+                {
+                    ID = nextCompId,
+                    Nombre = nombreSubMenu
+                };
                 root.Agregar(sub);
             }
 
-            // 2) Ítem simple (si existe nombre)
+            // 2) Ítem simple opcional
             if (!string.IsNullOrWhiteSpace(nombreItem))
             {
                 if (sub.HijosSimples.Any(s => s.Nombre == nombreItem))
                     throw new ApplicationException($"El ítem '{nombreItem}' ya existe en '{nombreSubMenu}'.");
 
-                int nextSimple = FlattenSimples().Max(s => s.ID) + 1;
-                sub.Agregar(new PermisoSimple { ID = nextSimple, Nombre = nombreItem });
+                var todosSimples = FlattenSimples().ToList();
+                int nextSimpleId = todosSimples.Any()
+                    ? todosSimples.Max(s => s.ID) + 1
+                    : 1;
+
+                sub.Agregar(new PermisoSimple
+                {
+                    ID = nextSimpleId,
+                    Nombre = nombreItem
+                });
             }
 
             PersistirPlantillas();

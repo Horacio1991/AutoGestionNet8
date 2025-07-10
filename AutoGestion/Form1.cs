@@ -39,13 +39,7 @@ namespace AutoGestion
                 var seguridad = menuPrincipal.Items
                     .OfType<ToolStripMenuItem>()
                     .FirstOrDefault(m => m.Name == "seguridadToolStripMenuItem");
-                if (seguridad != null)
-                {
-                    seguridad.Visible = true;
-                    foreach (ToolStripItem sub in seguridad.DropDownItems)
-                        sub.Visible = (sub.Name == "mnuCerrarSesion");
-                }
-
+              
                 // Aplicar visibilidad según permisos del rol
                 AplicarPermisos(_usuario.Rol);
             }
@@ -66,9 +60,6 @@ namespace AutoGestion
         {
             foreach (ToolStripMenuItem menu in menuPrincipal.Items)
             {
-                if (menu.Name == "seguridadToolStripMenuItem")
-                    continue;
-
                 menu.Visible = TienePermiso(rol, menu.Text);
 
                 foreach (ToolStripMenuItem sub in menu.DropDownItems.OfType<ToolStripMenuItem>())
@@ -76,6 +67,14 @@ namespace AutoGestion
                     sub.Visible = TienePermiso(rol, sub.Text);
                 }
             }
+
+            // --- Asegurar siempre visible "Cerrar Sesión" ---
+            var cerrar = menuPrincipal.Items
+                .OfType<ToolStripMenuItem>()
+                .SelectMany(m => m.DropDownItems.OfType<ToolStripMenuItem>())
+                .FirstOrDefault(sub => sub.Name == "mnuCerrarSesion");
+            if (cerrar != null)
+                cerrar.Visible = true;
         }
 
         /// Comprueba recursivamente si el permiso (hoja o compuesto)

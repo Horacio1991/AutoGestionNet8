@@ -139,6 +139,7 @@
             chkEncriptar.TabIndex = 7;
             chkEncriptar.Text = "Decifrar/Cifrar Clave";
             chkEncriptar.UseVisualStyleBackColor = true;
+            chkEncriptar.CheckedChanged += chkEncriptar_CheckedChanged_1;
             // 
             // label5
             // 
@@ -173,6 +174,7 @@
             btnModificarRol.TabIndex = 13;
             btnModificarRol.Text = "Modificar";
             btnModificarRol.UseVisualStyleBackColor = true;
+            btnModificarRol.Click += btnModificarRol_Click_1;
             // 
             // btnAltaRol
             // 
@@ -182,6 +184,7 @@
             btnAltaRol.TabIndex = 14;
             btnAltaRol.Text = "Alta";
             btnAltaRol.UseVisualStyleBackColor = true;
+            btnAltaRol.Click += btnAltaRol_Click_1;
             // 
             // btnEliminarRol
             // 
@@ -191,6 +194,7 @@
             btnEliminarRol.TabIndex = 15;
             btnEliminarRol.Text = "Eliminar";
             btnEliminarRol.UseVisualStyleBackColor = true;
+            btnEliminarRol.Click += btnEliminarRol_Click_1;
             // 
             // label12
             // 
@@ -242,6 +246,7 @@
             cmbPermisoMenu.Name = "cmbPermisoMenu";
             cmbPermisoMenu.Size = new Size(121, 23);
             cmbPermisoMenu.TabIndex = 30;
+            cmbPermisoMenu.SelectedIndexChanged += cmbPermisoMenu_SelectedIndexChanged_1;
             // 
             // cmbPermisoItem
             // 
@@ -268,6 +273,7 @@
             btnAltaPermiso.TabIndex = 34;
             btnAltaPermiso.Text = "Alta Permiso";
             btnAltaPermiso.UseVisualStyleBackColor = true;
+            btnAltaPermiso.Click += btnAltaPermiso_Click_1;
             // 
             // btnEliminarPermiso
             // 
@@ -277,6 +283,7 @@
             btnEliminarPermiso.TabIndex = 33;
             btnEliminarPermiso.Text = "Eliminar Permiso";
             btnEliminarPermiso.UseVisualStyleBackColor = true;
+            btnEliminarPermiso.Click += btnEliminarPermiso_Click_1;
             // 
             // btnAsociarPermisoARol
             // 
@@ -286,6 +293,7 @@
             btnAsociarPermisoARol.TabIndex = 36;
             btnAsociarPermisoARol.Text = "Asociar Permiso a Rol";
             btnAsociarPermisoARol.UseVisualStyleBackColor = true;
+            btnAsociarPermisoARol.Click += btnAsociarPermisoARol_Click_1;
             // 
             // btnQuitarPermisoRol
             // 
@@ -295,6 +303,7 @@
             btnQuitarPermisoRol.TabIndex = 35;
             btnQuitarPermisoRol.Text = "Quitar Permiso a Rol";
             btnQuitarPermisoRol.UseVisualStyleBackColor = true;
+            btnQuitarPermisoRol.Click += btnQuitarPermisoRol_Click_1;
             // 
             // label18
             // 
@@ -322,6 +331,7 @@
             btnAsociarRolAUsuario.TabIndex = 44;
             btnAsociarRolAUsuario.Text = "Asociar Rol a Usuario";
             btnAsociarRolAUsuario.UseVisualStyleBackColor = true;
+            btnAsociarRolAUsuario.Click += btnAsociarRolAUsuario_Click_1;
             // 
             // btnQuitarRolUsuario
             // 
@@ -331,6 +341,7 @@
             btnQuitarRolUsuario.TabIndex = 43;
             btnQuitarRolUsuario.Text = "Quitar Rol a Usuario";
             btnQuitarRolUsuario.UseVisualStyleBackColor = true;
+            btnQuitarRolUsuario.Click += btnQuitarRolUsuario_Click_1;
             // 
             // label21
             // 
@@ -383,6 +394,7 @@
             tvUsuarios.Name = "tvUsuarios";
             tvUsuarios.Size = new Size(163, 417);
             tvUsuarios.TabIndex = 52;
+            tvUsuarios.AfterSelect += tvUsuarios_AfterSelect_1;
             // 
             // tvRoles
             // 
@@ -390,6 +402,7 @@
             tvRoles.Name = "tvRoles";
             tvRoles.Size = new Size(161, 417);
             tvRoles.TabIndex = 53;
+            tvRoles.AfterSelect += tvRoles_AfterSelect_1;
             // 
             // tvPermisos
             // 
@@ -397,6 +410,7 @@
             tvPermisos.Name = "tvPermisos";
             tvPermisos.Size = new Size(162, 417);
             tvPermisos.TabIndex = 54;
+            tvPermisos.AfterSelect += tvPermisos_AfterSelect_1;
             // 
             // tvPermisosPorRol
             // 

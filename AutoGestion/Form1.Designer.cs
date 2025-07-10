@@ -219,42 +219,42 @@
             // mnuAsignarRoles
             // 
             mnuAsignarRoles.Name = "mnuAsignarRoles";
-            mnuAsignarRoles.Size = new Size(145, 22);
+            mnuAsignarRoles.Size = new Size(180, 22);
             mnuAsignarRoles.Text = "Asignar Roles";
             mnuAsignarRoles.Click += mnuAsignarRoles_Click;
             // 
             // dashboardToolStripMenuItem
             // 
             dashboardToolStripMenuItem.Name = "dashboardToolStripMenuItem";
-            dashboardToolStripMenuItem.Size = new Size(145, 22);
+            dashboardToolStripMenuItem.Size = new Size(180, 22);
             dashboardToolStripMenuItem.Text = "Dashboard";
             dashboardToolStripMenuItem.Click += dashboardToolStripMenuItem_Click;
             // 
             // backupToolStripMenuItem
             // 
             backupToolStripMenuItem.Name = "backupToolStripMenuItem";
-            backupToolStripMenuItem.Size = new Size(145, 22);
+            backupToolStripMenuItem.Size = new Size(180, 22);
             backupToolStripMenuItem.Text = "Backup";
             backupToolStripMenuItem.Click += backupToolStripMenuItem_Click;
             // 
             // restoreToolStripMenuItem
             // 
             restoreToolStripMenuItem.Name = "restoreToolStripMenuItem";
-            restoreToolStripMenuItem.Size = new Size(145, 22);
+            restoreToolStripMenuItem.Size = new Size(180, 22);
             restoreToolStripMenuItem.Text = "Restore";
             restoreToolStripMenuItem.Click += restoreToolStripMenuItem_Click;
             // 
             // bitacoraToolStripMenuItem
             // 
             bitacoraToolStripMenuItem.Name = "bitacoraToolStripMenuItem";
-            bitacoraToolStripMenuItem.Size = new Size(145, 22);
+            bitacoraToolStripMenuItem.Size = new Size(180, 22);
             bitacoraToolStripMenuItem.Text = "Bitacora";
             bitacoraToolStripMenuItem.Click += bitacoraToolStripMenuItem_Click;
             // 
             // mnuCerrarSesion
             // 
             mnuCerrarSesion.Name = "mnuCerrarSesion";
-            mnuCerrarSesion.Size = new Size(145, 22);
+            mnuCerrarSesion.Size = new Size(180, 22);
             mnuCerrarSesion.Text = "Cerrar Sesión";
             mnuCerrarSesion.Click += mnuCerrarSesion_Click_1;
             // 

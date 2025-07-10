@@ -57,6 +57,17 @@
               </PermisoSimple>
             </HijosSimples>
           </PermisoCompuesto>
+          <PermisoCompuesto>
+            <ID>14</ID>
+            <Nombre>Seguridad</Nombre>
+            <HijosCompuestos />
+            <HijosSimples>
+              <PermisoSimple>
+                <ID>22</ID>
+                <Nombre>Dashboard</Nombre>
+              </PermisoSimple>
+            </HijosSimples>
+          </PermisoCompuesto>
         </HijosCompuestos>
         <HijosSimples />
       </PermisoCompuesto>
@@ -66,7 +77,34 @@
   <PermisoCompuesto>
     <ID>2</ID>
     <Nombre>Comprador</Nombre>
-    <HijosCompuestos />
+    <HijosCompuestos>
+      <PermisoCompuesto>
+        <ID>5</ID>
+        <Nombre>Compradores</Nombre>
+        <HijosCompuestos>
+          <PermisoCompuesto>
+            <ID>6</ID>
+            <Nombre>Gestión Compras</Nombre>
+            <HijosCompuestos />
+            <HijosSimples>
+              <PermisoSimple>
+                <ID>8</ID>
+                <Nombre>Registrar Oferta</Nombre>
+              </PermisoSimple>
+              <PermisoSimple>
+                <ID>9</ID>
+                <Nombre>Evaluar Vehículo</Nombre>
+              </PermisoSimple>
+              <PermisoSimple>
+                <ID>10</ID>
+                <Nombre>Tasar Vehículo</Nombre>
+              </PermisoSimple>
+            </HijosSimples>
+          </PermisoCompuesto>
+        </HijosCompuestos>
+        <HijosSimples />
+      </PermisoCompuesto>
+    </HijosCompuestos>
     <HijosSimples />
   </PermisoCompuesto>
   <PermisoCompuesto>
@@ -90,6 +128,10 @@
                 <ID>12</ID>
                 <Nombre>Emitir Factura</Nombre>
               </PermisoSimple>
+              <PermisoSimple>
+                <ID>16</ID>
+                <Nombre>Solicitar Modelo</Nombre>
+              </PermisoSimple>
             </HijosSimples>
           </PermisoCompuesto>
           <PermisoCompuesto>
@@ -111,6 +153,69 @@
               <PermisoSimple>
                 <ID>14</ID>
                 <Nombre>Registrar Comisión</Nombre>
+              </PermisoSimple>
+            </HijosSimples>
+          </PermisoCompuesto>
+          <PermisoCompuesto>
+            <ID>11</ID>
+            <Nombre>Seguridad</Nombre>
+            <HijosCompuestos />
+            <HijosSimples>
+              <PermisoSimple>
+                <ID>15</ID>
+                <Nombre>Dashboard</Nombre>
+              </PermisoSimple>
+            </HijosSimples>
+          </PermisoCompuesto>
+        </HijosCompuestos>
+        <HijosSimples />
+      </PermisoCompuesto>
+    </HijosCompuestos>
+    <HijosSimples />
+  </PermisoCompuesto>
+  <PermisoCompuesto>
+    <ID>4</ID>
+    <Nombre>Seguridad</Nombre>
+    <HijosCompuestos>
+      <PermisoCompuesto>
+        <ID>12</ID>
+        <Nombre>Seguridad</Nombre>
+        <HijosCompuestos>
+          <PermisoCompuesto>
+            <ID>13</ID>
+            <Nombre>Seguridad</Nombre>
+            <HijosCompuestos />
+            <HijosSimples>
+              <PermisoSimple>
+                <ID>17</ID>
+                <Nombre>Asignar Roles</Nombre>
+              </PermisoSimple>
+              <PermisoSimple>
+                <ID>18</ID>
+                <Nombre>Dashboard</Nombre>
+              </PermisoSimple>
+              <PermisoSimple>
+                <ID>19</ID>
+                <Nombre>Backup</Nombre>
+              </PermisoSimple>
+              <PermisoSimple>
+                <ID>20</ID>
+                <Nombre>Restore</Nombre>
+              </PermisoSimple>
+              <PermisoSimple>
+                <ID>21</ID>
+                <Nombre>Bitacora</Nombre>
+              </PermisoSimple>
+            </HijosSimples>
+          </PermisoCompuesto>
+          <PermisoCompuesto>
+            <ID>15</ID>
+            <Nombre>Usuarios</Nombre>
+            <HijosCompuestos />
+            <HijosSimples>
+              <PermisoSimple>
+                <ID>23</ID>
+                <Nombre>ABM Usuarios</Nombre>
               </PermisoSimple>
             </HijosSimples>
           </PermisoCompuesto>

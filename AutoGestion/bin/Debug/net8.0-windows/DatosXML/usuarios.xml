@@ -10,20 +10,21 @@
     <ID>2</ID>
     <Nombre>Horacio</Nombre>
     <Clave>MQAyADMA</Clave>
-    <RolNombre>Vendedor</RolNombre>
+    <RolNombre>Seguridad</RolNombre>
     <Permisos />
   </UsuarioSerializable>
   <UsuarioSerializable>
     <ID>3</ID>
     <Nombre>Belen</Nombre>
     <Clave>MQAyADMA</Clave>
-    <RolNombre>Administrativo</RolNombre>
+    <RolNombre>Comprador</RolNombre>
     <Permisos />
   </UsuarioSerializable>
   <UsuarioSerializable>
     <ID>4</ID>
     <Nombre>Charo</Nombre>
     <Clave>MQAyADMA</Clave>
+    <RolNombre>Administrativo</RolNombre>
     <Permisos />
   </UsuarioSerializable>
 </ArrayOfUsuarioSerializable>

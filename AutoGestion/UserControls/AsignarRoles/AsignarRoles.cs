@@ -23,7 +23,6 @@ namespace AutoGestion.Vista
             cmbPermisoMenu.Enabled = false;
             cmbPermisoItem.Enabled = false;
             CargarTodo();
-            AsignarEventos();
         }
 
         #region Carga y Refresco
@@ -83,33 +82,8 @@ namespace AutoGestion.Vista
         }
         #endregion
 
-        #region Wiring de eventos
-        private void AsignarEventos()
-        {
-            // --- Plantillas ---
-            btnAltaPermiso.Click += BtnAltaPermiso_Click;
-            btnEliminarPermiso.Click += BtnEliminarPermiso_Click;
-            cmbPermisoMenu.SelectedIndexChanged += CmbPermisoMenu_SelectedIndexChanged;
-            tvPermisos.AfterSelect += TvPermisos_AfterSelect;
-
-            // --- Roles ---
-            btnAltaRol.Click += BtnAltaRol_Click;
-            btnModificarRol.Click += BtnModificarRol_Click;
-            btnEliminarRol.Click += BtnEliminarRol_Click;
-            btnAsociarPermisoARol.Click += BtnAsociarPermisoARol_Click;
-            btnQuitarPermisoRol.Click += BtnQuitarPermisoRol_Click;
-            tvRoles.AfterSelect += TvRoles_AfterSelect;
-
-            // --- Usuarios ---
-            tvUsuarios.AfterSelect += TvUsuarios_AfterSelect;
-            btnAsociarRolAUsuario.Click += BtnAsociarRolAUsuario_Click;
-            btnQuitarRolUsuario.Click += BtnQuitarRolUsuario_Click;
-            chkEncriptar.CheckedChanged += ChkEncriptar_CheckedChanged;
-        }
-        #endregion
-
         #region Handlers de Plantillas
-        private void CmbPermisoMenu_SelectedIndexChanged(object sender, EventArgs e)
+        private void cmbPermisoMenu_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             cmbPermisoItem.Items.Clear();
             if (cmbPermisoMenu.SelectedItem is string menu &&
@@ -124,13 +98,13 @@ namespace AutoGestion.Vista
             }
         }
 
-        private void TvPermisos_AfterSelect(object sender, TreeViewEventArgs e)
+        private void tvPermisos_AfterSelect_1(object sender, TreeViewEventArgs e)
         {
             if (e.Node?.Tag is PermisoCompuesto)
                 cmbPermisoMenu.Enabled = true;
         }
 
-        private void BtnAltaPermiso_Click(object sender, EventArgs e)
+        private void btnAltaPermiso_Click_1(object sender, EventArgs e)
         {
             var nombre = txtNombrePermiso.Text.Trim();
             var menuSel = cmbPermisoMenu.SelectedItem as string;
@@ -154,12 +128,18 @@ namespace AutoGestion.Vista
                     _ctrl.CrearPlantilla(nombre);
                     CargarTodo();
 
-                    // Selección inmediata
+                    // Intentamos encontrar el nodo por nombre
                     var nodoNuevo = tvPermisos.Nodes
                        .Cast<TreeNode>()
-                       .First(n => ((PermisoCompuesto)n.Tag).Nombre == nombre);
-                    tvPermisos.SelectedNode = nodoNuevo;
-                    nodoNuevo.Expand();
+                       .FirstOrDefault(n => ((PermisoCompuesto)n.Tag).Nombre == nombre)
+                       // Si no existe (por cualquier motivo), tomamos el último agregado
+                       ?? tvPermisos.Nodes.Cast<TreeNode>().LastOrDefault();
+
+                    if (nodoNuevo != null)
+                    {
+                        tvPermisos.SelectedNode = nodoNuevo;
+                        nodoNuevo.Expand();
+                    }
 
                     cmbPermisoMenu.SelectedIndex = -1;
                     cmbPermisoItem.Items.Clear();
@@ -167,7 +147,7 @@ namespace AutoGestion.Vista
                 }
 
                 // Añadir ítem a plantilla existente
-                if (tvPermisos.SelectedNode.Tag is not PermisoCompuesto raiz)
+                if (tvPermisos.SelectedNode?.Tag is not PermisoCompuesto raiz)
                     throw new ApplicationException("Seleccione primero la plantilla donde agregar el ítem.");
                 if (string.IsNullOrEmpty(menuSel))
                     throw new ApplicationException("Seleccione un Menú principal.");
@@ -180,9 +160,12 @@ namespace AutoGestion.Vista
                 CargarPlantillas();
                 var nodoRaiz = tvPermisos.Nodes
                    .Cast<TreeNode>()
-                   .First(n => ((PermisoCompuesto)n.Tag).ID == raiz.ID);
-                tvPermisos.SelectedNode = nodoRaiz;
-                nodoRaiz.Expand();
+                   .FirstOrDefault(n => ((PermisoCompuesto)n.Tag).ID == raiz.ID);
+                if (nodoRaiz != null)
+                {
+                    tvPermisos.SelectedNode = nodoRaiz;
+                    nodoRaiz.Expand();
+                }
 
                 cmbPermisoMenu.SelectedItem = menuSel;
                 cmbPermisoItem.SelectedItem = itemSel;
@@ -194,7 +177,7 @@ namespace AutoGestion.Vista
             }
         }
 
-        private void BtnEliminarPermiso_Click(object sender, EventArgs e)
+        private void btnEliminarPermiso_Click_1(object sender, EventArgs e)
         {
             if (tvPermisos.SelectedNode?.Tag is not IPermiso permiso)
             {
@@ -210,9 +193,9 @@ namespace AutoGestion.Vista
                 // Refrescar árboles afectados
                 CargarPlantillas();
                 if (tvRoles.SelectedNode != null)
-                    TvRoles_AfterSelect(tvRoles, new TreeViewEventArgs(tvRoles.SelectedNode));
+                    tvRoles_AfterSelect_1(tvRoles, new TreeViewEventArgs(tvRoles.SelectedNode));
                 if (tvUsuarios.SelectedNode != null)
-                    TvUsuarios_AfterSelect(tvUsuarios, new TreeViewEventArgs(tvUsuarios.SelectedNode));
+                    tvUsuarios_AfterSelect_1(tvUsuarios, new TreeViewEventArgs(tvUsuarios.SelectedNode));
             }
             catch (Exception ex)
             {
@@ -223,7 +206,7 @@ namespace AutoGestion.Vista
         #endregion
 
         #region Handlers de Roles
-        private void BtnAltaRol_Click(object sender, EventArgs e)
+        private void btnAltaRol_Click_1(object sender, EventArgs e)
         {
             var nombre = txtNombreRol.Text.Trim();
             if (string.IsNullOrEmpty(nombre))
@@ -244,7 +227,7 @@ namespace AutoGestion.Vista
             }
         }
 
-        private void BtnModificarRol_Click(object sender, EventArgs e)
+        private void btnModificarRol_Click_1(object sender, EventArgs e)
         {
             if (tvRoles.SelectedNode?.Tag is not PermisoCompuesto rol)
             {
@@ -271,7 +254,7 @@ namespace AutoGestion.Vista
             }
         }
 
-        private void BtnEliminarRol_Click(object sender, EventArgs e)
+        private void btnEliminarRol_Click_1(object sender, EventArgs e)
         {
             if (tvRoles.SelectedNode?.Tag is not PermisoCompuesto rol)
             {
@@ -303,7 +286,7 @@ namespace AutoGestion.Vista
                     if (nodo != null)
                     {
                         tvUsuarios.SelectedNode = nodo;
-                        TvUsuarios_AfterSelect(tvUsuarios, new TreeViewEventArgs(nodo));
+                        tvUsuarios_AfterSelect_1(tvUsuarios, new TreeViewEventArgs(nodo));
                     }
                 }
             }
@@ -314,7 +297,7 @@ namespace AutoGestion.Vista
             }
         }
 
-        private void BtnAsociarPermisoARol_Click(object sender, EventArgs e)
+        private void btnAsociarPermisoARol_Click_1(object sender, EventArgs e)
         {
             if (tvRoles.SelectedNode?.Tag is not PermisoCompuesto rol ||
                 tvPermisos.SelectedNode?.Tag is not PermisoCompuesto plant)
@@ -329,11 +312,17 @@ namespace AutoGestion.Vista
                 // Refrescar sólo árboles de rol y plantilla
                 CargarRoles();
                 CargarPlantillas();
+                // 1) Refrescar todo
+                CargarTodo();
+
+                // 2) Limpiar vistas de rol/usuario
+                tvPermisosPorRol.Nodes.Clear();
+                tvPermisosPorUsuario.Nodes.Clear();
                 // Mantener selección de rol
                 tvRoles.SelectedNode = tvRoles.Nodes
                   .Cast<TreeNode>()
                   .First(n => ((PermisoCompuesto)n.Tag).ID == rol.ID);
-                TvRoles_AfterSelect(tvRoles, new TreeViewEventArgs(tvRoles.SelectedNode));
+                tvRoles_AfterSelect_1(tvRoles, new TreeViewEventArgs(tvRoles.SelectedNode));
             }
             catch (Exception ex)
             {
@@ -342,7 +331,7 @@ namespace AutoGestion.Vista
             }
         }
 
-        private void BtnQuitarPermisoRol_Click(object sender, EventArgs e)
+        private void btnQuitarPermisoRol_Click_1(object sender, EventArgs e)
         {
             if (tvRoles.SelectedNode?.Tag is not PermisoCompuesto rol)
             {
@@ -377,7 +366,7 @@ namespace AutoGestion.Vista
             }
         }
 
-        private void TvRoles_AfterSelect(object sender, TreeViewEventArgs e)
+        private void tvRoles_AfterSelect_1(object sender, TreeViewEventArgs e)
         {
             if (e.Node.Tag is PermisoCompuesto rol)
             {
@@ -390,7 +379,7 @@ namespace AutoGestion.Vista
         #endregion
 
         #region Handlers de Usuarios
-        private void TvUsuarios_AfterSelect(object sender, TreeViewEventArgs e)
+        private void tvUsuarios_AfterSelect_1(object sender, TreeViewEventArgs e)
         {
             if (e.Node.Tag is Usuario usr)
             {
@@ -409,7 +398,7 @@ namespace AutoGestion.Vista
             }
         }
 
-        private void BtnAsociarRolAUsuario_Click(object sender, EventArgs e)
+        private void btnAsociarRolAUsuario_Click_1(object sender, EventArgs e)
         {
             if (tvUsuarios.SelectedNode?.Tag is not Usuario usr ||
                 tvRoles.SelectedNode?.Tag is not PermisoCompuesto rol)
@@ -430,7 +419,7 @@ namespace AutoGestion.Vista
             }
         }
 
-        private void BtnQuitarRolUsuario_Click(object sender, EventArgs e)
+        private void btnQuitarRolUsuario_Click_1(object sender, EventArgs e)
         {
             if (tvUsuarios.SelectedNode?.Tag is not Usuario usr || usr.Rol == null)
             {
@@ -453,13 +442,13 @@ namespace AutoGestion.Vista
             }
         }
 
-        private void ChkEncriptar_CheckedChanged(object sender, EventArgs e)
+        private void chkEncriptar_CheckedChanged_1(object sender, EventArgs e)
         {
             if (tvUsuarios.SelectedNode?.Tag is Usuario usr)
                 txtContrasenaUsuario.Text = chkEncriptar.Checked
                     ? Encriptacion.DesencriptarPassword(usr.Clave)
                     : usr.Clave;
         }
-        #endregion
+        #endregion 
     }
 }
