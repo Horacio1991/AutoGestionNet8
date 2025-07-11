@@ -38,14 +38,11 @@ namespace AutoGestion.BLL
         }
 
         // Obtiene la evaluación técnica asociada a una oferta.
-        // oferta = Oferta Compra cuya evaluación se desea consultar.
         public EvaluacionTecnica ObtenerEvaluacionAsociada(OfertaCompra oferta)
         {
             try
             {
-                // 1) Leer todas las evaluaciones
                 var lista = _repo.ObtenerTodos();
-                // 2) Buscar la que tenga el mismo ID que la oferta
                 return lista.FirstOrDefault(e => e.ID == oferta.ID);
             }
             catch (ApplicationException)

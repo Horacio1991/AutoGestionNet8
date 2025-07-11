@@ -14,9 +14,6 @@ namespace AutoGestion.Servicios.XmlServices
             "DatosXML",
             "usuarios.xml");
 
-        // Lee los usuarios desde el XML (tipo UsuarioSerializable), los mapea a Usuario,
-        // asigna roles cargados desde roles.xml y permisos simples desde permisos.xml,
-        // y garantiza que exista un usuario "admin".
         public static List<Usuario> Leer()
         {
             try

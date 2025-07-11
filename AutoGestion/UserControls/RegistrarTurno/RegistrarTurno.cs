@@ -49,7 +49,7 @@ namespace AutoGestion.Vista
             }
         }
 
-        // Al seleccionar una fila en el grid, vuelca el dominio al textbox.
+        // cuando se selecciona una fila muestra el dominio al textbox.
         private void dgvVehiculos_CellClick_1(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
@@ -69,7 +69,6 @@ namespace AutoGestion.Vista
 
         private void btnRegistrar_Click(object sender, EventArgs e)
         {
-            // 1) Validar DNI y Dominio
             string dni = txtDniCliente.Text.Trim();
             string dominio = txtDominio.Text.Trim();
             if (string.IsNullOrEmpty(dni) || string.IsNullOrEmpty(dominio))
@@ -83,7 +82,7 @@ namespace AutoGestion.Vista
                 return;
             }
 
-            // 2) Construir DTO de entrada
+            // Construir DTO de entrada
             _inputDto = new TurnoInputDto
             {
                 DniCliente = dni,
@@ -94,7 +93,6 @@ namespace AutoGestion.Vista
 
             try
             {
-                // 3) Invocar al controller
                 _ctrl.RegistrarTurno(_inputDto);
 
                 MessageBox.Show(
@@ -104,7 +102,6 @@ namespace AutoGestion.Vista
                     MessageBoxIcon.Information
                 );
 
-                // 4) Limpiar y refrescar
                 txtDniCliente.Clear();
                 txtDominio.Clear();
                 CargarVehiculos();

@@ -18,11 +18,11 @@ namespace AutoGestion.CTRL_Vista
         {
             try
             {
-                // 1) Traer entidades Venta
+                //  Traer entidades Venta
                 var ventas = _comisionBll.ObtenerVentasSinComision();
 
-                // 2) Mapear a DTOs de presentación, incluyendo comisión sugerida al 5%
-                return ventas.Select(v => new VentaComisionDto // Select Transforma Venta a DTO
+                //  Mapear a DTOs de presentación, incluyendo comisión sugerida al 5%
+                return ventas.Select(v => new VentaComisionDto
                 {
                     VentaID = v.ID,
                     Cliente = $"{v.Cliente.Nombre} {v.Cliente.Apellido}".Trim(),

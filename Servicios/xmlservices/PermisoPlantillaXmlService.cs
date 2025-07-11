@@ -21,9 +21,9 @@ namespace AutoGestion.Servicios.XmlServices
                 if (!File.Exists(_ruta))
                     return new List<PermisoCompuesto>();
 
-                using var reader = new StreamReader(_ruta);
-                var serializer = new XmlSerializer(typeof(List<PermisoCompuesto>));
-                return (List<PermisoCompuesto>)serializer.Deserialize(reader)!;
+                using var reader = new StreamReader(_ruta); //Abro archivo
+                var serializer = new XmlSerializer(typeof(List<PermisoCompuesto>)); // Serializador xml y la lista
+                return (List<PermisoCompuesto>)serializer.Deserialize(reader)!; // paso de xml a objeto en memoria 
             }
             catch (InvalidOperationException ex)
             {
@@ -44,9 +44,9 @@ namespace AutoGestion.Servicios.XmlServices
                 var dir = Path.GetDirectoryName(_ruta)!;
                 Directory.CreateDirectory(dir);
 
-                using var writer = new StreamWriter(_ruta);
-                var serializer = new XmlSerializer(typeof(List<PermisoCompuesto>));
-                serializer.Serialize(writer, plantillas);
+                using var writer = new StreamWriter(_ruta); // abro el archivo para escribir
+                var serializer = new XmlSerializer(typeof(List<PermisoCompuesto>)); // Serializador xml y la lista
+                serializer.Serialize(writer, plantillas); // Lo serializo y guardo en el archivo
             }
             catch (Exception ex)
             {

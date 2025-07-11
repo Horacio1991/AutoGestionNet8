@@ -8,7 +8,6 @@ namespace AutoGestion.Vista
     {
         private readonly ComisionController _ctrl = new ComisionController();
 
-        // Lista de comisiones ya filtradas para detalle
         private List<ComisionListDto> _comisiones;
 
         public ConsultarComisiones()

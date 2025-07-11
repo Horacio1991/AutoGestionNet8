@@ -21,9 +21,7 @@ namespace AutoGestion.BLL
         {
             try
             {
-                // 1) Leer todos los vehículos
                 var todos = _repo.ObtenerTodos();
-                // 2) Filtrar por modelo exacto y estado disponible
                 return todos
                     .Where(v => v.Modelo.Equals(modelo, StringComparison.OrdinalIgnoreCase)
                              && v.Estado == VehiculoEstados.Disponible)

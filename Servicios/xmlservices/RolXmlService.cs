@@ -4,7 +4,6 @@ using AutoGestion.Servicios.Composite;
 namespace AutoGestion.Servicios.XmlServices
 {
     // Servicio para leer y guardar roles (PermisoCompuesto) en roles.xml.
-    // Serializa tanto permisos compuestos como sus hijos simples o compuestos.
     public static class RolXmlService
     {
         private static readonly string _ruta = Path.Combine(
@@ -12,7 +11,6 @@ namespace AutoGestion.Servicios.XmlServices
             "DatosXML",
             "roles.xml");
 
-        // Lee todos los roles (PermisoCompuesto) desde el XML.
         public static List<PermisoCompuesto> Leer()
         {
             try

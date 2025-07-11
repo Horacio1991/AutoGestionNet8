@@ -2,8 +2,6 @@
 
 namespace AutoGestion.Servicios.Composite
 {
-    // Nodo compuesto del Composite: puede contener PermisoCompuesto (sub-menús o ramas)
-    // y PermisoSimple (acciones leaf).
     [Serializable]
     [XmlInclude(typeof(PermisoSimple))]
     [XmlInclude(typeof(PermisoCompuesto))]

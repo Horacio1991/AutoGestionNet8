@@ -45,7 +45,7 @@ namespace AutoGestion.Servicios.Backup
             if (!Directory.Exists(CarpetaPrincipal))
                 return Array.Empty<string>();
             return Directory.GetDirectories(CarpetaPrincipal)
-                            .Select(Path.GetFileName)
+                            .Select(Path.GetFileName) //Convierte ruta completa a solo nombre
                             .OrderByDescending(n => n)
                             .ToArray();
         }

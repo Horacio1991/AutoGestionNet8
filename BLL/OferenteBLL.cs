@@ -18,9 +18,7 @@ namespace AutoGestion.BLL
         {
             try
             {
-                // 1) Leer todos los oferentes
                 var lista = _repo.ObtenerTodos();
-                // 2) Buscar coincidencia exacta
                 return lista.FirstOrDefault(o => o.Dni == dni);
             }
             catch (ApplicationException)

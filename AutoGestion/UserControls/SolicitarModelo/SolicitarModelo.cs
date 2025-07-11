@@ -51,7 +51,6 @@ namespace AutoGestion.Vista
 
             try
             {
-                // 1) Intento búsqueda exacta por modelo
                 var exactos = _ctrl.BuscarPorModelo(texto);
                 if (exactos.Any())
                 {
@@ -59,7 +58,6 @@ namespace AutoGestion.Vista
                 }
                 else
                 {
-                    // 2) Fallback: buscar por marca
                     var porMarca = _ctrl.BuscarPorMarca(texto);
                     if (porMarca.Any())
                     {
@@ -105,7 +103,7 @@ namespace AutoGestion.Vista
         // Ajustes visuales del DataGridView.
         private void FormatearGrid()
         {
-            dgvResultados.AutoGenerateColumns = true;  // solo propiedades del DTO
+            dgvResultados.AutoGenerateColumns = true; 
             dgvResultados.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvResultados.ReadOnly = true;
             dgvResultados.SelectionMode = DataGridViewSelectionMode.FullRowSelect;

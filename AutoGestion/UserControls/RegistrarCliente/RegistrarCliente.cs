@@ -11,7 +11,6 @@ namespace AutoGestion.Vista
             InitializeComponent();
         }
 
-        //valida campos y llama al Controller.
         private void btnRegistrar_Click(object sender, EventArgs e)
         {
             string dni = txtDni.Text.Trim();

@@ -61,7 +61,6 @@ namespace Vista.UserControls.Backup
                     dgvBackup.Rows.Add(carpeta, _usuarioNombre);
                 }
 
-                // 4) Ajustes visuales
                 dgvBackup.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 dgvBackup.ReadOnly = true;
             }

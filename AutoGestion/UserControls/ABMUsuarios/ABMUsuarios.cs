@@ -5,15 +5,14 @@ using AutoGestion.Servicios.Utilidades;
 
 namespace AutoGestion.Vista
 {
-    // Permite crear, editar y eliminar usuarios, y muestra su clave desencriptada para edición.
     public partial class ABMUsuarios : UserControl
     {
         public ABMUsuarios()
         {
             InitializeComponent();
-            txtID.ReadOnly = true;             // El ID lo asigna automáticamente
-            txtClave.UseSystemPasswordChar = true; // Oculta la clave por defecto
-            CargarUsuarios();                  // Carga los usuarios al iniciar
+            txtID.ReadOnly = true;             
+            txtClave.UseSystemPasswordChar = true;
+            CargarUsuarios();                  
         }
 
         // Carga todos los usuarios desde el XML y los muestra en el DataGridView.

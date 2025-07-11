@@ -12,7 +12,6 @@ namespace AutoGestion.Vista
         {
             InitializeComponent();
 
-            // Combo de estados de asistencia
             cmbEstado.Items.AddRange(new[] { "Asistió", "No asistió", "Pendiente" });
 
             CargarTurnos();

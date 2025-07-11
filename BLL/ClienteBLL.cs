@@ -19,15 +19,12 @@ namespace AutoGestion.BLL
         {
             try
             {
-                // 1) Leer todos los clientes
                 var todos = _repo.ObtenerTodos();
 
-                // 2) Buscar coincidencia exacta
                 return todos.FirstOrDefault(c => c.Dni == dni);
             }
             catch (ApplicationException)
             {
-                // 3) Retornar null para que la capa de UI no falle
                 return null;
             }
         }

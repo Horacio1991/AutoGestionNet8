@@ -77,7 +77,6 @@ namespace AutoGestion.Vista
 
         private void btnRegistrarPago_Click_1(object sender, EventArgs e)
         {
-            // Validaciones UI
             if (_clienteSeleccionado == null)
             {
                 MessageBox.Show("Busque primero un cliente.", "Validación",

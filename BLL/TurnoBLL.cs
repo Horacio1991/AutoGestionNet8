@@ -21,9 +21,7 @@ namespace AutoGestion.BLL
         {
             try
             {
-                // 1) Leer todos los vehículos
                 var todos = _vehiculoRepo.ObtenerTodos();
-                // 2) Filtrar por estado
                 return todos.Where(v => v.Estado == VehiculoEstados.Disponible)
                            .ToList();
             }
@@ -57,9 +55,7 @@ namespace AutoGestion.BLL
         {
             try
             {
-                // 1) Asignar nuevo ID único
                 turno.ID = GeneradorID.ObtenerID<Turno>();
-                // 2) Persistir en XML
                 _turnoRepo.Agregar(turno);
                 return turno;
             }
@@ -74,9 +70,7 @@ namespace AutoGestion.BLL
         {
             try
             {
-                // 1) Leer todos los turnos
                 var turnos = _turnoRepo.ObtenerTodos();
-                // 2) Filtrar por asistencia pendiente
                 return turnos.Where(t => t.Asistencia == "Pendiente")
                              .ToList();
             }
@@ -92,15 +86,13 @@ namespace AutoGestion.BLL
         {
             try
             {
-                // 1) Leer lista actual de turnos
                 var lista = _turnoRepo.ObtenerTodos();
-                // 2) Buscar turno específico
                 var turno = lista.FirstOrDefault(t => t.ID == turnoId)
                             ?? throw new ApplicationException("Turno no encontrado.");
-                // 3) Actualizar estado y observaciones
+                // Actualizar estado y observaciones
                 turno.Asistencia = estado;
                 turno.Observaciones = observaciones;
-                // 4) Guardar cambios
+                // Guardar cambios
                 _turnoRepo.GuardarLista(lista);
             }
             catch (Exception ex) when (ex is IOException || ex is InvalidOperationException || ex is ApplicationException)

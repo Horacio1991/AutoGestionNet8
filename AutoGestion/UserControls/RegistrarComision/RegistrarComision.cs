@@ -32,7 +32,7 @@ namespace AutoGestion.Vista
             }
         }
 
-        //calcula y registra la comisión aprobada.
+        //registra la comisión aprobada.
         private void btnConfirmar_Click_1(object sender, EventArgs e)
         {
             if (dgvVentas.CurrentRow?.DataBoundItem is not VentaComisionDto venta)

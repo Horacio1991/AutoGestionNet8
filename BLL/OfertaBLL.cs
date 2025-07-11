@@ -19,21 +19,16 @@ namespace AutoGestion.BLL
         {
             try
             {
-                // 1) Asignar ID de oferta si no tiene
                 if (oferta.ID == 0)
                     oferta.ID = GeneradorID.ObtenerID<OfertaCompra>();
 
-                // 2) Asignar ID de vehículo si no tiene
                 if (oferta.Vehiculo.ID == 0)
                     oferta.Vehiculo.ID = GeneradorID.ObtenerID<Vehiculo>();
 
-                // 3) Cargar lista existente
                 var lista = _repo.ObtenerTodos().ToList();
 
-                // 4) Agregar nueva oferta
                 lista.Add(oferta);
 
-                // 5) Persistir lista en XML
                 _repo.GuardarLista(lista);
             }
             catch (Exception ex) when (ex is IOException || ex is InvalidOperationException)
@@ -48,9 +43,7 @@ namespace AutoGestion.BLL
         {
             try
             {
-                // 1) Leer todas las ofertas
                 var ofertas = _repo.ObtenerTodos();
-                // 2) Filtrar por estado
                 return ofertas.Where(o => o.Estado == "En evaluación").ToList();
             }
             catch (ApplicationException)
@@ -94,13 +87,11 @@ namespace AutoGestion.BLL
         {
             try
             {
-                // 1) Obtener IDs evaluadas
                 var evaluaciones = new XmlRepository<EvaluacionTecnica>("evaluaciones.xml")
                                    .ObtenerTodos()
                                    .Select(e => e.ID)
                                    .ToHashSet(); // para busqueda rapida y evitar duplicados
 
-                // 2) Filtrar ofertas
                 return _repo.ObtenerTodos()
                             .Where(o => evaluaciones.Contains(o.ID))
                             .ToList();
