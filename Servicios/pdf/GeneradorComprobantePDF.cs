@@ -6,11 +6,8 @@ namespace AutoGestion.Servicios.Pdf
 {
     public static class GeneradorComprobantePDF
     {
-        /// <summary>
-        /// Genera un comprobante de entrega en formato PDF con diseño de factura.
-        /// </summary>
-        /// <param name="venta">Entidad Venta con datos del cliente, vehículo y pago.</param>
-        /// <param name="rutaDestino">Ruta completa donde se guardará el PDF.</param>
+        // Genera un comprobante de entrega en formato PDF .
+
         public static void Generar(Venta venta, string rutaDestino)
         {
             // 1) Crear documento y escritor
@@ -37,7 +34,7 @@ namespace AutoGestion.Servicios.Pdf
             celdaEmpresa.AddElement(new Paragraph("Tel: (011) 3252-6503", fuenteNormal));
             tablaCabecera.AddCell(celdaEmpresa);
 
-            // 3.2) Logo (opcional: reemplaza ruta por tu logo)
+            // 3.2) Logo
             var celdaLogo = new PdfPCell();
             celdaLogo.Border = Rectangle.NO_BORDER;
             try
@@ -98,7 +95,7 @@ namespace AutoGestion.Servicios.Pdf
             doc.Add(tablaInfo);
             doc.Add(new Paragraph("\n"));
 
-            // 5) Tabla de detalles (aquí solo un único ítem: el vehículo)
+            // 5) Tabla de detalles
             var tablaItems = new PdfPTable(4) { WidthPercentage = 100 };
             tablaItems.SetWidths(new[] { 40f, 20f, 20f, 20f });
 

@@ -10,15 +10,13 @@ namespace AutoGestion.BLL
         private readonly XmlRepository<Comision> _repo;
         private readonly VentaBLL _ventaBll;
 
-        // 1) Inicializa los repositorios de comisiones y ventas.
+        // 1) Inicializa el repositorio apuntando a "DatosXML/comisiones.xml".
         public ComisionBLL()
         {
             _repo = new XmlRepository<Comision>("comisiones.xml");
             _ventaBll = new VentaBLL();
         }
 
-        // Registra una nueva comisión.
-        // Objeto Comision que tiene Venta, Porcentaje, Estado y opcional MotivoRechazo.
         public bool RegistrarComision(Comision comision)
         {
             try

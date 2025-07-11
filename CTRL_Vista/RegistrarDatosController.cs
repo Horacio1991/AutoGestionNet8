@@ -3,7 +3,7 @@ using AutoGestion.DTOs;
 
 namespace AutoGestion.CTRL_Vista
 {
-    // Controller para el registro del estado final de stock de una oferta,
+    // se usa para ya registrar la compra de un vehiculo
     // tras haber completado la evaluación técnica.
     public class RegistrarDatosController
     {
@@ -26,18 +26,16 @@ namespace AutoGestion.CTRL_Vista
                         o.Vehiculo.Dominio
                          .Equals(dominio, StringComparison.OrdinalIgnoreCase));
 
-                // Si no hay oferta, devolvemos null para que la UI lo maneje
                 if (oferta == null)
                     return null;
 
-                // 2) Obtener evaluación asociada
+                // Obtener evaluación asociada
                 var evaluacion = _evaluacionBll.ObtenerEvaluacionAsociada(oferta);
 
-                // Si no hay evaluación, devolvemos null
                 if (evaluacion == null)
                     return null;
 
-                // 3) Construir y devolver el DTO
+                // construir y devolver el DTO
                 return new OfertaRegistroDto
                 {
                     OfertaID = oferta.ID,
@@ -50,14 +48,12 @@ namespace AutoGestion.CTRL_Vista
             }
             catch (Exception ex)
             {
-                // Solo para errores inesperados
                 throw new ApplicationException($"Error al obtener datos de registro: {ex.Message}", ex);
             }
         }
 
 
         // Registra el estado de stock final del vehículo y marca la oferta como procesada.
-        // dto = RegistrarDatosInputDto con OfertaID y EstadoStock.
         public void RegistrarDatos(RegistrarDatosInputDto dto)
         {
             if (dto == null)
@@ -69,7 +65,7 @@ namespace AutoGestion.CTRL_Vista
 
             try
             {
-                // 1) Recuperar oferta sin procesar
+                // 1) trae ofertas sin registrar y busca la oferta por ID:
                 var oferta = _ofertaBll.ObtenerOfertasSinRegistrar()
                     .FirstOrDefault(o => o.ID == dto.OfertaID);
                 if (oferta == null)

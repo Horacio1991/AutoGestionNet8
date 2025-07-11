@@ -10,7 +10,7 @@ namespace AutoGestion.CTRL_Vista
     {
         private readonly VentaBLL _ventaBll = new();
 
-        /// Obtiene las ventas cuyo estado es "Facturada",
+        // Obtiene las ventas cuyo estado es "Facturada",
         public List<VentaDto> ObtenerVentasParaEntrega()
         {
             try
@@ -30,7 +30,7 @@ namespace AutoGestion.CTRL_Vista
             }
         }
 
-        /// Marca una venta como entregada.
+        // Marca una venta como entregada.
         public void ConfirmarEntrega(int ventaId)
         {
             try
@@ -39,7 +39,7 @@ namespace AutoGestion.CTRL_Vista
                 var venta = _ventaBll.ObtenerTodas().FirstOrDefault(v => v.ID == ventaId)
                             ?? throw new ApplicationException("Venta no encontrada.");
 
-                // 2) Delegar a la BLL
+                // 2) marcar como entregada
                 _ventaBll.MarcarComoEntregada(ventaId);
             }
             catch (Exception ex)
@@ -48,7 +48,7 @@ namespace AutoGestion.CTRL_Vista
             }
         }
 
-        /// Recupera la entidad completa de venta para generar el comprobante PDF.
+        // Recupera la entidad completa de venta para generar el comprobante PDF.
         public Venta ObtenerEntidad(int ventaId)
         {
             try

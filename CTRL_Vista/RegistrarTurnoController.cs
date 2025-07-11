@@ -10,7 +10,7 @@ namespace AutoGestion.CTRL_Vista
         private readonly ClienteBLL _clienteBll = new();
         private readonly VehiculoBLL _vehiculoBll = new();
 
-        // Obtiene los vehículos que actualmente están en stock con estado "Disponible".
+        // trae los vehiculos que estan estado "Disponible".
         public List<VehiculoTurnoDto> ObtenerVehiculosParaTurno()
         {
             try
@@ -29,7 +29,6 @@ namespace AutoGestion.CTRL_Vista
         }
 
         // Valida y registra un nuevo turno.
-        // dto = TurnoInputDto con datos del turno: DNI cliente, dominio vehículo, fecha y hora.
         public void RegistrarTurno(TurnoInputDto dto)
         {
             if (dto == null)
@@ -41,7 +40,7 @@ namespace AutoGestion.CTRL_Vista
 
             try
             {
-                // 1) Verificar cliente existente
+                // 1) Ver si el cliente existente
                 var cliente = _clienteBll.BuscarClientePorDNI(dto.DniCliente)
                               ?? throw new ApplicationException("Cliente no encontrado. Regístrelo primero.");
 

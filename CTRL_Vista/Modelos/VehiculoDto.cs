@@ -17,7 +17,6 @@ namespace AutoGestion.CTRL_Vista.Modelos
         public int Km { get; set; }
 
         // Mappea una entidad Vehiculo a VehiculoDto para la UI.
-        // v = Entidad Vehiculo a mapear;
         public static VehiculoDto FromEntity(Vehiculo v)
         {
             if (v == null) return null;

@@ -2,8 +2,7 @@
 
 namespace AutoGestion.DTOs
 {
-    // DTO para exponer datos de Oferente en la capa de presentación,
-    // filtrando únicamente la información necesaria.
+    // DTO para representar un Oferente en la vista.
     public class OferenteDto
     {
         public int ID { get; set; }
@@ -13,7 +12,6 @@ namespace AutoGestion.DTOs
         public string Contacto { get; set; }
 
         // Mapea una entidad Oferente a OferenteDto.
-        // o = Entidad Oferente a mapear;
         public static OferenteDto FromEntity(Oferente o)
         {
             if (o == null) return null;

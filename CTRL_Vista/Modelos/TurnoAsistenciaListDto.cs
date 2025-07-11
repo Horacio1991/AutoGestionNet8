@@ -4,13 +4,9 @@ namespace AutoGestion.DTOs
 {
     public class TurnoAsistenciaListDto
     {
-        // ID del turno
         public int ID { get; set; }
         public string Cliente { get; set; }
-
-        //Descripción del vehículo: Marca, Modelo y Dominio
         public string Vehiculo { get; set; }
-    
         public string Fecha { get; set; }
         public string Hora { get; set; }
 

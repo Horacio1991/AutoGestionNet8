@@ -13,7 +13,7 @@ namespace AutoGestion.CTRL_Vista
         private readonly TasaBLL _tasaBll = new();
 
 
-        // Obtiene todas las ofertas que ya cuentan con evaluación técnica,
+        // trae todas las ofertas que ya cuentan con evaluación técnica
         public List<TasacionListDto> ObtenerOfertasParaTasar()
         {
             try
@@ -48,7 +48,6 @@ namespace AutoGestion.CTRL_Vista
         }
 
         // Registra la tasación de una oferta, guardando únicamente el valor final
-        // dto = TasacionInputDto con OfertaID y ValorFinal.
         public void RegistrarTasacion(TasacionInputDto dto)
         {
             try
@@ -65,7 +64,6 @@ namespace AutoGestion.CTRL_Vista
 
                 _tasaBll.RegistrarTasacion(oferta, dto.ValorFinal);
 
-                // Nota: no modificamos aquí el stock del vehículo.
             }
             catch (Exception ex)
             {

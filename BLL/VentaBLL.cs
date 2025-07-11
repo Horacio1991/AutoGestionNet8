@@ -7,18 +7,15 @@ namespace AutoGestion.BLL
     public class VentaBLL
     {
         private readonly XmlRepository<Venta> _repo;
-        // Fix for CS1061: Ensure _vehiculoBLL is properly typed and initialized.  
-        // Replace the declaration of _vehiculoBLL with the correct type.  
         private readonly VehiculoBLL _vehiculoBLL;
 
-        // Initialize _vehiculoBLL in the constructor.
         public VentaBLL()
         {
             _repo = new XmlRepository<Venta>("ventas.xml");
             _vehiculoBLL = new VehiculoBLL(); 
         }
 
-        /// Obtiene todas las ventas registradas.
+        // Obtiene todas las ventas registradas.
         public List<Venta> ObtenerTodas()
         {
             try
@@ -46,7 +43,7 @@ namespace AutoGestion.BLL
             }
         }
 
-        // Obtiene todas las ventas cuyo estado es exactamente "Pendiente".
+        // Obtiene todas las ventas cuyo estado es "Pendiente".
         public List<Venta> ObtenerVentasConEstadoPendiente()
         {
             try
@@ -109,26 +106,21 @@ namespace AutoGestion.BLL
             }
         }
 
-        // Rechaza una venta asignándole motivo y liberando el vehículo.
-        // ventaID = ID de la venta a rechazar
-        // motivo = Motivo del rechazo (ej. "Vehículo no disponible", "Cliente no califica", etc.)
         public bool RechazarVenta(int ventaId, string motivo)
         {
             try
             {
-                // 1) Leer lista
                 var lista = _repo.ObtenerTodos().ToList();
                 var venta = lista.FirstOrDefault(v => v.ID == ventaId);
                 if (venta == null) return false;
 
-                // 2) Marcar rechazo
                 venta.Estado = "Rechazada";
                 venta.MotivoRechazo = motivo;
 
-                // 3) Actualizar estado del vehículo a "Disponible"
+                // Actualizar estado del vehículo a "Disponible"
                 _vehiculoBLL.ActualizarEstadoVehiculo(venta.Vehiculo, VehiculoEstados.Disponible);
 
-                // 4) Liberar vehículo
+                // Liberar vehículo
                 _repo.GuardarLista(lista);
                 return true;
             }
@@ -138,15 +130,11 @@ namespace AutoGestion.BLL
             }
         }
 
-        // Registra una venta nueva en el sistema.
-        // venta = venta a registrar
         public void RegistrarVenta(Venta venta)
         {
             try
             {
-                // 1) Asignar ID único
                 venta.ID = GeneradorID.ObtenerID<Venta>();
-                // 2) Persistir
                 _repo.Agregar(venta);
             }
             catch (Exception ex) when (ex is IOException || ex is InvalidOperationException)
@@ -155,7 +143,6 @@ namespace AutoGestion.BLL
             }
         }
 
-        // Marca la venta como facturada.
         public void MarcarComoFacturada(int ventaId)
         {
             try
@@ -174,7 +161,7 @@ namespace AutoGestion.BLL
             }
         }
 
-        /// Marca la venta como entregada.
+        // Marca la venta como entregada.
         public void MarcarComoEntregada(int ventaId)
         {
             try
@@ -213,7 +200,7 @@ namespace AutoGestion.BLL
             }
         }
 
-        /// Guarda la venta finalizada (aprovechando el mismo repositorio).
+        // Guarda la venta finalizada (aprovechando el mismo repositorio).
         public void FinalizarVenta(Venta venta)
         {
             RegistrarVenta(venta);
@@ -234,7 +221,7 @@ namespace AutoGestion.BLL
             }
         }
 
-        /// Obtiene ventas en un rango de fechas.
+        // Obtiene ventas en un rango de fechas.
         public List<Venta> ObtenerVentasPorFecha(DateTime desde, DateTime hasta)
         {
             try
@@ -249,7 +236,7 @@ namespace AutoGestion.BLL
             }
         }
 
-        /// Obtiene todas las ventas con estado "Autorizada".
+        // Obtiene todas las ventas con estado "Autorizada".
         public List<Venta> ObtenerVentasAutorizadas()
         {
             try
@@ -264,7 +251,7 @@ namespace AutoGestion.BLL
             }
         }
 
-        /// Obtiene todas las ventas con estado "Entregada".
+        // Obtiene todas las ventas con estado "Entregada".
         public List<Venta> ObtenerVentasEntregadas()
         {
             try

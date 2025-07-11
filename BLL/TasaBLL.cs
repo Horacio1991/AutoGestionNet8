@@ -17,8 +17,6 @@ namespace AutoGestion.BLL
         }
 
         // Registra una tasación para una oferta con valor final especificado.
-        // oferta = OfertaCompra a la que se asocia la tasación.
-        // valorFinal = Valor final tasado del vehículo en la oferta.
         public void RegistrarTasacion(OfertaCompra oferta, decimal valorFinal)
         {
             try
@@ -42,13 +40,10 @@ namespace AutoGestion.BLL
         }
 
         // Calcula un rango sugerido de tasación según modelo, estado del motor y kilometraje.
-        // modelo = Modelo del vehículo (ej. "Toyota Corolla").
-        // estadoMotor = Estado del motor ("Excelente", "Bueno", "Regular", "Malo").
-        // kilometraje = Kilometraje del vehículo en kilómetros.
         public RangoTasacion CalcularRangoTasacion(string modelo, string estadoMotor, int kilometraje)
         {
             // 1) Precio base estándar
-            decimal basePrice = 2_500_000m;
+            decimal basePrice = 4_500_000m;
 
             // 2) Ajustes según estado del motor
             if (estadoMotor.Equals("Excelente", StringComparison.OrdinalIgnoreCase))

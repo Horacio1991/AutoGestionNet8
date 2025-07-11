@@ -3,7 +3,7 @@
 namespace AutoGestion.Servicios.Encriptacion
 {
     // Métodos para encriptar y desencriptar contraseñas
-    // usando Base64 sobre bytes Unicode. (Use el más simple)
+    // usando Base64 sobre bytes Unicode. (Usé el más simple)
     public static class Encriptacion
     {
         public static string EncriptarPassword(string password)

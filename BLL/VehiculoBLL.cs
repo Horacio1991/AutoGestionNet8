@@ -36,7 +36,6 @@ namespace AutoGestion.BLL
         }
 
         // Busca vehículos cuyo modelo o marca contenga el texto dado.
-        // texto = Texto a buscar en Modelo o Marca (ej "toyota").
         public List<Vehiculo> BuscarVehiculosSimilares(string texto)
         {
             try
@@ -56,10 +55,6 @@ namespace AutoGestion.BLL
             }
         }
 
-        // Cambia el estado de un vehículo identificado por Dominio.
-        // vehiculo = Vehículo a actualizar.
-        // nuevoEstado = Nuevo estado a asignar.
-        // usado 
         public void ActualizarEstadoVehiculo(Vehiculo vehiculo, string nuevoEstado)
         {
             try
@@ -99,7 +94,7 @@ namespace AutoGestion.BLL
             }
         }
 
-        /// Obtiene la lista completa de vehículos.
+        // Obtiene la lista completa de vehículos.
         public List<Vehiculo> ObtenerTodos()
         {
             try
@@ -112,7 +107,7 @@ namespace AutoGestion.BLL
             }
         }
 
-        /// Obtiene solo los vehículos con estado "Disponible".
+        // Obtiene solo los vehículos con estado "Disponible".
         public List<Vehiculo> ObtenerDisponibles()
         {
             try
@@ -129,21 +124,15 @@ namespace AutoGestion.BLL
 
 
         // Agrega un nuevo vehículo al stock, asignándole ID y estado "Disponible".
-        // vehiculo = Vehículo a agregar al stock.
 
         public void AgregarVehiculoAlStock(Vehiculo vehiculo)
         {
             try
             {
-                // 1) Asignar ID único
                 vehiculo.ID = GeneradorID.ObtenerID<Vehiculo>();
-                // 2) Marcar como disponible
                 vehiculo.Estado = VehiculoEstados.Disponible;
-                // 3) Leer lista actual
                 var lista = _repo.ObtenerTodos();
-                // 4) Agregar nuevo vehículo
                 lista.Add(vehiculo);
-                // 5) Guardar lista actualizada
                 _repo.GuardarLista(lista);
             }
             catch (Exception ex) when (ex is IOException || ex is InvalidOperationException)
@@ -157,15 +146,11 @@ namespace AutoGestion.BLL
         {
             try
             {
-                // 1) Leer lista de vehículos
                 var lista = _repo.ObtenerTodos();
-                // 2) Buscar el vehículo por ID
                 var existente = lista
                     .FirstOrDefault(v => v.ID == vehiculo.ID)
                     ?? throw new ApplicationException("Vehículo no encontrado.");
-                // 3) Asignar nuevo estado de stock
                 existente.Estado = nuevoEstado;
-                // 4) Persistir cambios en XML
                 _repo.GuardarLista(lista);
             }
             catch (Exception ex) when (ex is IOException || ex is InvalidOperationException || ex is ApplicationException)

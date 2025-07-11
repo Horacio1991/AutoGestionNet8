@@ -11,7 +11,6 @@ namespace AutoGestion.CTRL_Vista
         private readonly PagoBLL _pagoBll = new();
         private readonly VentaBLL _ventaBll = new();
 
-        // Recupera todos los vehículos con estado "Disponible" y los mapea a DTOs.
         public List<VehiculoDto> ObtenerVehiculosDisponibles()
         {
             try
@@ -27,7 +26,6 @@ namespace AutoGestion.CTRL_Vista
             }
         }
 
-        // Busca un Cliente por su DNI.  
         public ClienteDto BuscarCliente(string dni)
         {
             try
@@ -47,7 +45,7 @@ namespace AutoGestion.CTRL_Vista
         }
 
         // Registra el pago y crea la venta en estado "Pendiente". 
-        // Devuelve true si todo fue exitoso; en caso contrario, devuelve false y la descripción del error en out.
+        // Devuelve true si todo fue exitoso; en caso contrario, devuelve false y la descripción del error.
         public bool RegistrarPagoYVenta(
             string clienteDni,
             string vehiculoDominio,

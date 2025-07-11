@@ -3,11 +3,10 @@
 namespace AutoGestion.CTRL_Vista.Modelos
 {
 
-    /// DTO para exponer datos de una venta en la pantalla
+    // DTO para exponer datos de una venta en la pantalla
     
     public class VentaDto
     {
-        // Venta realizada
         public int ID { get; set; }
 
         public string Cliente { get; set; }
@@ -21,7 +20,6 @@ namespace AutoGestion.CTRL_Vista.Modelos
         public string Fecha { get; set; }
 
         // Mapea una entidad Venta a este DTO.
-        // v = Entidad Venta a mapear;
         public static VentaDto FromEntity(Venta v)
         {
             if (v == null) return null;

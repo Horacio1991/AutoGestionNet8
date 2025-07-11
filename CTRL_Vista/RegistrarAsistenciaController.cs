@@ -11,7 +11,7 @@ namespace AutoGestion.CTRL_Vista
     {
         private readonly TurnoBLL _turnoBll = new();
 
-        // Obtiene los turnos cuya fecha ya pasó y no tienen asistencia registrada.
+        // obtiene los turnos cuya fecha ya pasó y no tienen asistencia registrada.
         public List<TurnoAsistenciaListDto> ObtenerTurnosParaAsistencia()
         {
             try
@@ -29,7 +29,6 @@ namespace AutoGestion.CTRL_Vista
         }
 
         // Registra la asistencia de un turno específico.
-        // dto = DTO con datos de asistencia: TurnoID, Estado y Observaciones.
         public void RegistrarAsistencia(RegistrarAsistenciaInputDto dto)
         {
             try

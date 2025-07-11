@@ -16,7 +16,7 @@ namespace AutoGestion.BLL
             _vehiculoRepo = new XmlRepository<Vehiculo>("vehiculos.xml");
         }
 
-        /// Obtiene la lista de vehículos con estado "Disponible" para agendar turnos.
+        // Obtiene la lista de vehículos con estado "Disponible" para agendar turnos.
         public List<Vehiculo> ObtenerVehiculosDisponibles()
         {
             try
@@ -34,9 +34,6 @@ namespace AutoGestion.BLL
         }
 
         // Verifica si un vehículo está libre en la fecha y hora indicadas.
-        // vehiculo = Vehículo a verificar.
-        // fecha = Fecha del turno a agendar.
-        // hora = Hora del turno a agendar.
         public bool VerificarDisponibilidad(Vehiculo vehiculo, DateTime fecha, TimeSpan hora)
         {
             try
@@ -52,13 +49,10 @@ namespace AutoGestion.BLL
             }
             catch (ApplicationException)
             {
-                // Si falla la lectura, asumimos no disponible para prevenir errores
                 return false;
             }
         }
 
-        // Registra un nuevo turno y le asigna un ID único.
-        // turno = Turno a registrar con Vehiculo, Fecha, Hora y Asistencia.
         public Turno RegistrarTurno(Turno turno)
         {
             try
@@ -76,7 +70,6 @@ namespace AutoGestion.BLL
         }
 
         // Obtiene los turnos cuya fecha ya pasó y no tienen asistencia registrada.
-
         public List<Turno> ObtenerTurnosCumplidos()
         {
             try
@@ -94,10 +87,6 @@ namespace AutoGestion.BLL
         }
 
         // Registra la asistencia de un turno existente (Asistió/No asistió/Pendiente)
-        // y guarda las observaciones.
-        // turnoId = ID del turno a actualizar.
-        // estado = Estado de asistencia ("Asistió", "No asistió", "Pendiente").
-        // observaciones = Observaciones adicionales sobre la asistencia.
 
         public void RegistrarAsistencia(int turnoId, string estado, string observaciones)
         {

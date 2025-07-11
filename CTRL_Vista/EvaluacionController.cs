@@ -5,7 +5,7 @@ using AutoGestion.Servicios.Utilidades;
 
 namespace AutoGestion.CTRL_Vista
 {
-    /// se usa para la gestión de evaluaciones técnicas de ofertas.
+    // se usa para la gestión de evaluaciones técnicas de ofertas.
     public class EvaluacionController
     {
         private readonly OfertaBLL _ofertaBll = new();
@@ -16,10 +16,9 @@ namespace AutoGestion.CTRL_Vista
         {
             try
             {
-                // 1) Leer ofertas con inspección registrada
                 var entidades = _ofertaBll.ObtenerOfertasConInspeccion();
 
-                // 2) Mapear a DTOs y ordenar
+                // Mapear a DTOs y ordenar
                 return entidades
                     .Select(OfertaListDto.FromEntity)
                     .OrderBy(dto => dto.FechaInspeccion)
@@ -31,7 +30,6 @@ namespace AutoGestion.CTRL_Vista
             }
         }
 
-        // Registra una evaluación técnica para una oferta existente.
         // dto = DTO con datos de evaluación: OfertaID, EstadoMotor, EstadoCarroceria, etc.
         public void RegistrarEvaluacion(EvaluacionInputDto dto)
         {
@@ -40,12 +38,12 @@ namespace AutoGestion.CTRL_Vista
                 // 1) Validar dto
                 if (dto == null) throw new ArgumentNullException(nameof(dto));
 
-                // 2) Buscar la oferta correspondiente
+                // 2) buscar la oferta 
                 var oferta = _ofertaBll.ObtenerOfertasConInspeccion()
                                        .FirstOrDefault(o => o.ID == dto.OfertaID)
                             ?? throw new ApplicationException("Oferta no encontrada.");
 
-                // 3) Construir la entidad de EvaluacionTecnica
+                // 3) construir la entidad de EvaluacionTecnica
                 var entEval = new Entidades.EvaluacionTecnica
                 {
                     ID = GeneradorID.ObtenerID<Entidades.EvaluacionTecnica>(),
@@ -56,7 +54,6 @@ namespace AutoGestion.CTRL_Vista
                     Observaciones = dto.Observaciones
                 };
 
-                // 4) Guardar evaluación (BLL)
                 _evalBll.GuardarEvaluacion(oferta, entEval);
             }
             catch (Exception ex)

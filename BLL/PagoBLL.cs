@@ -14,22 +14,13 @@ namespace AutoGestion.BLL
             _repo = new XmlRepository<Pago>("pagos.xml");
         }
 
-        // Registra un pago y lo persiste en XML.
-        // pago = Pago a registrar con datos de monto, fecha y vehículo.
         public bool RegistrarPago(Pago pago)
         {
             try
             {
-                // 1) Asignar nuevo ID único
                 pago.ID = GeneradorID.ObtenerID<Pago>();
-
-                // 2) Obtener lista actual de pagos
                 var lista = _repo.ObtenerTodos();
-
-                // 3) Agregar el nuevo pago
                 lista.Add(pago);
-
-                // 4) Persistir la lista actualizada en XML
                 _repo.GuardarLista(lista);
 
                 return true;

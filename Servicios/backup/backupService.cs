@@ -5,11 +5,11 @@ namespace AutoGestion.Servicios.Backup
 {
     public static class BackupService
     {
-        // Carpeta principal donde se guardan todas las carpetas de backup
+        // Donde voy a guardar los backups
         private static readonly string CarpetaPrincipal =
             Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Backups");
 
-        // Carpeta donde residen los XML de datos de la app
+        // Carpeta donde estan los datos XML 
         private static readonly string DatosDir =
             Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DatosXML");
 

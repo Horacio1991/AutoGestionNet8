@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AutoGestion.BLL;
+﻿using AutoGestion.BLL;
 using AutoGestion.CTRL_Vista.Modelos;
 
 namespace AutoGestion.CTRL_Vista
 {
-    // se ocupa de las operaciones sobre vehículos:
-    // - Listar todos o disponibles
-    // - Buscar por modelo o marca
     public class VehiculoController
     {
         private readonly VehiculoBLL _bll = new();
@@ -45,7 +39,7 @@ namespace AutoGestion.CTRL_Vista
             }
         }
 
-        // Busca vehículos cuyo modelo coincida exactamen
+        // Busca vehículos cuyo modelo coincida exactament
         public List<VehiculoDto> BuscarPorModelo(string modelo)
         {
             if (string.IsNullOrWhiteSpace(modelo))
@@ -64,7 +58,6 @@ namespace AutoGestion.CTRL_Vista
             }
         }
 
-        // Busca vehículos que contengan la cadena en marca o modelo.
         public List<VehiculoDto> BuscarPorMarca(string marca)
         {
             if (string.IsNullOrWhiteSpace(marca))

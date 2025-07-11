@@ -1,6 +1,4 @@
-﻿
-
-namespace Entidades
+﻿namespace Entidades
 {
     [Serializable]
     public class Bitacora

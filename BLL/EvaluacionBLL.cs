@@ -8,7 +8,7 @@ namespace AutoGestion.BLL
     {
         private readonly XmlRepository<EvaluacionTecnica> _repo;
 
-        /// 1) Inicializa el repositorio apuntando a "DatosXML/evaluaciones.xml".
+        // 1) Inicializa el repositorio apuntando a "DatosXML/evaluaciones.xml".
         public EvaluacionBLL()
         {
             _repo = new XmlRepository<EvaluacionTecnica>("evaluaciones.xml");
@@ -21,7 +21,7 @@ namespace AutoGestion.BLL
         {
             try
             {
-                // 1) Asignar ID igual al de la oferta para vinculación
+                // 1) Asignar ID igual al de la oferta para vinculación.
                 evaluacion.ID = oferta.ID;
                 // 2) Agregar a la lista existente
                 var lista = _repo.ObtenerTodos();
@@ -50,7 +50,6 @@ namespace AutoGestion.BLL
             }
             catch (ApplicationException)
             {
-                // 3) En caso de fallo, retornar null para no interrumpir la UI
                 return null;
             }
         }

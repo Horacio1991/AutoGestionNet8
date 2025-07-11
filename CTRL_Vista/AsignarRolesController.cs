@@ -18,19 +18,17 @@ namespace AutoGestion.CTRL_Vista
         // Fuerza la recarga desde los XML de plantillas, roles y usuarios.
         public void RecargarTodo()
         {
-            _plantillas = PermisoPlantillaXmlService.Leer();
-            _roles = RolXmlService.Leer();
-            _usuarios = UsuarioXmlService.Leer();
+            _plantillas = PermisoPlantillaXmlService.Leer(); // Carga las plantillas de permisos compuestos
+            _roles = RolXmlService.Leer(); // Carga los roles (PermisoCompuesto) que envolveran a las plantillas
+            _usuarios = UsuarioXmlService.Leer(); // Carga los usuarios que tendrán roles asignados
         }
 
         #region Plantillas
 
-        /// <summary>Devuelve todas las plantillas raíz.</summary>
+        //Devuelve todas las plantillas raíz (Vendedores, Admministrativos, etc)
         public IEnumerable<PermisoCompuesto> GetPlantillas() => _plantillas;
 
-        /// <summary>
-        /// Crea una nueva plantilla raíz con un ID único en todo el conjunto.
-        /// </summary>
+        // Crea una nueva plantilla raíz con un ID único en todo el conjunto.
         public void CrearPlantilla(string nombre)
         {
             if (_plantillas.Any(p => p.Nombre.Equals(nombre, StringComparison.OrdinalIgnoreCase)))
@@ -44,12 +42,10 @@ namespace AutoGestion.CTRL_Vista
             PersistirPlantillas();
         }
 
-        /// <summary>
-        /// Elimina la plantilla raíz, desasocia de roles y limpia usuarios afectados.
-        /// </summary>
+        //Elimina la plantilla raíz, desasocia de roles y limpia usuarios afectados.
         public void EliminarPlantilla(int plantillaId)
         {
-            // 1) Quitar de plantillas
+            // 1) Elimina la plantilla que se pasa por parametro.
             _plantillas.RemoveAll(p => p.ID == plantillaId);
             PersistirPlantillas();
 
@@ -73,10 +69,7 @@ namespace AutoGestion.CTRL_Vista
             if (usrMod) UsuarioXmlService.Guardar(_usuarios);
         }
 
-        /// <summary>
-        /// Agrega un submenú (y opcionalmente un ítem) a la plantilla dada.
-        /// IDs globales para evitar colisiones.
-        /// </summary>
+        // Agrega un submenú a la plantilla dada.
         public void AgregarItemAPlantilla(int plantillaId, string nombreSubMenu, string nombreItem)
         {
             var root = _plantillas.FirstOrDefault(p => p.ID == plantillaId)
@@ -127,9 +120,7 @@ namespace AutoGestion.CTRL_Vista
             _plantillas = PermisoPlantillaXmlService.Leer();
         }
 
-        /// <summary>
-        /// Elimina recursivamente nodos compuestos con el ID dado.
-        /// </summary>
+        // Elimina recursivamente nodos compuestos con el ID dado.
         private bool EliminarEnProfundidad(PermisoCompuesto padre, int idAEliminar)
         {
             int removed = padre.HijosCompuestos.RemoveAll(c => c.ID == idAEliminar);

@@ -4,7 +4,6 @@ using AutoGestion.Servicios.Utilidades;
 
 namespace AutoGestion.BLL
 {
-    // BLL para crear Oferentes en el sistema.
     public class OferenteBLL
     {
         private readonly XmlRepository<Oferente> _repo;
@@ -26,7 +25,6 @@ namespace AutoGestion.BLL
             }
             catch (ApplicationException)
             {
-                // 3) En caso de fallo, retornar null para no interrumpir la UI
                 return null;
             }
         }

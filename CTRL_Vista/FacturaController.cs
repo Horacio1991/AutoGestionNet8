@@ -29,16 +29,15 @@ namespace AutoGestion.CTRL_Vista
             }
         }
 
-        /// Emite una factura para la venta (ventaId) y marca la venta como “Facturada”.
+        // Emite una factura para la venta que pasa por parametro y marca la venta como facturada.
         public Factura EmitirFactura(int ventaId)
         {
             try
             {
-                // 1) Obtener la venta
                 var venta = _ventaBll.ObtenerDetalleVenta(ventaId)
                             ?? throw new ApplicationException("Venta no encontrada.");
 
-                // 2) Construir la entidad Factura
+                // construir la entidad Factura
                 var factura = new Factura
                 {
                     Cliente = venta.Cliente,
@@ -48,10 +47,8 @@ namespace AutoGestion.CTRL_Vista
                     FormaPago = venta.Pago?.TipoPago ?? "Desconocido"
                 };
 
-                // 3) Persistir factura
                 var emitida = _facturaBll.EmitirFactura(factura);
 
-                // 4) Marcar la venta como facturada
                 _ventaBll.MarcarComoFacturada(ventaId);
 
                 return emitida;

@@ -11,8 +11,6 @@ namespace AutoGestion.DTOs
 
         public DateTime FechaInspeccion { get; set; }
 
-        // Mapea una entidad OfertaCompra a OfertaListDto para la UI.
-        // o = Entidad OfertaCompra a mapear;
         public static OfertaListDto FromEntity(OfertaCompra o)
         {
             if (o == null) return null;

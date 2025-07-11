@@ -5,7 +5,6 @@ namespace AutoGestion.CTRL_Vista
 {
     public class BitacoraController
     {
-        // Registra un evento en bitácora.
         public void RegistrarEvento(string detalle, int usuarioID, string usuarioNombre)
         {
             try
@@ -18,7 +17,6 @@ namespace AutoGestion.CTRL_Vista
             }
         }
 
-        // Recupera todos los registros de bitácora.
         public List<Bitacora> ObtenerRegistros()
         {
             try

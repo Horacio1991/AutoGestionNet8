@@ -13,7 +13,7 @@ namespace AutoGestion.CTRL_Vista
         private readonly OferenteBLL _oferenteBll = new();
         private readonly OfertaBLL _ofertaBll = new();
 
-        /// Busca un oferente por DNI y lo retorna como DTO
+        // Busca un oferente por DNI y lo retorna como DTO
         public OferenteDto BuscarOferente(string dni)
         {
             try
@@ -31,12 +31,11 @@ namespace AutoGestion.CTRL_Vista
         }
 
         // Registra un oferente (si no existe) y luego la oferta.
-        // dto = OfertaInputDto con datos de la oferta y el oferente.
         public bool RegistrarOferta(OfertaInputDto dto)
         {
             try
             {
-                // 1) Validar DTO
+                // validaciones 
                 if (dto == null)
                     throw new ArgumentNullException(nameof(dto));
                 if (dto.Oferente == null)
@@ -46,7 +45,7 @@ namespace AutoGestion.CTRL_Vista
                 if (dto.FechaInspeccion == default)
                     throw new ArgumentException("Fecha de inspección inválida.", nameof(dto.FechaInspeccion));
 
-                // 2) Buscar o crear oferente
+                // Buscar o crear oferente
                 var entOferente = _oferenteBll.BuscarPorDni(dto.Oferente.Dni);
                 if (entOferente == null)
                 {
@@ -61,7 +60,7 @@ namespace AutoGestion.CTRL_Vista
                     _oferenteBll.GuardarOferente(entOferente);
                 }
 
-                // 3) Crear entidad Vehiculo para la oferta
+                // Crear entidad Vehiculo para la oferta
                 var entVehiculo = new Vehiculo
                 {
                     ID = GeneradorID.ObtenerID<Vehiculo>(),
@@ -74,7 +73,7 @@ namespace AutoGestion.CTRL_Vista
                     Estado = "En evaluación"
                 };
 
-                // 4) Crear entidad OfertaCompra
+                // Crear entidad OfertaCompra
                 var entOferta = new OfertaCompra
                 {
                     ID = GeneradorID.ObtenerID<OfertaCompra>(),
@@ -84,7 +83,7 @@ namespace AutoGestion.CTRL_Vista
                     Estado = "En evaluación"
                 };
 
-                // 5) Persistir oferta
+                // Persistir oferta
                 _ofertaBll.RegistrarOferta(entOferta);
                 return true;
             }

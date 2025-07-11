@@ -7,7 +7,6 @@ namespace AutoGestion.Servicios.XmlServices
     // Serializa tanto permisos compuestos como sus hijos simples o compuestos.
     public static class RolXmlService
     {
-        // Ruta al archivo XML de roles
         private static readonly string _ruta = Path.Combine(
             AppDomain.CurrentDomain.BaseDirectory,
             "DatosXML",

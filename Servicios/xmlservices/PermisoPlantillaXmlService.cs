@@ -4,10 +4,9 @@ using AutoGestion.Servicios.Composite;
 namespace AutoGestion.Servicios.XmlServices
 {
     // Servicio para leer y guardar plantillas de permisos compuestos
-    // en permisos_compuestos.xml.
     public static class PermisoPlantillaXmlService
     {
-        // Ruta al archivo XML de plantillas de permisos compuestos
+        // donde voy a guardar las plantillas de permisos compuestos
         private static readonly string _ruta = Path.Combine(
             AppDomain.CurrentDomain.BaseDirectory,
             "DatosXML",

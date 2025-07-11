@@ -3,19 +3,17 @@ using AutoGestion.CTRL_Vista.Modelos;
 
 namespace AutoGestion.CTRL_Vista
 {
-    // Se usa para operaciones de cliente: búsqueda y registro.
     public class ClienteController
     {
         private readonly ClienteBLL _clienteBll = new();
 
-        /// Busca un cliente por DNI y devuelve un DTO para la vista.
         public ClienteDto BuscarCliente(string dni)
         {
             try
             {
-                // 1) Invocar BLL para obtener entidad
                 var entidad = _clienteBll.BuscarClientePorDNI(dni);
-                // 2) Mapear a DTO o devolver null
+                
+                // Mapear a DTO o devolver null
                 return entidad == null ? null : ClienteDto.FromEntity(entidad);
             }
             catch (Exception ex)
@@ -24,12 +22,12 @@ namespace AutoGestion.CTRL_Vista
             }
         }
 
-        /// Registra un nuevo cliente y retorna su DTO.
+        // Registra un nuevo cliente y retorna su DTO.
         public ClienteDto RegistrarCliente(string dni, string nombre, string apellido, string contacto)
         {
             try
             {
-                // 1) Construir entidad de dominio
+                // 1) Construir entidad
                 var entidad = new Entidades.Cliente
                 {
                     Dni = dni,

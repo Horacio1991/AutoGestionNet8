@@ -10,15 +10,14 @@ namespace AutoGestion.CTRL_Vista.Modelos
         public string Contacto { get; set; }
 
         // Mapea una entidad Cliente a ClienteDTO.
-        // c = Entidad Cliente a mapear;
-        // ClienteDTO con sólo los campos necesarios para la UI;
+
         public static ClienteDto FromEntity(Cliente c)
         {
             // 1) Validar que la entidad no sea null para evitar NullReferenceException en la vista
             if (c == null)
                 return null;
 
-            // 2) Mapear únicamente los campos que la capa de presentación requiere
+            // 2) mapear solo los campos necesarios para la vista
             return new ClienteDto
             {
                 Dni = c.Dni,

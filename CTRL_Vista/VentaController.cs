@@ -3,15 +3,10 @@ using AutoGestion.CTRL_Vista.Modelos;
 
 namespace AutoGestion.CTRL_Vista
 {
-    // Gestiona el flujo de ventas:
-    // - Listar ventas pendientes
-    // - Autorizar o rechazar ventas
-    // - Listar ventas autorizadas para facturar
     public class VentaController
     {
         private readonly VentaBLL _ventaBll = new();
 
-        // Obtiene las ventas en estado "Pendiente".
         public List<VentaDto> ObtenerVentasPendientes()
         {
             try
@@ -63,7 +58,7 @@ namespace AutoGestion.CTRL_Vista
             }
         }
 
-        // Obtiene las ventas autorizadas ("Autorizada") listas para emitir factura.
+        // Obtiene las ventas autorizadas, listas para emitir factura.
         public List<VentaDto> ObtenerVentasParaFacturar()
         {
             try

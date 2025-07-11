@@ -14,10 +14,7 @@ namespace AutoGestion.BLL
             _repo = new XmlRepository<Bitacora>("bitacora.xml");
         }
 
-        // Registra un evento en la bitácora.
-        // tipo = Tipo de evento ("backup" o "restore").
-        // usuarioId = El usuario que realiza la acción.
-        // usuarioNombre = Nombre del usuario que realiza la acción.
+        // Registra un evento en la bitácora. (Backup / Restore)
         public void Registrar(string tipo, int usuarioID, string usuarioNombre)
         {
             try
@@ -31,18 +28,16 @@ namespace AutoGestion.BLL
                     UsuarioNombre = usuarioNombre
                 };
 
-                // 2) Persistir en XML
+                // 2) Persistir en XML (XmlRepository)
                 _repo.Agregar(registro);
             }
             catch (Exception ex) when (ex is InvalidOperationException || ex is System.IO.IOException)
             {
-                // 3) En caso de fallo, convertimos a ApplicationException
                 throw new ApplicationException(
                     $"Error al registrar en la bitácora: {ex.Message}", ex);
             }
         }
 
-        // Obtiene todos los registros de la bitácora.
         public List<Bitacora> ObtenerTodos()
         {
             try

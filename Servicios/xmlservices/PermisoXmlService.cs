@@ -6,7 +6,6 @@ namespace AutoGestion.Servicios.XmlServices
     // Servicio para leer y guardar el catálogo de permisos simples en permisos.xml.
     public static class PermisoXmlService
     {
-        // Ruta al archivo XML de permisos simples
         private static readonly string _ruta = Path.Combine(
             AppDomain.CurrentDomain.BaseDirectory,
             "DatosXML",
@@ -26,7 +25,6 @@ namespace AutoGestion.Servicios.XmlServices
             }
             catch (InvalidOperationException ex)
             {
-                // Error de deserialización: XML mal formado
                 throw new ApplicationException($"El archivo de permisos está corrupto: {ex.Message}", ex);
             }
             catch (Exception ex)

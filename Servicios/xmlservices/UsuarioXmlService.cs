@@ -5,8 +5,8 @@ using AutoGestion.Servicios.Utilidades;
 
 namespace AutoGestion.Servicios.XmlServices
 {
-    /// Servicio para leer y guardar usuarios (y sus roles) en usuarios.xml.
-    /// Asegura que siempre exista un usuario "admin" con permisos completos.
+    // Servicio para leer y guardar usuarios (y sus roles) en usuarios.xml.
+    // Asegura que siempre exista un usuario "admin" con permisos completos.
     public static class UsuarioXmlService
     {
         private static readonly string _ruta = Path.Combine(

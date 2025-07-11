@@ -15,8 +15,6 @@ namespace AutoGestion.BLL
             _repo = new XmlRepository<OfertaCompra>("ofertas.xml");
         }
 
-        // Registra una nueva oferta de compra (o actualiza si ya existe).
-        // oferta = OfertaCompra a registrar con datos de vehículo y oferente.
         public void RegistrarOferta(OfertaCompra oferta)
         {
             try
@@ -45,7 +43,6 @@ namespace AutoGestion.BLL
         }
 
         // Obtiene todas las ofertas en evaluación.
-        // Devuelve una lista de ofertas cuyo estado es "En evaluación".
         // Usado para mostrar ofertas pendientes de revisión.
         public List<OfertaCompra> ObtenerOfertasSinRegistrar()
         {
@@ -77,14 +74,13 @@ namespace AutoGestion.BLL
         }
 
         // Obtiene ofertas que ya tienen inspección programada.
-        // Devuelve una Lista de ofertas con fecha de inspección distinta de DateTime.MinValue
         // Usado para gestionar inspecciones pendientes.
         public List<OfertaCompra> ObtenerOfertasConInspeccion()
         {
             try
             {
                 return _repo.ObtenerTodos()
-                            .Where(o => o.FechaInspeccion != DateTime.MinValue)
+                            .Where(o => o.FechaInspeccion != DateTime.MinValue) // Verifica si la fecha de inspección es válida
                             .ToList();
             }
             catch (ApplicationException)
@@ -94,7 +90,6 @@ namespace AutoGestion.BLL
         }
 
         // Obtiene ofertas que cuentan con evaluación técnica asociada.
-        // Devuelve lista de ofertas con ID presentes en evaluaciones.xml
         public List<OfertaCompra> ObtenerOfertasConEvaluacion()
         {
             try
@@ -116,7 +111,6 @@ namespace AutoGestion.BLL
             }
         }
 
-        // Actualiza el estado de una oferta existente.
         // nuevoEstado = Nuevo estado a asignar (ej. "Aceptada", "Rechazada").
         public void ActualizarEstado(OfertaCompra oferta, string nuevoEstado)
         {
@@ -156,7 +150,7 @@ namespace AutoGestion.BLL
             }
         }
 
-        /// Obtiene ofertas cuyo estado es "EnEvaluacion".
+        // Obtiene ofertas cuyo estado es "EnEvaluacion".
         public List<OfertaCompra> ObtenerOfertasPendientes()
         {
             try
