@@ -231,23 +231,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Educaccion\\.nuget\\packages\\": {},
+    "C:\\Users\\hory_\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Educaccion\\Desktop\\TPFINAL\\AutoGestionNet8\\AutoGestion\\Vista.csproj",
+      "projectUniqueName": "C:\\Users\\hory_\\OneDrive\\Escritorio\\TPMAL\\AutoGestionNet8\\AutoGestion\\Vista.csproj",
       "projectName": "Vista",
-      "projectPath": "C:\\Users\\Educaccion\\Desktop\\TPFINAL\\AutoGestionNet8\\AutoGestion\\Vista.csproj",
-      "packagesPath": "C:\\Users\\Educaccion\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Educaccion\\Desktop\\TPFINAL\\AutoGestionNet8\\AutoGestion\\obj\\",
+      "projectPath": "C:\\Users\\hory_\\OneDrive\\Escritorio\\TPMAL\\AutoGestionNet8\\AutoGestion\\Vista.csproj",
+      "packagesPath": "C:\\Users\\hory_\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\hory_\\OneDrive\\Escritorio\\TPMAL\\AutoGestionNet8\\AutoGestion\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Educaccion\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\hory_\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -262,11 +262,11 @@
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
           "projectReferences": {
-            "C:\\Users\\Educaccion\\Desktop\\TPFINAL\\AutoGestionNet8\\CTRL_Vista\\CTRL_Vista.csproj": {
-              "projectPath": "C:\\Users\\Educaccion\\Desktop\\TPFINAL\\AutoGestionNet8\\CTRL_Vista\\CTRL_Vista.csproj"
+            "C:\\Users\\hory_\\OneDrive\\Escritorio\\TPMAL\\AutoGestionNet8\\CTRL_Vista\\CTRL_Vista.csproj": {
+              "projectPath": "C:\\Users\\hory_\\OneDrive\\Escritorio\\TPMAL\\AutoGestionNet8\\CTRL_Vista\\CTRL_Vista.csproj"
             },
-            "C:\\Users\\Educaccion\\Desktop\\TPFINAL\\AutoGestionNet8\\Servicios\\Servicios.csproj": {
-              "projectPath": "C:\\Users\\Educaccion\\Desktop\\TPFINAL\\AutoGestionNet8\\Servicios\\Servicios.csproj"
+            "C:\\Users\\hory_\\OneDrive\\Escritorio\\TPMAL\\AutoGestionNet8\\Servicios\\Servicios.csproj": {
+              "projectPath": "C:\\Users\\hory_\\OneDrive\\Escritorio\\TPMAL\\AutoGestionNet8\\Servicios\\Servicios.csproj"
             }
           }
         }
@@ -315,7 +315,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.302/PortableRuntimeIdentifierGraph.json"
       }
     }
   },
